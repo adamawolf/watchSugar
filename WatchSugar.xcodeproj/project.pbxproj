@@ -1,0 +1,804 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94313B591C1F98F900F74345 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B581C1F98F900F74345 /* main.m */; };
+		94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5B1C1F98F900F74345 /* AppDelegate.m */; };
+		94313B5F1C1F98F900F74345 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5E1C1F98F900F74345 /* ViewController.m */; };
+		94313B621C1F98F900F74345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B601C1F98F900F74345 /* Main.storyboard */; };
+		94313B641C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313B631C1F98F900F74345 /* Assets.xcassets */; };
+		94313B671C1F98F900F74345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B651C1F98F900F74345 /* LaunchScreen.storyboard */; };
+		94313B721C1F98F900F74345 /* WatchSugarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B711C1F98F900F74345 /* WatchSugarTests.m */; };
+		94313B7D1C1F98F900F74345 /* WatchSugarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */; };
+		94313B821C1F98F900F74345 /* WatchSugar WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */; };
+		94313B881C1F98F900F74345 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B861C1F98F900F74345 /* Interface.storyboard */; };
+		94313B8A1C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313B891C1F98F900F74345 /* Assets.xcassets */; };
+		94313B911C1F98F900F74345 /* WatchSugar WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		94313B991C1F98F900F74345 /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B981C1F98F900F74345 /* InterfaceController.m */; };
+		94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */; };
+		94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9E1C1F98F900F74345 /* NotificationController.m */; };
+		94313BA21C1F98F900F74345 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA11C1F98F900F74345 /* GlanceController.m */; };
+		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
+		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		94313B6E1C1F98F900F74345 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94313B531C1F98F900F74345;
+			remoteInfo = WatchSugar;
+		};
+		94313B791C1F98F900F74345 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94313B531C1F98F900F74345;
+			remoteInfo = WatchSugar;
+		};
+		94313B831C1F98F900F74345 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94313B801C1F98F900F74345;
+			remoteInfo = "WatchSugar WatchKit App";
+		};
+		94313B921C1F98F900F74345 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94313B8F1C1F98F900F74345;
+			remoteInfo = "WatchSugar WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		94313BAE1C1F98F900F74345 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				94313B911C1F98F900F74345 /* WatchSugar WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313BB21C1F98F900F74345 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				94313B821C1F98F900F74345 /* WatchSugar WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		94313B541C1F98F900F74345 /* WatchSugar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchSugar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94313B581C1F98F900F74345 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94313B5A1C1F98F900F74345 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		94313B5B1C1F98F900F74345 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		94313B5D1C1F98F900F74345 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		94313B5E1C1F98F900F74345 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		94313B611C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		94313B631C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94313B661C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		94313B681C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchSugarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94313B711C1F98F900F74345 /* WatchSugarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchSugarTests.m; sourceTree = "<group>"; };
+		94313B731C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchSugarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchSugarUITests.m; sourceTree = "<group>"; };
+		94313B7E1C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchSugar WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94313B871C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		94313B891C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94313B8B1C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchSugar WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94313B961C1F98F900F74345 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		94313B971C1F98F900F74345 /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
+		94313B981C1F98F900F74345 /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
+		94313B9A1C1F98F900F74345 /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
+		94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
+		94313B9D1C1F98F900F74345 /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
+		94313B9E1C1F98F900F74345 /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
+		94313BA01C1F98F900F74345 /* GlanceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlanceController.h; sourceTree = "<group>"; };
+		94313BA11C1F98F900F74345 /* GlanceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlanceController.m; sourceTree = "<group>"; };
+		94313BA31C1F98F900F74345 /* ComplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComplicationController.h; sourceTree = "<group>"; };
+		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
+		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		94313BA81C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94313B511C1F98F900F74345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B6A1C1F98F900F74345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B751C1F98F900F74345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B8D1C1F98F900F74345 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94313B4B1C1F98F900F74345 = {
+			isa = PBXGroup;
+			children = (
+				94313B561C1F98F900F74345 /* WatchSugar */,
+				94313B701C1F98F900F74345 /* WatchSugarTests */,
+				94313B7B1C1F98F900F74345 /* WatchSugarUITests */,
+				94313B851C1F98F900F74345 /* WatchSugar WatchKit App */,
+				94313B941C1F98F900F74345 /* WatchSugar WatchKit Extension */,
+				94313B551C1F98F900F74345 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94313B551C1F98F900F74345 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94313B541C1F98F900F74345 /* WatchSugar.app */,
+				94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */,
+				94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */,
+				94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */,
+				94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94313B561C1F98F900F74345 /* WatchSugar */ = {
+			isa = PBXGroup;
+			children = (
+				94313B5A1C1F98F900F74345 /* AppDelegate.h */,
+				94313B5B1C1F98F900F74345 /* AppDelegate.m */,
+				94313B5D1C1F98F900F74345 /* ViewController.h */,
+				94313B5E1C1F98F900F74345 /* ViewController.m */,
+				94313B601C1F98F900F74345 /* Main.storyboard */,
+				94313B631C1F98F900F74345 /* Assets.xcassets */,
+				94313B651C1F98F900F74345 /* LaunchScreen.storyboard */,
+				94313B681C1F98F900F74345 /* Info.plist */,
+				94313B571C1F98F900F74345 /* Supporting Files */,
+			);
+			path = WatchSugar;
+			sourceTree = "<group>";
+		};
+		94313B571C1F98F900F74345 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94313B581C1F98F900F74345 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94313B701C1F98F900F74345 /* WatchSugarTests */ = {
+			isa = PBXGroup;
+			children = (
+				94313B711C1F98F900F74345 /* WatchSugarTests.m */,
+				94313B731C1F98F900F74345 /* Info.plist */,
+			);
+			path = WatchSugarTests;
+			sourceTree = "<group>";
+		};
+		94313B7B1C1F98F900F74345 /* WatchSugarUITests */ = {
+			isa = PBXGroup;
+			children = (
+				94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */,
+				94313B7E1C1F98F900F74345 /* Info.plist */,
+			);
+			path = WatchSugarUITests;
+			sourceTree = "<group>";
+		};
+		94313B851C1F98F900F74345 /* WatchSugar WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				94313B861C1F98F900F74345 /* Interface.storyboard */,
+				94313B891C1F98F900F74345 /* Assets.xcassets */,
+				94313B8B1C1F98F900F74345 /* Info.plist */,
+			);
+			path = "WatchSugar WatchKit App";
+			sourceTree = "<group>";
+		};
+		94313B941C1F98F900F74345 /* WatchSugar WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				94313B971C1F98F900F74345 /* InterfaceController.h */,
+				94313B981C1F98F900F74345 /* InterfaceController.m */,
+				94313B9A1C1F98F900F74345 /* ExtensionDelegate.h */,
+				94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */,
+				94313B9D1C1F98F900F74345 /* NotificationController.h */,
+				94313B9E1C1F98F900F74345 /* NotificationController.m */,
+				94313BA01C1F98F900F74345 /* GlanceController.h */,
+				94313BA11C1F98F900F74345 /* GlanceController.m */,
+				94313BA31C1F98F900F74345 /* ComplicationController.h */,
+				94313BA41C1F98F900F74345 /* ComplicationController.m */,
+				94313BA61C1F98F900F74345 /* Assets.xcassets */,
+				94313BA81C1F98F900F74345 /* Info.plist */,
+				94313B951C1F98F900F74345 /* Supporting Files */,
+			);
+			path = "WatchSugar WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		94313B951C1F98F900F74345 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94313B961C1F98F900F74345 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94313B531C1F98F900F74345 /* WatchSugar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */;
+			buildPhases = (
+				94313B501C1F98F900F74345 /* Sources */,
+				94313B511C1F98F900F74345 /* Frameworks */,
+				94313B521C1F98F900F74345 /* Resources */,
+				94313BB21C1F98F900F74345 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94313B841C1F98F900F74345 /* PBXTargetDependency */,
+			);
+			name = WatchSugar;
+			productName = WatchSugar;
+			productReference = 94313B541C1F98F900F74345 /* WatchSugar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94313B6C1C1F98F900F74345 /* WatchSugarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94313BB61C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarTests" */;
+			buildPhases = (
+				94313B691C1F98F900F74345 /* Sources */,
+				94313B6A1C1F98F900F74345 /* Frameworks */,
+				94313B6B1C1F98F900F74345 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94313B6F1C1F98F900F74345 /* PBXTargetDependency */,
+			);
+			name = WatchSugarTests;
+			productName = WatchSugarTests;
+			productReference = 94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		94313B771C1F98F900F74345 /* WatchSugarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94313BB91C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarUITests" */;
+			buildPhases = (
+				94313B741C1F98F900F74345 /* Sources */,
+				94313B751C1F98F900F74345 /* Frameworks */,
+				94313B761C1F98F900F74345 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94313B7A1C1F98F900F74345 /* PBXTargetDependency */,
+			);
+			name = WatchSugarUITests;
+			productName = WatchSugarUITests;
+			productReference = 94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		94313B801C1F98F900F74345 /* WatchSugar WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94313BAF1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit App" */;
+			buildPhases = (
+				94313B7F1C1F98F900F74345 /* Resources */,
+				94313BAE1C1F98F900F74345 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				94313B931C1F98F900F74345 /* PBXTargetDependency */,
+			);
+			name = "WatchSugar WatchKit App";
+			productName = "WatchSugar WatchKit App";
+			productReference = 94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94313BAB1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit Extension" */;
+			buildPhases = (
+				94313B8C1C1F98F900F74345 /* Sources */,
+				94313B8D1C1F98F900F74345 /* Frameworks */,
+				94313B8E1C1F98F900F74345 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WatchSugar WatchKit Extension";
+			productName = "WatchSugar WatchKit Extension";
+			productReference = 94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94313B4C1C1F98F900F74345 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Flairify;
+				TargetAttributes = {
+					94313B531C1F98F900F74345 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					94313B6C1C1F98F900F74345 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 94313B531C1F98F900F74345;
+					};
+					94313B771C1F98F900F74345 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 94313B531C1F98F900F74345;
+					};
+					94313B801C1F98F900F74345 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					94313B8F1C1F98F900F74345 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 94313B4F1C1F98F900F74345 /* Build configuration list for PBXProject "WatchSugar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 94313B4B1C1F98F900F74345;
+			productRefGroup = 94313B551C1F98F900F74345 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94313B531C1F98F900F74345 /* WatchSugar */,
+				94313B6C1C1F98F900F74345 /* WatchSugarTests */,
+				94313B771C1F98F900F74345 /* WatchSugarUITests */,
+				94313B801C1F98F900F74345 /* WatchSugar WatchKit App */,
+				94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94313B521C1F98F900F74345 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B671C1F98F900F74345 /* LaunchScreen.storyboard in Resources */,
+				94313B641C1F98F900F74345 /* Assets.xcassets in Resources */,
+				94313B621C1F98F900F74345 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B6B1C1F98F900F74345 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B761C1F98F900F74345 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B7F1C1F98F900F74345 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B8A1C1F98F900F74345 /* Assets.xcassets in Resources */,
+				94313B881C1F98F900F74345 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B8E1C1F98F900F74345 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94313B501C1F98F900F74345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B5F1C1F98F900F74345 /* ViewController.m in Sources */,
+				94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */,
+				94313B591C1F98F900F74345 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B691C1F98F900F74345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B721C1F98F900F74345 /* WatchSugarTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B741C1F98F900F74345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B7D1C1F98F900F74345 /* WatchSugarUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94313B8C1C1F98F900F74345 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */,
+				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
+				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,
+				94313BA21C1F98F900F74345 /* GlanceController.m in Sources */,
+				94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		94313B6F1C1F98F900F74345 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94313B531C1F98F900F74345 /* WatchSugar */;
+			targetProxy = 94313B6E1C1F98F900F74345 /* PBXContainerItemProxy */;
+		};
+		94313B7A1C1F98F900F74345 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94313B531C1F98F900F74345 /* WatchSugar */;
+			targetProxy = 94313B791C1F98F900F74345 /* PBXContainerItemProxy */;
+		};
+		94313B841C1F98F900F74345 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94313B801C1F98F900F74345 /* WatchSugar WatchKit App */;
+			targetProxy = 94313B831C1F98F900F74345 /* PBXContainerItemProxy */;
+		};
+		94313B931C1F98F900F74345 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */;
+			targetProxy = 94313B921C1F98F900F74345 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		94313B601C1F98F900F74345 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94313B611C1F98F900F74345 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		94313B651C1F98F900F74345 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94313B661C1F98F900F74345 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		94313B861C1F98F900F74345 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94313B871C1F98F900F74345 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		94313BA91C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		94313BAA1C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		94313BAC1C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		94313BAD1C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		94313BB01C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = WatchSugar_WatchKit_Extension;
+				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		94313BB11C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = WatchSugar_WatchKit_Extension;
+				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		94313BB41C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WatchSugar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		94313BB51C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = WatchSugar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		94313BB71C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = WatchSugarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar";
+			};
+			name = Debug;
+		};
+		94313BB81C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = WatchSugarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar";
+			};
+			name = Release;
+		};
+		94313BBA1C1F98F900F74345 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WatchSugarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WatchSugar;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		94313BBB1C1F98F900F74345 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WatchSugarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WatchSugar;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94313B4F1C1F98F900F74345 /* Build configuration list for PBXProject "WatchSugar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BA91C1F98F900F74345 /* Debug */,
+				94313BAA1C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94313BAB1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BAC1C1F98F900F74345 /* Debug */,
+				94313BAD1C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		94313BAF1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BB01C1F98F900F74345 /* Debug */,
+				94313BB11C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BB41C1F98F900F74345 /* Debug */,
+				94313BB51C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		94313BB61C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BB71C1F98F900F74345 /* Debug */,
+				94313BB81C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		94313BB91C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94313BBA1C1F98F900F74345 /* Debug */,
+				94313BBB1C1F98F900F74345 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94313B4C1C1F98F900F74345 /* Project object */;
+}
