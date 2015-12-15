@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2926D3AD3244B057970398C7 /* libPods-WatchSugar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */; };
 		94313B591C1F98F900F74345 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B581C1F98F900F74345 /* main.m */; };
 		94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5B1C1F98F900F74345 /* AppDelegate.m */; };
 		94313B5F1C1F98F900F74345 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5E1C1F98F900F74345 /* ViewController.m */; };
@@ -84,6 +85,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.release.xcconfig"; sourceTree = "<group>"; };
 		94313B541C1F98F900F74345 /* WatchSugar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchSugar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94313B581C1F98F900F74345 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		94313B5A1C1F98F900F74345 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -118,6 +120,8 @@
 		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
 		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94313BA81C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2926D3AD3244B057970398C7 /* libPods-WatchSugar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		367AAA8AF317176C7FBDA3FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		94313B4B1C1F98F900F74345 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +174,8 @@
 				94313B851C1F98F900F74345 /* WatchSugar WatchKit App */,
 				94313B941C1F98F900F74345 /* WatchSugar WatchKit Extension */,
 				94313B551C1F98F900F74345 /* Products */,
+				CC1D94489A4E9B015A24E80F /* Pods */,
+				367AAA8AF317176C7FBDA3FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -256,6 +271,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CC1D94489A4E9B015A24E80F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */,
+				78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -263,10 +287,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */;
 			buildPhases = (
+				C31BDFEE2C7AD22F4F8CA855 /* Check Pods Manifest.lock */,
 				94313B501C1F98F900F74345 /* Sources */,
 				94313B511C1F98F900F74345 /* Frameworks */,
 				94313B521C1F98F900F74345 /* Resources */,
 				94313BB21C1F98F900F74345 /* Embed Watch Content */,
+				FB8B0D79A5AFCC27B6A2F2AA /* Embed Pods Frameworks */,
+				56BFA33FE9AF6774ACF8F8BF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -441,6 +468,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		56BFA33FE9AF6774ACF8F8BF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C31BDFEE2C7AD22F4F8CA855 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FB8B0D79A5AFCC27B6A2F2AA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94313B501C1F98F900F74345 /* Sources */ = {
@@ -678,6 +753,7 @@
 		};
 		94313BB41C1F98F900F74345 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
@@ -689,6 +765,7 @@
 		};
 		94313BB51C1F98F900F74345 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
@@ -765,6 +842,7 @@
 				94313BAD1C1F98F900F74345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94313BAF1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -773,6 +851,7 @@
 				94313BB11C1F98F900F74345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */ = {
 			isa = XCConfigurationList;
@@ -781,6 +860,7 @@
 				94313BB51C1F98F900F74345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94313BB61C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarTests" */ = {
 			isa = XCConfigurationList;
@@ -789,6 +869,7 @@
 				94313BB81C1F98F900F74345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		94313BB91C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarUITests" */ = {
 			isa = XCConfigurationList;
@@ -797,6 +878,7 @@
 				94313BBB1C1F98F900F74345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
