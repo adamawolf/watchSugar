@@ -13,6 +13,8 @@
 @interface AppDelegate ()
 
 @property (nonatomic, strong) NSString *dexcomToken;
+@property (nonatomic, strong) NSString *subscriptionId;
+@property (nonatomic, strong) NSDictionary * latestBloodSugarData;
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
@@ -62,58 +64,87 @@
     if (!self.dexcomToken) {
         [self authenticateWithDexcom];
     } else {
-        [self fetchLatestBloodSugar];
+        if (!self.subscriptionId) {
+            [self fetchSubscriptions];
+        } else {
+            [self fetchLatestBloodSugar];
+        }
     }
+}
+
++ (void)dexcomPOSTToURLString:(NSString *)URLString
+               withParameters:(id)parameters
+             withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
+             withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
+    [manager setRequestSerializer:requestSerializer];
+    
+    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    [manager setResponseSerializer:responseSerializer];
+    
+    [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
 }
 
 - (void)authenticateWithDexcom
 {
-    NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/AuthenticatePublisherAccount";
-    NSDictionary *parameters = @{@"accountName": @"aawolf", @"password": @"Wuf*4646", @"applicationId": @"d8665ade-9673-4e27-9ff6-92db4ce13d13"};
+    NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/LoginSubscriberAccount";
+    NSDictionary *parameters = @{@"accountId": @"***REMOVED***",
+                                 @"password": @"A***REMOVED***",
+                                 @"applicationId": @"d89443d2-327c-4a6f-89e5-496bbb0317db"};
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [AppDelegate dexcomPOSTToURLString:URLString
+                        withParameters:parameters
+                      withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                          NSLog(@"received dexcom token: %@", responseObject);
+                          self.dexcomToken = responseObject;
+                          
+                          if (!self.subscriptionId) {
+                              [self fetchSubscriptions];
+                          }
+                      }
+                      withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                          NSLog(@"error: %@", error);
+                      }];
+}
 
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
-    [manager setRequestSerializer:requestSerializer];
+- (void)fetchSubscriptions
+{
+    NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ListSubscriberAccountSubscriptions?sessionId=%@", self.dexcomToken];
+    NSString *parameters = nil;
     
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-    [manager setResponseSerializer:responseSerializer];
-    
-    [manager POST:URLString parameters:parameters progress:NULL success:^(NSURLSessionDataTask * task, id responseObject) {
-        NSLog(@"received dexcom token: %@", responseObject);
-        self.dexcomToken = responseObject;
-    } failure:^(NSURLSessionDataTask * task, NSError * error) {
-        NSLog(@"error: %@", error);
-    }];
+    [AppDelegate dexcomPOSTToURLString:URLString
+                        withParameters:parameters
+                      withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                          NSLog(@"received subscription list: %@", responseObject);
+                          self.subscriptionId = responseObject[0][@"SubscriptionId"];
+                          
+                          if (!self.latestBloodSugarData) {
+                              [self fetchLatestBloodSugar];
+                          }
+                      }
+                      withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                          NSLog(@"error: %@", error);
+                      }];
 }
 
 - (void)fetchLatestBloodSugar
 {
-//    {
-//        "Code": "SessionIdNotFound",
-//        "Message": "Failed to find session object. [SessionId = 73b4c8d5-7605-4132-aa1d-39d2c80e93ec]",
-//        "SubCode": "<OnlineException DateThrownLocal=\"2015-12-14 17:55:45.1463538-08:00\" DateThrown=\"2015-12-15 01:55:45.1463538+00:00\" ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\" CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\" Id=\"{BCA341F2-F252-4C9A-B671-39D4B586917A}\" Message=\"Failed to find session object. [SessionId = 73b4c8d5-7605-4132-aa1d-39d2c80e93ec]\" FullText=\"Dexcom.Common.OnlineException: Failed to find session object. [SessionId = 73b4c8d5-7605-4132-aa1d-39d2c80e93ec]\" \/>",
-//        "TypeName": "FaultException"
-//    }
+    NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ReadLastGlucoseFromSubscriptions?sessionId=%@", self.dexcomToken];
+    NSArray *parameters = @[self.subscriptionId];
     
-    NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?sessionID=%@&minutes=1440&maxCount=1", self.dexcomToken];
-    NSString *parameters = nil;
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
-    [manager setRequestSerializer:requestSerializer];
-    
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-    [manager setResponseSerializer:responseSerializer];
-    
-    [manager POST:URLString parameters:parameters progress:NULL success:^(NSURLSessionDataTask * task, id responseObject) {
-        NSLog(@"received blood sugar data: %@", responseObject);
-    } failure:^(NSURLSessionDataTask * task, NSError * error) {
-        NSLog(@"error: %@", error);
-    }];
+    [AppDelegate dexcomPOSTToURLString:URLString
+                        withParameters:parameters
+                      withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                          NSLog(@"received blood sugar data: %@", responseObject);
+                          self.latestBloodSugarData = responseObject[0];
+                      }
+                      withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                          NSLog(@"error: %@", error);
+                      }];
 }
 
 @end
