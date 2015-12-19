@@ -12,6 +12,8 @@
 
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 
+static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
@@ -48,7 +50,7 @@ NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChan
         [self authenticateWithDexcom];
     }
     
-    self.fetchTimer = [NSTimer scheduledTimerWithTimeInterval:20.0f target:self selector:@selector(fetchTimerFired:) userInfo:nil repeats:YES];
+    self.fetchTimer = [NSTimer scheduledTimerWithTimeInterval:kRefreshInterval target:self selector:@selector(fetchTimerFired:) userInfo:nil repeats:YES];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
