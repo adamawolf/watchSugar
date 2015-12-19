@@ -3,4 +3,5 @@
 
 target 'WatchSugar' do
 pod 'AFNetworking'
+pod 'MagicalRecord'
 end
