@@ -10,6 +10,9 @@
 
 #import <AFNetworking/AFNetworking.h>
 
+#import <MagicalRecord/MagicalRecord.h>
+#import "Reading+CoreDataProperties.h"
+
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 
 static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
@@ -24,7 +27,12 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    //initialize CoreData
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
+    
+    NSLog(@"%@", [MagicalRecord currentStack]);
+    
     return YES;
 }
 
@@ -158,6 +166,22 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     _latestBloodSugarData = latestBloodSugarData;
     
     if (_latestBloodSugarData) {
+        
+        Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO];
+        NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
+        int64_t epochMilliseconds = [STDate longLongValue];
+        if (latestReading.timestamp != epochMilliseconds)
+        {
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                Reading *newReading = [Reading MR_createEntityInContext:localContext];
+                newReading.timestamp = epochMilliseconds;
+                newReading.trend = [_latestBloodSugarData[@"Trend"] intValue];
+                newReading.value = [_latestBloodSugarData[@"Value"] intValue];
+            }];
+        } else {
+            NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
     }
 }

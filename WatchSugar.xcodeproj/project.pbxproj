@@ -26,6 +26,9 @@
 		94313BA21C1F98F900F74345 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA11C1F98F900F74345 /* GlanceController.m */; };
 		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
 		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
+		94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */; };
+		94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */; };
+		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +123,11 @@
 		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
 		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94313BA81C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WatchSugar.xcdatamodel; sourceTree = "<group>"; };
+		94693FD11C260A8A00436C64 /* Reading+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reading+CoreDataProperties.h"; sourceTree = "<group>"; };
+		94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reading+CoreDataProperties.m"; sourceTree = "<group>"; };
+		94693FD31C260A8A00436C64 /* Reading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reading.h; sourceTree = "<group>"; };
+		94693FD41C260A8A00436C64 /* Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reading.m; sourceTree = "<group>"; };
 		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,6 +206,7 @@
 				94313B5B1C1F98F900F74345 /* AppDelegate.m */,
 				94313B5D1C1F98F900F74345 /* ViewController.h */,
 				94313B5E1C1F98F900F74345 /* ViewController.m */,
+				94693FCD1C2609E200436C64 /* Core Data */,
 				94313B601C1F98F900F74345 /* Main.storyboard */,
 				94313B631C1F98F900F74345 /* Assets.xcassets */,
 				94313B651C1F98F900F74345 /* LaunchScreen.storyboard */,
@@ -269,6 +278,18 @@
 				94313B961C1F98F900F74345 /* PushNotificationPayload.apns */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94693FCD1C2609E200436C64 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */,
+				94693FD11C260A8A00436C64 /* Reading+CoreDataProperties.h */,
+				94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */,
+				94693FD31C260A8A00436C64 /* Reading.h */,
+				94693FD41C260A8A00436C64 /* Reading.m */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		CC1D94489A4E9B015A24E80F /* Pods */ = {
@@ -522,7 +543,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */,
 				94313B5F1C1F98F900F74345 /* ViewController.m in Sources */,
+				94693FD61C260A8A00436C64 /* Reading.m in Sources */,
+				94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */,
 				94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */,
 				94313B591C1F98F900F74345 /* main.m in Sources */,
 			);
@@ -881,6 +905,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */,
+			);
+			currentVersion = 94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */;
+			path = WatchSugar.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 94313B4C1C1F98F900F74345 /* Project object */;
 }
