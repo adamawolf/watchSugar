@@ -10,6 +10,11 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UILabel *sessionIdLabel;
+@property (nonatomic, strong) IBOutlet UILabel *subscriptionIdLabel;
+@property (nonatomic, strong) IBOutlet UILabel *bloodSugarLabel;
+@property (nonatomic, strong) IBOutlet UILabel *readingDateLabel;
+@property (nonatomic, strong) IBOutlet UILabel *trendLabel;
 
 @end
 

@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const WSNotificationDexcomDataChanged;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic, strong) NSString *dexcomToken;
+@property (nonatomic, strong) NSString *subscriptionId;
+@property (nonatomic, strong) NSDictionary * latestBloodSugarData;
 
 @end
 

@@ -10,11 +10,9 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-@interface AppDelegate ()
+NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 
-@property (nonatomic, strong) NSString *dexcomToken;
-@property (nonatomic, strong) NSString *subscriptionId;
-@property (nonatomic, strong) NSDictionary * latestBloodSugarData;
+@interface AppDelegate ()
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
@@ -102,6 +100,8 @@
                           NSLog(@"received dexcom token: %@", responseObject);
                           self.dexcomToken = responseObject;
                           
+                          [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          
                           if (!self.subscriptionId) {
                               [self fetchSubscriptions];
                           }
@@ -122,6 +122,8 @@
                           NSLog(@"received subscription list: %@", responseObject);
                           self.subscriptionId = responseObject[0][@"SubscriptionId"];
                           
+                          [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          
                           if (!self.latestBloodSugarData) {
                               [self fetchLatestBloodSugar];
                           }
@@ -140,11 +142,22 @@
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
                           NSLog(@"received blood sugar data: %@", responseObject);
-                          self.latestBloodSugarData = responseObject[0];
+                          self.latestBloodSugarData = responseObject[0][@"Egv"];
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
                       }];
+}
+
+#pragma mark - Custom setter methods
+
+-(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData
+{
+    _latestBloodSugarData = latestBloodSugarData;
+    
+    if (_latestBloodSugarData) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+    }
 }
 
 @end
