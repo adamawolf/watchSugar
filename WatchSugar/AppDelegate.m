@@ -217,4 +217,13 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     }
 }
 
+#pragma mark - WCSessionDelegate methods
+
+- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message
+{
+    if ([message[@"watchIsRequestingUpdate"] boolValue]) {
+        [self sendAllBloodSugarReadingsFromPastDay];
+    }
+}
+
 @end
