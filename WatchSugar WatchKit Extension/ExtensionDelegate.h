@@ -8,6 +8,10 @@
 
 #import <WatchKit/WatchKit.h>
 
+extern NSString *const WSNotificationBloodSugarDataChanged;
+
 @interface ExtensionDelegate : NSObject <WKExtensionDelegate>
+
+@property (nonatomic, strong) NSArray *bloodSugarValues;
 
 @end

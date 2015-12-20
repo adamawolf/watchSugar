@@ -40,6 +40,8 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         WCSession *session = [WCSession defaultSession];
         session.delegate = self;
         [session activateSession];
+        
+        NSLog(@"activate session called on device");
     }
     
     return YES;
@@ -170,28 +172,20 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)sendAllBloodSugarReadingsFromPastDay
 {
-    if ([[WCSession defaultSession] isReachable]) {
-        int64_t dayAgoEpochMilliseconds = (int64_t)([[NSDate date] timeIntervalSince1970] - (24 * 60 * 60)) * 1000;
-        NSArray *allReadings = [Reading MR_findAllSortedBy:@"timestamp" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"timestamp > %ld", dayAgoEpochMilliseconds]];
-        
-        NSMutableArray *allReadingDicts = [NSMutableArray new];
-        [allReadings enumerateObjectsUsingBlock:^(Reading *obj, NSUInteger idx, BOOL *stop) {
-            [allReadingDicts addObject:@{
+    int64_t hourAgoEpochMilliseconds = (int64_t)([[NSDate date] timeIntervalSince1970] - (24 * 60)) * 1000;
+    NSArray *readingsPastHour = [Reading MR_findAllSortedBy:@"timestamp" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"timestamp > %ld", hourAgoEpochMilliseconds]];
+    
+    NSMutableArray *readingDictionaries = [NSMutableArray new];
+    [readingsPastHour enumerateObjectsUsingBlock:^(Reading *obj, NSUInteger idx, BOOL *stop) {
+        [readingDictionaries addObject:@{
                                          @"timestamp": obj.timestamp,
                                          @"value": obj.value,
                                          @"trend": obj.trend,
                                          }];
-        }];
-        
-        [[WCSession defaultSession] sendMessage:@{@"readings": allReadingDicts}
-                                   replyHandler:^(NSDictionary *reply) {
-                                       NSLog(@"device app received reply: %@", reply);
-                                   }
-                                   errorHandler:^(NSError *error) {
-                                       NSLog(@"device app received error: %@", error);
-                                   }
-         ];
-    }
+    }];
+    
+    NSError *anError;
+    [[WCSession defaultSession] updateApplicationContext:@{@"readings": readingDictionaries} error:&anError];
 }
 
 #pragma mark - Custom setter methods
@@ -220,15 +214,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
-    }
-}
-
-#pragma mark - WCSessionDelegate methods
-
-- (void)sessionWatchStateDidChange:(WCSession *)session
-{
-    if (session.isReachable) {
-        [self sendAllBloodSugarReadingsFromPastDay];
     }
 }
 

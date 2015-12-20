@@ -7,10 +7,9 @@
 //
 
 #import "InterfaceController.h"
+#import "ExtensionDelegate.h"
 
-#import <WatchConnectivity/WatchConnectivity.h>
-
-@interface InterfaceController() <WCSessionDelegate>
+@interface InterfaceController()
 
 @end
 
@@ -21,37 +20,41 @@
     [super awakeWithContext:context];
 
     NSLog(@"watch awakeWithContext");
-    // Configure interface objects here.
 }
 
-- (void)willActivate {
+- (void)willActivate
+{
     [super willActivate];
     
-    if ([WCSession isSupported]) {
-        WCSession *session = [WCSession defaultSession];
-        session.delegate = self;
-        [session activateSession];
-    }
+    [self updateDisplay];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationBloodSugarDataChanged object:nil];
 }
 
-- (void)didDeactivate {
-    // This method is called when watch view controller is no longer visible
+- (void)didDeactivate
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super didDeactivate];
 }
 
-#pragma mark - WCSessionDelegate methods
-
-- (void)sessionReachabilityDidChange:(WCSession *)session
+- (void)updateDisplay
 {
-    NSLog(@"sessionReachabilityDidChange: %@", session);
+    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    
+    if (extensionDelegate.bloodSugarValues.count) {
+        int mostRecentValue = [extensionDelegate.bloodSugarValues[0][@"value"] intValue];
+        [self.bloodSugarLabel setText:[NSString stringWithFormat:@"%d", mostRecentValue]];
+    } else {
+        [self.bloodSugarLabel setText:@""];
+    }
 }
 
-- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message
+#pragma mark - Notification handler methods
+
+- (void)handleBloodSugarDataChanged:(NSNotification *)notification
 {
-    NSLog(@"watch received data: %@", message);
+    [self updateDisplay];
 }
 
 @end
-
-
-
