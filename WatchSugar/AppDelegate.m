@@ -13,11 +13,13 @@
 #import <MagicalRecord/MagicalRecord.h>
 #import "Reading+CoreDataProperties.h"
 
+#import <WatchConnectivity/WatchConnectivity.h>
+
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 
 static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
-@interface AppDelegate ()
+@interface AppDelegate () <WCSessionDelegate>
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
@@ -32,6 +34,13 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
     
     NSLog(@"%@", [MagicalRecord currentStack]);
+    
+    //initialize WatchConnectivity
+    if ([WCSession isSupported]) {
+        WCSession *session = [WCSession defaultSession];
+        session.delegate = self;
+        [session activateSession];
+    }
     
     return YES;
 }
@@ -159,6 +168,32 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                       }];
 }
 
+- (void)sendAllBloodSugarReadingsFromPastDay
+{
+    if ([[WCSession defaultSession] isReachable]) {
+        int64_t dayAgoEpochMilliseconds = (int64_t)([[NSDate date] timeIntervalSince1970] - (24 * 60 * 60)) * 1000;
+        NSArray *allReadings = [Reading MR_findAllSortedBy:@"timestamp" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"timestamp > %ld", dayAgoEpochMilliseconds]];
+        
+        NSMutableArray *allReadingDicts = [NSMutableArray new];
+        [allReadings enumerateObjectsUsingBlock:^(Reading *obj, NSUInteger idx, BOOL *stop) {
+            [allReadingDicts addObject:@{
+                                         @"timestamp": obj.timestamp,
+                                         @"value": obj.value,
+                                         @"trend": obj.trend,
+                                         }];
+        }];
+        
+        [[WCSession defaultSession] sendMessage:@{@"readings": allReadingDicts}
+                                   replyHandler:^(NSDictionary *reply) {
+                                       NSLog(@"device app received reply: %@", reply);
+                                   }
+                                   errorHandler:^(NSError *error) {
+                                       NSLog(@"device app received error: %@", error);
+                                   }
+         ];
+    }
+}
+
 #pragma mark - Custom setter methods
 
 -(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData
@@ -170,19 +205,30 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO];
         NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
-        if (latestReading.timestamp != epochMilliseconds)
+        if ([latestReading.timestamp longLongValue] != epochMilliseconds)
         {
             [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
                 Reading *newReading = [Reading MR_createEntityInContext:localContext];
-                newReading.timestamp = epochMilliseconds;
-                newReading.trend = [_latestBloodSugarData[@"Trend"] intValue];
-                newReading.value = [_latestBloodSugarData[@"Value"] intValue];
+                newReading.timestamp = @(epochMilliseconds);
+                newReading.trend = _latestBloodSugarData[@"Trend"];
+                newReading.value = _latestBloodSugarData[@"Value"];
+            } completion:^(BOOL contextDidSave, NSError *error) {
+                [self sendAllBloodSugarReadingsFromPastDay];
             }];
         } else {
             NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+    }
+}
+
+#pragma mark - WCSessionDelegate methods
+
+- (void)sessionWatchStateDidChange:(WCSession *)session
+{
+    if (session.isReachable) {
+        [self sendAllBloodSugarReadingsFromPastDay];
     }
 }
 

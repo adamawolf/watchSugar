@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Reading (CoreDataProperties)
 
-@property (nonatomic) int64_t timestamp;
-@property (nonatomic) int32_t trend;
-@property (nonatomic) int32_t value;
+@property (nullable, nonatomic, retain) NSNumber *timestamp;
+@property (nullable, nonatomic, retain) NSNumber *trend;
+@property (nullable, nonatomic, retain) NSNumber *value;
 
 @end
 

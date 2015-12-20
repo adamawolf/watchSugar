@@ -8,8 +8,9 @@
 
 #import "InterfaceController.h"
 
+#import <WatchConnectivity/WatchConnectivity.h>
 
-@interface InterfaceController()
+@interface InterfaceController() <WCSessionDelegate>
 
 @end
 
@@ -19,17 +20,35 @@
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
 
+    NSLog(@"watch awakeWithContext");
     // Configure interface objects here.
 }
 
 - (void)willActivate {
-    // This method is called when watch view controller is about to be visible to user
     [super willActivate];
+    
+    if ([WCSession isSupported]) {
+        WCSession *session = [WCSession defaultSession];
+        session.delegate = self;
+        [session activateSession];
+    }
 }
 
 - (void)didDeactivate {
     // This method is called when watch view controller is no longer visible
     [super didDeactivate];
+}
+
+#pragma mark - WCSessionDelegate methods
+
+- (void)sessionReachabilityDidChange:(WCSession *)session
+{
+    NSLog(@"sessionReachabilityDidChange: %@", session);
+}
+
+- (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message
+{
+    NSLog(@"watch received data: %@", message);
 }
 
 @end
