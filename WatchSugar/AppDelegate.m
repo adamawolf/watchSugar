@@ -16,12 +16,16 @@
 #import <WatchConnectivity/WatchConnectivity.h>
 
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
+static const NSTimeInterval kBackgroundFetchInterval = 9 * 60.0f;
 
 static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 @interface AppDelegate () <WCSessionDelegate>
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
+
+@property (nonatomic, strong) dispatch_semaphore_t requestSemaphore;
+@property (nonatomic, strong) dispatch_semaphore_t saveSemaphore;
 
 @end
 
@@ -43,6 +47,11 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         
         NSLog(@"activate session called on device");
     }
+    
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
+    
+    self.requestSemaphore = dispatch_semaphore_create(0);
+    self.saveSemaphore = dispatch_semaphore_create(0);
     
     return YES;
 }
@@ -74,6 +83,19 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    if (self.dexcomToken) {
+        if (self.subscriptionId) {
+            [self fetchLatestBloodSugar];
+            dispatch_wait(self.requestSemaphore, 20.0f);
+            dispatch_wait(self.saveSemaphore, 20.0f);
+        }
+    }
+    
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 #pragma mark - Helper methods
@@ -148,9 +170,12 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           if (!self.latestBloodSugarData) {
                               [self fetchLatestBloodSugar];
                           }
+                          
+                          dispatch_semaphore_signal(self.requestSemaphore);
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
+                          dispatch_semaphore_signal(self.requestSemaphore);
                       }];
 }
 
@@ -164,9 +189,12 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
                           NSLog(@"received blood sugar data: %@", responseObject);
                           self.latestBloodSugarData = responseObject[0][@"Egv"];
+                          dispatch_semaphore_signal(self.requestSemaphore);
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
+                          
+                          dispatch_semaphore_signal(self.requestSemaphore);
                       }];
 }
 
@@ -208,6 +236,8 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                 newReading.value = _latestBloodSugarData[@"Value"];
             } completion:^(BOOL contextDidSave, NSError *error) {
                 [self sendAllBloodSugarReadingsFromPastDay];
+                
+                 dispatch_semaphore_signal(self.saveSemaphore);
             }];
         } else {
             NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
