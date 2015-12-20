@@ -14,9 +14,17 @@
                         <label alignment="left" text="102" id="CJe-pa-4I6">
                             <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
+                        <label alignment="left" text="4m28s ago" id="Wx1-hA-sNc">
+                            <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
+                        <label alignment="left" text="Trend 4" id="gSQ-cI-MyS">
+                            <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
                     </items>
                     <connections>
+                        <outlet property="agoLabel" destination="Wx1-hA-sNc" id="rH3-pH-WRn"/>
                         <outlet property="bloodSugarLabel" destination="CJe-pa-4I6" id="CdY-9S-vxh"/>
+                        <outlet property="trendLabel" destination="gSQ-cI-MyS" id="kSF-Bg-Tz9"/>
                     </connections>
                 </controller>
             </objects>
