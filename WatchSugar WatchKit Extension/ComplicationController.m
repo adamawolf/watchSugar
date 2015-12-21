@@ -8,6 +8,8 @@
 
 #import "ComplicationController.h"
 
+#import "ExtensionDelegate.h"
+
 @interface ComplicationController ()
 
 @end
@@ -17,7 +19,7 @@
 #pragma mark - Timeline Configuration
 
 - (void)getSupportedTimeTravelDirectionsForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimeTravelDirections directions))handler {
-    handler(CLKComplicationTimeTravelDirectionForward|CLKComplicationTimeTravelDirectionBackward);
+    handler(CLKComplicationTimeTravelDirectionNone);
 }
 
 - (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler {
@@ -35,8 +37,37 @@
 #pragma mark - Timeline Population
 
 - (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler {
-    // Call the handler with the current timeline entry
-    handler(nil);
+    // Get the current complication data from the extension delegate.    
+    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    
+    NSString *bloodSugarValue = @"-";
+    if (extensionDelegate.bloodSugarValues.count) {
+        NSDictionary *mostRecent = extensionDelegate.bloodSugarValues[0];
+        
+        int mostRecentValue = [mostRecent[@"value"] intValue];
+        bloodSugarValue = [NSString stringWithFormat:@"%d", mostRecentValue];
+    }
+    
+    
+    CLKComplicationTimelineEntry* entry = nil;
+    NSDate* now = [NSDate date];
+    
+    // Create the template and timeline entry.
+    if (complication.family == CLKComplicationFamilyModularSmall) {
+        CLKComplicationTemplateModularSmallSimpleText *textTemplate = [[CLKComplicationTemplateModularSmallSimpleText alloc] init];
+        textTemplate.textProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:textTemplate];
+    } else if (complication.family == CLKComplicationFamilyCircularSmall) {
+        CLKComplicationTemplateCircularSmallSimpleText *textTemplate = [[CLKComplicationTemplateCircularSmallSimpleText alloc] init];
+        textTemplate.textProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:textTemplate];
+    }
+    else {
+        // ...configure entries for other complication families.
+    }
+    
+    // Pass the timeline entry back to ClockKit.
+    handler(entry);
 }
 
 - (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler {
@@ -52,15 +83,27 @@
 #pragma mark Update Scheduling
 
 - (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler {
-    // Call the handler with the date when you would next like to be given the opportunity to update your complication content
-    handler(nil);
+    NSDate *futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
+    handler(futureDate);
 }
 
 #pragma mark - Placeholder Templates
 
 - (void)getPlaceholderTemplateForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTemplate * __nullable complicationTemplate))handler {
     // This method will be called once per supported complication, and the results will be cached
-    handler(nil);
+    
+    CLKComplicationTemplate* template = nil;
+    
+    // Create the template and timeline entry.
+    if (complication.family == CLKComplicationFamilyModularSmall) {
+        template = [[CLKComplicationTemplateModularSmallSimpleText alloc] init];
+        ((CLKComplicationTemplateModularSmallSimpleText *)template).textProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+    } else if (complication.family == CLKComplicationFamilyCircularSmall) {
+        template = [[CLKComplicationTemplateCircularSmallSimpleText alloc] init];
+        ((CLKComplicationTemplateCircularSmallSimpleText *)template).textProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+    }
+    
+    handler(template);
 }
 
 @end

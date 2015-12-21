@@ -170,12 +170,9 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           if (!self.latestBloodSugarData) {
                               [self fetchLatestBloodSugar];
                           }
-                          
-                          dispatch_semaphore_signal(self.requestSemaphore);
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
-                          dispatch_semaphore_signal(self.requestSemaphore);
                       }];
 }
 
@@ -212,8 +209,10 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                                          }];
     }];
     
-    NSError *anError;
-    [[WCSession defaultSession] updateApplicationContext:@{@"readings": readingDictionaries} error:&anError];
+//    NSError *anError;
+//    [[WCSession defaultSession] updateApplicationContext:@{@"readings": readingDictionaries} error:&anError];
+    
+    [[WCSession defaultSession] transferCurrentComplicationUserInfo:@{@"readings": readingDictionaries}];
 }
 
 #pragma mark - Custom setter methods

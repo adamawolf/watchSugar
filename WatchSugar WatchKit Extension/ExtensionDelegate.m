@@ -9,6 +9,7 @@
 #import "ExtensionDelegate.h"
 #import "InterfaceController.h"
 #import <WatchConnectivity/WatchConnectivity.h>
+#import <ClockKit/ClockKit.h>
 
 NSString *const WSNotificationBloodSugarDataChanged = @"WSNotificationBloodSugarDataChanged";
 
@@ -40,15 +41,30 @@ NSString *const WSNotificationBloodSugarDataChanged = @"WSNotificationBloodSugar
 
 #pragma mark - WCSessionDelegate methods
 
-- (void)session:(WCSession *)session didReceiveApplicationContext:(NSDictionary<NSString *, id> *)applicationContext
+- (void)session:(WCSession *)session didReceiveUserInfo:(NSDictionary<NSString *, id> *)userInfo
 {
-    NSLog(@"watch received data: '%@'", applicationContext);
+    NSLog(@"watch received data: '%@'", userInfo);
     
-    if (applicationContext) {
-        self.bloodSugarValues = applicationContext[@"readings"];
+    if (userInfo) {
+        self.bloodSugarValues = userInfo[@"readings"];
+    }
+    
+    for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
+        [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationBloodSugarDataChanged object:nil];
 }
+
+//- (void)session:(WCSession *)session didReceiveApplicationContext:(NSDictionary<NSString *, id> *)applicationContext
+//{
+//    NSLog(@"watch received data: '%@'", applicationContext);
+//    
+//    if (applicationContext) {
+//        self.bloodSugarValues = applicationContext[@"readings"];
+//    }
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationBloodSugarDataChanged object:nil];
+//}
 
 @end
