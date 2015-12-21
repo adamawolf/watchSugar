@@ -20,20 +20,21 @@ static const NSTimeInterval kBackgroundFetchInterval = 9 * 60.0f;
 
 static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
-@interface AppDelegate () <WCSessionDelegate>
+@interface AppDelegate () <WCSessionDelegate> {
+    void (^_backgroundFetchCompletionHandler)(UIBackgroundFetchResult);
+}
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
-@property (nonatomic, strong) dispatch_semaphore_t requestSemaphore;
-@property (nonatomic, strong) dispatch_semaphore_t saveSemaphore;
+@property (nonatomic, strong) dispatch_semaphore_t backgroundFetchSemaphore;
 
 @end
 
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     //initialize CoreData
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
     
@@ -50,26 +51,17 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
     
-    self.requestSemaphore = dispatch_semaphore_create(0);
-    self.saveSemaphore = dispatch_semaphore_create(0);
+    self.backgroundFetchSemaphore = dispatch_semaphore_create(0);
     
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
+- (void)applicationWillResignActive:(UIApplication *)application
+{
     if (self.fetchTimer) {
         [self.fetchTimer invalidate];
         self.fetchTimer = nil;
     }
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -78,24 +70,28 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         [self authenticateWithDexcom];
     }
     
+    if (self.fetchTimer) {
+        [self.fetchTimer invalidate];
+        self.fetchTimer = nil;
+    }
     self.fetchTimer = [NSTimer scheduledTimerWithTimeInterval:kRefreshInterval target:self selector:@selector(fetchTimerFired:) userInfo:nil repeats:YES];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    if (_backgroundFetchCompletionHandler) {
+        return;
+    }
+    
     if (self.dexcomToken) {
         if (self.subscriptionId) {
             [self fetchLatestBloodSugar];
-            dispatch_wait(self.requestSemaphore, 20.0f);
-            dispatch_wait(self.saveSemaphore, 20.0f);
         }
     }
     
-    completionHandler(UIBackgroundFetchResultNewData);
+    _backgroundFetchCompletionHandler = [completionHandler copy];
+    
+    dispatch_semaphore_wait(self.backgroundFetchSemaphore, 20.0f);
 }
 
 #pragma mark - Helper methods
@@ -117,6 +113,23 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
+    [manager setRequestSerializer:requestSerializer];
+    
+    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+    [manager setResponseSerializer:responseSerializer];
+    
+    [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
+}
+
++ (void)blockingDexcomPOSTToURLString:(NSString *)URLString
+                       withParameters:(id)parameters
+                     withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
+                     withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -186,12 +199,14 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
                           NSLog(@"received blood sugar data: %@", responseObject);
                           self.latestBloodSugarData = responseObject[0][@"Egv"];
-                          dispatch_semaphore_signal(self.requestSemaphore);
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
-                          
-                          dispatch_semaphore_signal(self.requestSemaphore);
+                          if (_backgroundFetchCompletionHandler) {
+                              _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
+                              _backgroundFetchCompletionHandler = NULL;
+                              dispatch_semaphore_signal(self.backgroundFetchSemaphore);
+                          }
                       }];
 }
 
@@ -208,9 +223,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                                          @"trend": obj.trend,
                                          }];
     }];
-    
-//    NSError *anError;
-//    [[WCSession defaultSession] updateApplicationContext:@{@"readings": readingDictionaries} error:&anError];
     
     [[WCSession defaultSession] transferCurrentComplicationUserInfo:@{@"readings": readingDictionaries}];
 }
@@ -235,10 +247,18 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                 newReading.value = _latestBloodSugarData[@"Value"];
             } completion:^(BOOL contextDidSave, NSError *error) {
                 [self sendAllBloodSugarReadingsFromPastDay];
-                
-                 dispatch_semaphore_signal(self.saveSemaphore);
+                if (_backgroundFetchCompletionHandler) {
+                    _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
+                    _backgroundFetchCompletionHandler = NULL;
+                    dispatch_semaphore_signal(self.backgroundFetchSemaphore);
+                }
             }];
         } else {
+            if (_backgroundFetchCompletionHandler) {
+                _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
+                _backgroundFetchCompletionHandler = NULL;
+                dispatch_semaphore_signal(self.backgroundFetchSemaphore);
+            }
             NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
         }
         
