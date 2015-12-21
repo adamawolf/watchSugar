@@ -16,5 +16,9 @@
 @property (nonatomic, strong) IBOutlet UILabel *readingDateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *trendLabel;
 
+- (void)updateDisplayWithSessionId:(NSString *)sessionId
+                    subscriptionId:(NSString *)subscriptionId
+           andBloodSugarDictionary:(NSDictionary *)bloodSugarDictionary;
+
 @end
 
