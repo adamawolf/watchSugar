@@ -26,8 +26,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
-@property (nonatomic, strong) dispatch_semaphore_t backgroundFetchSemaphore;
-
 @end
 
 @implementation AppDelegate
@@ -50,8 +48,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     }
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
-    
-    self.backgroundFetchSemaphore = dispatch_semaphore_create(0);
     
     return YES;
 }
@@ -97,7 +93,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     
     _backgroundFetchCompletionHandler = [completionHandler copy];
     
-    dispatch_semaphore_wait(self.backgroundFetchSemaphore, 20.0f);
     NSLog(@"completing background fetch");
 }
 
@@ -198,7 +193,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                               NSLog(@"fetch handler: UIBackgroundFetchResultFailed");
                               _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
                               _backgroundFetchCompletionHandler = NULL;
-                              dispatch_semaphore_signal(self.backgroundFetchSemaphore);
                           }
                       }];
 }
@@ -244,7 +238,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                     NSLog(@"fetch handler: UIBackgroundFetchResultNewData");
                     _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
                     _backgroundFetchCompletionHandler = NULL;
-                    dispatch_semaphore_signal(self.backgroundFetchSemaphore);
                 }
             }];
         } else {
@@ -252,7 +245,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                 NSLog(@"fetch handler: UIBackgroundFetchResultNoData");
                 _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
                 _backgroundFetchCompletionHandler = NULL;
-                dispatch_semaphore_signal(self.backgroundFetchSemaphore);
             }
             NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
         }
