@@ -81,7 +81,11 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    NSLog(@"starting background fetch");
     if (_backgroundFetchCompletionHandler) {
+        NSLog(@"fetch handler: UIBackgroundFetchResultNoData");
+        completionHandler(UIBackgroundFetchResultNoData);
+        NSLog(@"completing (errorneous) background fetch");
         return;
     }
     
@@ -94,6 +98,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     _backgroundFetchCompletionHandler = [completionHandler copy];
     
     dispatch_semaphore_wait(self.backgroundFetchSemaphore, 20.0f);
+    NSLog(@"completing background fetch");
 }
 
 #pragma mark - Helper methods
@@ -115,23 +120,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
-{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
-    [manager setRequestSerializer:requestSerializer];
-    
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-    [manager setResponseSerializer:responseSerializer];
-    
-    [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
-}
-
-+ (void)blockingDexcomPOSTToURLString:(NSString *)URLString
-                       withParameters:(id)parameters
-                     withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
-                     withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -207,6 +195,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
                           NSLog(@"error response: %@",errorResponse);
                           if (_backgroundFetchCompletionHandler) {
+                              NSLog(@"fetch handler: UIBackgroundFetchResultFailed");
                               _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
                               _backgroundFetchCompletionHandler = NULL;
                               dispatch_semaphore_signal(self.backgroundFetchSemaphore);
@@ -252,6 +241,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
             } completion:^(BOOL contextDidSave, NSError *error) {
                 [self sendAllBloodSugarReadingsFromPastDay];
                 if (_backgroundFetchCompletionHandler) {
+                    NSLog(@"fetch handler: UIBackgroundFetchResultNewData");
                     _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
                     _backgroundFetchCompletionHandler = NULL;
                     dispatch_semaphore_signal(self.backgroundFetchSemaphore);
@@ -259,6 +249,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
             }];
         } else {
             if (_backgroundFetchCompletionHandler) {
+                NSLog(@"fetch handler: UIBackgroundFetchResultNoData");
                 _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
                 _backgroundFetchCompletionHandler = NULL;
                 dispatch_semaphore_signal(self.backgroundFetchSemaphore);
