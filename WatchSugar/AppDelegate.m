@@ -204,6 +204,8 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
+                          NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                          NSLog(@"error response: %@",errorResponse);
                           if (_backgroundFetchCompletionHandler) {
                               _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
                               _backgroundFetchCompletionHandler = NULL;

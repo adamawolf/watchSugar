@@ -41,26 +41,33 @@
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
     
     NSString *bloodSugarValue = @"-";
+    UIImage *trendImage = nil;
     if (extensionDelegate.bloodSugarValues.count) {
         NSDictionary *mostRecent = extensionDelegate.bloodSugarValues[0];
         
         int mostRecentValue = [mostRecent[@"value"] intValue];
         bloodSugarValue = [NSString stringWithFormat:@"%d", mostRecentValue];
+        
+        int trend = [mostRecent[@"trend"] intValue];
+        NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
+        trendImage = [UIImage imageNamed:trendImageName];
     }
     
-    
+    // Create the template and timeline entry.
     CLKComplicationTimelineEntry* entry = nil;
     NSDate* now = [NSDate date];
-    
-    // Create the template and timeline entry.
     if (complication.family == CLKComplicationFamilyModularSmall) {
-        CLKComplicationTemplateModularSmallSimpleText *textTemplate = [[CLKComplicationTemplateModularSmallSimpleText alloc] init];
-        textTemplate.textProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
-        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:textTemplate];
+        CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
+        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
+        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+
+        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:smallStackImageTemplate];
     } else if (complication.family == CLKComplicationFamilyCircularSmall) {
-        CLKComplicationTemplateCircularSmallSimpleText *textTemplate = [[CLKComplicationTemplateCircularSmallSimpleText alloc] init];
-        textTemplate.textProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
-        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:textTemplate];
+        CLKComplicationTemplateCircularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateCircularSmallStackImage alloc] init];
+        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
+        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+        
+        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:smallStackImageTemplate];
     }
     else {
         // ...configure entries for other complication families.
@@ -96,11 +103,17 @@
     
     // Create the template and timeline entry.
     if (complication.family == CLKComplicationFamilyModularSmall) {
-        template = [[CLKComplicationTemplateModularSmallSimpleText alloc] init];
-        ((CLKComplicationTemplateModularSmallSimpleText *)template).textProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
+        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_4"]];
+        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        
+        template = smallStackImageTemplate;
     } else if (complication.family == CLKComplicationFamilyCircularSmall) {
-        template = [[CLKComplicationTemplateCircularSmallSimpleText alloc] init];
-        ((CLKComplicationTemplateCircularSmallSimpleText *)template).textProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        CLKComplicationTemplateCircularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateCircularSmallStackImage alloc] init];
+        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_4"]];
+        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        
+        template = smallStackImageTemplate;
     }
     
     handler(template);

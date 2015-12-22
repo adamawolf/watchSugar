@@ -10,6 +10,16 @@
 
 extern NSString *const WSNotificationDexcomDataChanged;
 
+typedef enum : NSUInteger {
+    WSTrendValueDoubleUp = 1,
+    WSTrendValueUp,
+    WSTrendValueHalfUp,
+    WSTrendValueFlat,
+    WSTrendValueHalfDown,
+    WSTrendValueDown,
+    WSTrendValueDoubleDown,
+} WSTrendValue;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
