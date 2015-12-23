@@ -417,6 +417,7 @@
 				TargetAttributes = {
 					94313B531C1F98F900F74345 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 3P4KBPGH6G;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -433,9 +434,11 @@
 					};
 					94313B801C1F98F900F74345 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 3P4KBPGH6G;
 					};
 					94313B8F1C1F98F900F74345 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 3P4KBPGH6G;
 					};
 				};
 			};
@@ -734,15 +737,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
 				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -750,15 +755,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
 				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
 				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -766,14 +773,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				IBSC_MODULE = WatchSugar_WatchKit_Extension;
 				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -781,14 +790,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
 				IBSC_MODULE = WatchSugar_WatchKit_Extension;
 				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -797,10 +808,12 @@
 			baseConfigurationReference = C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -811,10 +824,12 @@
 			baseConfigurationReference = 78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
 				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
