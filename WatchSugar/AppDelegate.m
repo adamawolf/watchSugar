@@ -26,6 +26,8 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 @property (nonatomic, strong) NSTimer *fetchTimer;
 
+@property (nonatomic, strong) dispatch_semaphore_t backgroundFetchCompletionSemaphore;
+
 @end
 
 @implementation AppDelegate
@@ -53,6 +55,8 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
     
+    self.backgroundFetchCompletionSemaphore = dispatch_semaphore_create(0);
+    
     return YES;
 }
 
@@ -67,7 +71,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     if (!self.dexcomToken) {
-        [self authenticateWithDexcom];
+        [self authenticateWithDexcomInBackground:NO];
     }
     
     if (self.fetchTimer) {
@@ -83,7 +87,6 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 {
     DDLogDebug(@"starting background fetch");
     if (_backgroundFetchCompletionHandler) {
-        DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
         completionHandler(UIBackgroundFetchResultNoData);
         DDLogDebug(@"completing (errorneous) background fetch");
         return;
@@ -91,12 +94,13 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     
     if (self.dexcomToken) {
         if (self.subscriptionId) {
-            [self fetchLatestBloodSugar];
+            [self performFetchInBackground:YES];
         }
     }
     
     _backgroundFetchCompletionHandler = [completionHandler copy];
     
+    dispatch_semaphore_wait(self.backgroundFetchCompletionSemaphore, DISPATCH_TIME_FOREVER);
     DDLogDebug(@"completing background fetch");
 }
 
@@ -104,13 +108,18 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)fetchTimerFired:(NSTimer *)timer
 {
+    [self performFetchInBackground:NO];
+}
+
+- (void)performFetchInBackground:(BOOL)inBackground
+{
     if (!self.dexcomToken) {
-        [self authenticateWithDexcom];
+        [self authenticateWithDexcomInBackground:inBackground];
     } else {
         if (!self.subscriptionId) {
-            [self fetchSubscriptions];
+            [self fetchSubscriptionsInBackground:inBackground];
         } else {
-            [self fetchLatestBloodSugar];
+            [self fetchLatestBloodSugarInBackground:inBackground];
         }
     }
 }
@@ -119,8 +128,12 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
+                 inBackground:(BOOL)inBackground
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    if (inBackground) {
+        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    }
     
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
     [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
@@ -132,7 +145,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
 }
 
-- (void)authenticateWithDexcom
+- (void)authenticateWithDexcomInBackground:(BOOL)inBackground
 {
     NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/LoginSubscriberAccount";
     NSDictionary *parameters = @{@"accountId": @"***REMOVED***",
@@ -142,21 +155,28 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [AppDelegate dexcomPOSTToURLString:URLString
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                          DDLogDebug(@"received dexcom token: %@", responseObject);
+                          if (!inBackground) {
+                              DDLogDebug(@"received dexcom token: %@", responseObject);
+                          }
                           self.dexcomToken = responseObject;
                           
-                          [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          if (!inBackground) {
+                              [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          }
                           
                           if (!self.subscriptionId) {
-                              [self fetchSubscriptions];
+                              [self fetchSubscriptionsInBackground:inBackground];
                           }
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          DDLogDebug(@"error: %@", error);
-                      }];
+                          if (!inBackground) {
+                              DDLogDebug(@"error: %@", error);
+                          }
+                      }
+                          inBackground:inBackground];
 }
 
-- (void)fetchSubscriptions
+- (void)fetchSubscriptionsInBackground:(BOOL)inBackground
 {
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ListSubscriberAccountSubscriptions?sessionId=%@", self.dexcomToken];
     NSString *parameters = nil;
@@ -164,21 +184,28 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [AppDelegate dexcomPOSTToURLString:URLString
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                          DDLogDebug(@"received subscription list: %@", responseObject);
+                          if (!inBackground) {
+                              DDLogDebug(@"received subscription list: %@", responseObject);
+                          }
                           self.subscriptionId = responseObject[0][@"SubscriptionId"];
                           
-                          [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          if (!inBackground) {
+                              [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+                          }
                           
                           if (!self.latestBloodSugarData) {
-                              [self fetchLatestBloodSugar];
+                              [self fetchLatestBloodSugarInBackground:inBackground];
                           }
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          DDLogDebug(@"error: %@", error);
-                      }];
+                          if (!inBackground) {
+                              DDLogDebug(@"error: %@", error);
+                          }
+                      }
+                          inBackground:inBackground];
 }
 
-- (void)fetchLatestBloodSugar
+- (void)fetchLatestBloodSugarInBackground:(BOOL)inBackground
 {
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ReadLastGlucoseFromSubscriptions?sessionId=%@", self.dexcomToken];
     NSArray *parameters = @[self.subscriptionId];
@@ -187,27 +214,32 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
                           DDLogDebug(@"received blood sugar data: %@", responseObject);
-                          self.latestBloodSugarData = responseObject[0][@"Egv"];
+                          [self setLatestBloodSugarData:responseObject[0][@"Egv"] inBackground:inBackground];
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          DDLogDebug(@"error: %@", error);
                           NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
-                          DDLogDebug(@"error response: %@", jsonError);
+                          if (!inBackground) {
+                              DDLogDebug(@"error: %@", error);
+                              DDLogDebug(@"error response: %@", jsonError);
+                          }
                           
                           if ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"]) {
                               self.dexcomToken = nil;
                               self.subscriptionId = nil;
                               self.latestBloodSugarData = nil;
                               
-                              [self fetchTimerFired:nil];
+                              [self performFetchInBackground:inBackground];
+                          } else {
+                              if (_backgroundFetchCompletionHandler) {
+                                  DDLogDebug(@"fetch handler: UIBackgroundFetchResultFailed");
+                                  _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
+                                  _backgroundFetchCompletionHandler = NULL;
+                                  
+                                  dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
+                              }
                           }
-                          
-                          if (_backgroundFetchCompletionHandler) {
-                              DDLogDebug(@"fetch handler: UIBackgroundFetchResultFailed");
-                              _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
-                              _backgroundFetchCompletionHandler = NULL;
-                          }
-                      }];
+                      }
+                          inBackground:inBackground];
 }
 
 - (void)sendAllBloodSugarReadingsFromPastDay
@@ -231,38 +263,66 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 -(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData
 {
+    [self setLatestBloodSugarData:latestBloodSugarData inBackground:NO];
+}
+
+-(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
+{
     _latestBloodSugarData = latestBloodSugarData;
     
     if (_latestBloodSugarData) {
-        
-        Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO];
+        NSManagedObjectContext *currentThreadContext = [NSManagedObjectContext MR_context];
+        Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO inContext:currentThreadContext];
         NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
         if ([latestReading.timestamp longLongValue] != epochMilliseconds)
         {
-            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            void(^saveBlock)(NSManagedObjectContext *) = ^(NSManagedObjectContext *localContext){
                 Reading *newReading = [Reading MR_createEntityInContext:localContext];
                 newReading.timestamp = @(epochMilliseconds);
                 newReading.trend = _latestBloodSugarData[@"Trend"];
                 newReading.value = _latestBloodSugarData[@"Value"];
-            } completion:^(BOOL contextDidSave, NSError *error) {
+            };
+            
+            void(^postSaveBlock)() = ^(){
                 [self sendAllBloodSugarReadingsFromPastDay];
                 if (_backgroundFetchCompletionHandler) {
                     DDLogDebug(@"fetch handler: UIBackgroundFetchResultNewData");
                     _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
                     _backgroundFetchCompletionHandler = NULL;
+                    
+                    dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
                 }
-            }];
+            };
+            
+            if (!inBackground) {
+                //asynchronous
+                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+                    saveBlock(localContext);
+                } completion:^(BOOL contextDidSave, NSError *error) {
+                    postSaveBlock();
+                }];
+            } else {
+                //synchronous
+                [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
+                    saveBlock(localContext);
+                }];
+                postSaveBlock();
+            }
         } else {
+            DDLogDebug(@"Latest Egv value has already been saved to Core Data. Skipping.");
             if (_backgroundFetchCompletionHandler) {
                 DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
                 _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
                 _backgroundFetchCompletionHandler = NULL;
+                
+                dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
             }
-            DDLogDebug(@"Latest Egv value has already been saved to Core Data. Skipping.");
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+        if (!inBackground) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+        }
     }
 }
 
