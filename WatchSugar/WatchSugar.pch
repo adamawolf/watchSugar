@@ -1,0 +1,16 @@
+//
+//  WatchSugar.pch
+//  WatchSugar
+//
+//  Created by Adam A. Wolf on 12/22/15.
+//  Copyright © 2015 Flairify. All rights reserved.
+//
+
+#ifndef WatchSugar_pch
+#define WatchSugar_pch
+
+#define LOG_LEVEL_DEF ddLogLevel
+#import <CocoaLumberjack/CocoaLumberjack.h>
+static const DDLogLevel ddLogLevel = DDLogLevelDebug;
+
+#endif /* WatchSugar_pch */

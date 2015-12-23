@@ -128,8 +128,13 @@
 		94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reading+CoreDataProperties.m"; sourceTree = "<group>"; };
 		94693FD31C260A8A00436C64 /* Reading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reading.h; sourceTree = "<group>"; };
 		94693FD41C260A8A00436C64 /* Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reading.m; sourceTree = "<group>"; };
+		94E378BB1C2A492B00FE1131 /* WatchSugar.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugar.pch; sourceTree = "<group>"; };
+		94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugarExtension.pch; sourceTree = "<group>"; };
 		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar WatchKit Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.debug.xcconfig"; sourceTree = "<group>"; };
+		DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar WatchKit Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */,
+				BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				94313B581C1F98F900F74345 /* main.m */,
+				94E378BB1C2A492B00FE1131 /* WatchSugar.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -276,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				94313B961C1F98F900F74345 /* PushNotificationPayload.apns */,
+				94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -297,6 +305,8 @@
 			children = (
 				C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */,
 				78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */,
+				9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */,
+				DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -724,6 +734,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
 				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
@@ -739,6 +750,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
 				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar.watchkitapp.watchkitextension;
@@ -785,6 +797,7 @@
 			baseConfigurationReference = C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;
@@ -797,6 +810,7 @@
 			baseConfigurationReference = 78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
 				INFOPLIST_FILE = WatchSugar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugar;

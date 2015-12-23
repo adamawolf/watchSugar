@@ -4,4 +4,9 @@
 target 'WatchSugar' do
 pod 'AFNetworking'
 pod 'MagicalRecord'
+pod 'CocoaLumberjack'
+end
+
+
+target 'WatchSugar WatchKit Extension' do
 end

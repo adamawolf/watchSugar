@@ -33,10 +33,14 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //initialize CocoaLumberjack
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
     //initialize CoreData
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
     
-    NSLog(@"%@", [MagicalRecord currentStack]);
+    DDLogDebug(@"%@", [MagicalRecord currentStack]);
     
     //initialize WatchConnectivity
     if ([WCSession isSupported]) {
@@ -44,7 +48,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
         session.delegate = self;
         [session activateSession];
         
-        NSLog(@"activate session called on device");
+        DDLogDebug(@"activate session called on device");
     }
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
@@ -77,11 +81,11 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSLog(@"starting background fetch");
+    DDLogDebug(@"starting background fetch");
     if (_backgroundFetchCompletionHandler) {
-        NSLog(@"fetch handler: UIBackgroundFetchResultNoData");
+        DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
         completionHandler(UIBackgroundFetchResultNoData);
-        NSLog(@"completing (errorneous) background fetch");
+        DDLogDebug(@"completing (errorneous) background fetch");
         return;
     }
     
@@ -93,7 +97,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     
     _backgroundFetchCompletionHandler = [completionHandler copy];
     
-    NSLog(@"completing background fetch");
+    DDLogDebug(@"completing background fetch");
 }
 
 #pragma mark - Helper methods
@@ -138,7 +142,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [AppDelegate dexcomPOSTToURLString:URLString
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                          NSLog(@"received dexcom token: %@", responseObject);
+                          DDLogDebug(@"received dexcom token: %@", responseObject);
                           self.dexcomToken = responseObject;
                           
                           [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
@@ -148,7 +152,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           }
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          NSLog(@"error: %@", error);
+                          DDLogDebug(@"error: %@", error);
                       }];
 }
 
@@ -160,7 +164,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [AppDelegate dexcomPOSTToURLString:URLString
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                          NSLog(@"received subscription list: %@", responseObject);
+                          DDLogDebug(@"received subscription list: %@", responseObject);
                           self.subscriptionId = responseObject[0][@"SubscriptionId"];
                           
                           [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
@@ -170,7 +174,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           }
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          NSLog(@"error: %@", error);
+                          DDLogDebug(@"error: %@", error);
                       }];
 }
 
@@ -182,13 +186,13 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [AppDelegate dexcomPOSTToURLString:URLString
                         withParameters:parameters
                       withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                          NSLog(@"received blood sugar data: %@", responseObject);
+                          DDLogDebug(@"received blood sugar data: %@", responseObject);
                           self.latestBloodSugarData = responseObject[0][@"Egv"];
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                          NSLog(@"error: %@", error);
+                          DDLogDebug(@"error: %@", error);
                           NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
-                          NSLog(@"error response: %@", jsonError);
+                          DDLogDebug(@"error response: %@", jsonError);
                           
                           if ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"]) {
                               self.dexcomToken = nil;
@@ -199,7 +203,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                           }
                           
                           if (_backgroundFetchCompletionHandler) {
-                              NSLog(@"fetch handler: UIBackgroundFetchResultFailed");
+                              DDLogDebug(@"fetch handler: UIBackgroundFetchResultFailed");
                               _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
                               _backgroundFetchCompletionHandler = NULL;
                           }
@@ -244,18 +248,18 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
             } completion:^(BOOL contextDidSave, NSError *error) {
                 [self sendAllBloodSugarReadingsFromPastDay];
                 if (_backgroundFetchCompletionHandler) {
-                    NSLog(@"fetch handler: UIBackgroundFetchResultNewData");
+                    DDLogDebug(@"fetch handler: UIBackgroundFetchResultNewData");
                     _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
                     _backgroundFetchCompletionHandler = NULL;
                 }
             }];
         } else {
             if (_backgroundFetchCompletionHandler) {
-                NSLog(@"fetch handler: UIBackgroundFetchResultNoData");
+                DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
                 _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
                 _backgroundFetchCompletionHandler = NULL;
             }
-            NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
+            DDLogDebug(@"Latest Egv value has already been saved to Core Data. Skipping.");
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];

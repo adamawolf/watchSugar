@@ -1,0 +1,12 @@
+//
+//  WatchSugarExtension.pch
+//  WatchSugar
+//
+//  Created by Adam A. Wolf on 12/22/15.
+//  Copyright © 2015 Flairify. All rights reserved.
+//
+
+#ifndef WatchSugarExtension_pch
+#define WatchSugarExtension_pch
+
+#endif /* WatchSugarExtension_pch */

@@ -58,7 +58,7 @@ NSString *const WSNotificationBloodSugarDataChanged = @"WSNotificationBloodSugar
 
 //- (void)session:(WCSession *)session didReceiveApplicationContext:(NSDictionary<NSString *, id> *)applicationContext
 //{
-//    NSLog(@"watch received data: '%@'", applicationContext);
+//    DDLogDebug(@"watch received data: '%@'", applicationContext);
 //    
 //    if (applicationContext) {
 //        self.bloodSugarValues = applicationContext[@"readings"];
