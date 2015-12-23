@@ -23,6 +23,9 @@
     self.readingDateLabel.text = @"";
     self.trendLabel.text = @"";
     
+    self.backgroundFetchDateLabel.text = @"";
+    self.backgroundFetchDateLabel.text = @"";
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dexcomDataDidChange:) name:WSNotificationDexcomDataChanged object:nil];
 }
 
@@ -38,7 +41,11 @@
 - (void)dexcomDataDidChange:(NSNotification *)notification
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [self updateDisplayWithSessionId:appDelegate.dexcomToken subscriptionId:appDelegate.subscriptionId andBloodSugarDictionary:appDelegate.latestBloodSugarData];
+    [self updateDisplayWithSessionId:appDelegate.dexcomToken
+                      subscriptionId:appDelegate.subscriptionId
+             andBloodSugarDictionary:appDelegate.latestBloodSugarData
+                backgroundFetchCount:appDelegate.backgroundFetchCount
+             lastBackgroundFetchDate:appDelegate.lastBackgroundFetchDate];
 }
 
 #pragma mark - Helper methods
@@ -46,6 +53,8 @@
 - (void)updateDisplayWithSessionId:(NSString *)sessionId
                     subscriptionId:(NSString *)subscriptionId
            andBloodSugarDictionary:(NSDictionary *)bloodSugarDictionary
+              backgroundFetchCount:(NSInteger)backgroundFetchCount
+           lastBackgroundFetchDate:(NSDate *)lastBackgroundFetchDate
 {
     self.sessionIdLabel.text = sessionId;
     self.subscriptionIdLabel.text = subscriptionId;
@@ -63,6 +72,14 @@
         self.bloodSugarLabel.text = @"";
         self.readingDateLabel.text = @"";
         self.trendLabel.text = @"";
+    }
+    
+    self.backgroundFetchCountLabel.text = [NSString stringWithFormat:@"%d", (int)backgroundFetchCount];
+    if (lastBackgroundFetchDate) {
+        NSString *agoString = [ViewController humanHourMinuteSecondStringFromTimeInterval:[[NSDate date] timeIntervalSinceDate:lastBackgroundFetchDate]];
+        self.backgroundFetchDateLabel.text = [NSString stringWithFormat:@"%@ ago", agoString];
+    } else {
+        self.backgroundFetchDateLabel.text = @"-";
     }
 }
 

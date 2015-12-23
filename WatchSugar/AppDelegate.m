@@ -56,6 +56,7 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:kBackgroundFetchInterval];
     
     self.backgroundFetchCompletionSemaphore = dispatch_semaphore_create(0);
+    self.backgroundFetchCount = 0;
     
     return YES;
 }
@@ -85,6 +86,9 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    self.backgroundFetchCount = self.backgroundFetchCount + 1;
+    self.lastBackgroundFetchDate = [NSDate date];
+    
     DDLogDebug(@"starting background fetch");
     if (_backgroundFetchCompletionHandler) {
         completionHandler(UIBackgroundFetchResultNoData);

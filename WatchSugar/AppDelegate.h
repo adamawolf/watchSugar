@@ -28,5 +28,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString *subscriptionId;
 @property (nonatomic, strong) NSDictionary * latestBloodSugarData;
 
+@property (nonatomic, assign) NSInteger backgroundFetchCount;
+@property (nonatomic, strong) NSDate *lastBackgroundFetchDate;
+
 @end
 

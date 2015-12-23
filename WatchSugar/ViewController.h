@@ -16,9 +16,14 @@
 @property (nonatomic, strong) IBOutlet UILabel *readingDateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *trendLabel;
 
+@property (nonatomic, strong) IBOutlet UILabel *backgroundFetchCountLabel;
+@property (nonatomic, strong) IBOutlet UILabel *backgroundFetchDateLabel;
+
 - (void)updateDisplayWithSessionId:(NSString *)sessionId
                     subscriptionId:(NSString *)subscriptionId
-           andBloodSugarDictionary:(NSDictionary *)bloodSugarDictionary;
+           andBloodSugarDictionary:(NSDictionary *)bloodSugarDictionary
+              backgroundFetchCount:(NSInteger)backgroundFetchCount
+           lastBackgroundFetchDate:(NSDate *)lastBackgroundFetchDate;
 
 @end
 
