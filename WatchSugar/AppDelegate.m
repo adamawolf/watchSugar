@@ -187,8 +187,17 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
                       }
                       withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                           NSLog(@"error: %@", error);
-                          NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-                          NSLog(@"error response: %@",errorResponse);
+                          NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
+                          NSLog(@"error response: %@", jsonError);
+                          
+                          if ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"]) {
+                              self.dexcomToken = nil;
+                              self.subscriptionId = nil;
+                              self.latestBloodSugarData = nil;
+                              
+                              [self fetchTimerFired:nil];
+                          }
+                          
                           if (_backgroundFetchCompletionHandler) {
                               NSLog(@"fetch handler: UIBackgroundFetchResultFailed");
                               _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
