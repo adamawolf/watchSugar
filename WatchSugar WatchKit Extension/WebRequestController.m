@@ -20,15 +20,6 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 @implementation WebRequestController
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.fetchSemaphore = dispatch_semaphore_create(0);
-    }
-    return self;
-}
-
 - (void)performFetchInBackground:(BOOL)inBackground
 {
     self.lastFetchAttempt = [NSDate date];
@@ -91,8 +82,6 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    if (!inBackground) {
                                        NSLog(@"error: %@", error);
-                                   } else {
-                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                    inBackground:inBackground];
@@ -122,8 +111,6 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    if (!inBackground) {
                                        NSLog(@"error: %@", error);
-                                   } else {
-                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                    inBackground:inBackground];
@@ -155,11 +142,6 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                        self.latestBloodSugarData = nil;
                                        
                                        [self performFetchInBackground:inBackground];
-                                   } else {
-                                       if (inBackground) {
-                                           //failure
-                                           dispatch_semaphore_signal(self.fetchSemaphore);
-                                       }
                                    }
                                }
                                    inBackground:inBackground];
@@ -217,11 +199,6 @@ static const NSInteger kMaxReadings = 20;
         if (!inBackground) {
             [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
         }
-    }
-    
-    if (inBackground) {
-        //success
-        dispatch_semaphore_signal(self.fetchSemaphore);
     }
 }
 

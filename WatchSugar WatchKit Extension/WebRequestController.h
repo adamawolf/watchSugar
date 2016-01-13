@@ -17,8 +17,6 @@ extern NSString *const WSDefaults_LastReadings;
 @property (nonatomic, strong) NSString *subscriptionId;
 @property (nonatomic, strong) NSDictionary * latestBloodSugarData;
 
-@property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;
-
 @property (nonatomic, strong) NSDate *lastFetchAttempt;
 
 - (void)performFetchInBackground:(BOOL)inBackground;

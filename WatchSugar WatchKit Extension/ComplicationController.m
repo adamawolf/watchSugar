@@ -47,7 +47,6 @@
     
     if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
         [webRequestController performFetchInBackground:YES];
-        dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
     }
     
     //...
