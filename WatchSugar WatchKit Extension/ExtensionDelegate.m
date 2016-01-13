@@ -23,7 +23,6 @@
 {
     [DefaultsLogController addLogMessage:@"applicationDidFinishLaunching"];
 
-    
     if (!self.webRequestController) {
         self.webRequestController = [[WebRequestController alloc] init];
         

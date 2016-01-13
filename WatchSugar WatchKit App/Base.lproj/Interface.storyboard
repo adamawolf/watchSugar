@@ -20,6 +20,12 @@
                         <label alignment="left" text="Trend 4" id="gSQ-cI-MyS">
                             <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
+                        <button width="1" alignment="left" title="Dump Log" id="5q6-t2-tUU">
+                            <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="dumpLogTapped:" destination="AgC-eL-Hgc" id="WqZ-3O-bau"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
                         <outlet property="agoLabel" destination="Wx1-hA-sNc" id="rH3-pH-WRn"/>

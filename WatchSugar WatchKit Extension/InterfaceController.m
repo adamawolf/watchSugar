@@ -9,6 +9,8 @@
 #import "InterfaceController.h"
 #import "ExtensionDelegate.h"
 
+#import "DefaultsLogController.h"
+
 @interface InterfaceController()
 
 @end
@@ -121,6 +123,13 @@
     }
     
     return ret;
+}
+
+#pragma mark -
+
+- (IBAction)dumpLogTapped:(id)sender
+{
+    NSLog(@"%@", [DefaultsLogController allLogMessages]);
 }
 
 @end
