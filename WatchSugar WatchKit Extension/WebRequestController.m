@@ -202,8 +202,10 @@ static const NSInteger kMaxReadings = 20;
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-                [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+            if (!inBackground) {
+                for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
+                    [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+                }
             }
             
         } else {
