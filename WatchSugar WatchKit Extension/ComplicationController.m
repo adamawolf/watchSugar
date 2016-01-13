@@ -10,6 +10,8 @@
 
 #import "ExtensionDelegate.h"
 
+#import "DefaultsLogController.h"
+
 @interface ComplicationController ()
 
 @end
@@ -41,6 +43,8 @@
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
     if (!extensionDelegate.webRequestController) {
         extensionDelegate.webRequestController = [[WebRequestController alloc] init];
+        
+        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication allocated: %@", extensionDelegate.webRequestController]];
     }
     
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
@@ -53,6 +57,7 @@
     
     NSString *bloodSugarValue = @"-";
     UIImage *trendImage = nil;
+    NSString *timeStampAsDate = nil;
     
     NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
     if (lastReadings.count) {
@@ -64,6 +69,21 @@
         int trend = [latestReading[@"trend"] intValue];
         NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
         trendImage = [UIImage imageNamed:trendImageName];
+        
+        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        NSDate *timeStampDate = [NSDate dateWithTimeIntervalSince1970:epoch];
+        
+        static NSDateFormatter *_timeStampDateFormatter = nil;
+        if (!_timeStampDateFormatter) {
+            _timeStampDateFormatter = [[NSDateFormatter alloc] init];
+            _timeStampDateFormatter.dateStyle = NSDateFormatterShortStyle;
+            _timeStampDateFormatter.timeStyle = NSDateFormatterShortStyle;
+        }
+        timeStampAsDate = [_timeStampDateFormatter stringFromDate:timeStampDate];
+        
+        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning BS of %@, reading date %@", bloodSugarValue, timeStampAsDate]];
+    } else {
+        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning %@", bloodSugarValue]];
     }
     
     // Create the template and timeline entry.
@@ -105,6 +125,16 @@
 - (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler {
     NSDate *futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
     handler(futureDate);
+}
+
+- (void)requestedUpdateDidBegin
+{
+    [DefaultsLogController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
+}
+
+- (void)requestedUpdateBudgetExhausted
+{
+    [DefaultsLogController addLogMessage:@"ComplicationController requestedUpdateBudgetExhausted!"];
 }
 
 #pragma mark - Placeholder Templates

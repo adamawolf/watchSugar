@@ -26,6 +26,7 @@
 		94313BA21C1F98F900F74345 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA11C1F98F900F74345 /* GlanceController.m */; };
 		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
 		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
+		944C748C1C46D22900306EA8 /* DefaultsLogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 944C748B1C46D22900306EA8 /* DefaultsLogController.m */; };
 		94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */; };
 		94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */; };
 		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
@@ -125,6 +126,8 @@
 		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
 		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94313BA81C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		944C748A1C46D22900306EA8 /* DefaultsLogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsLogController.h; sourceTree = "<group>"; };
+		944C748B1C46D22900306EA8 /* DefaultsLogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsLogController.m; sourceTree = "<group>"; };
 		94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WatchSugar.xcdatamodel; sourceTree = "<group>"; };
 		94693FD11C260A8A00436C64 /* Reading+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reading+CoreDataProperties.h"; sourceTree = "<group>"; };
 		94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reading+CoreDataProperties.m"; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				94313B951C1F98F900F74345 /* Supporting Files */,
 				94BF86EE1C45F6AA001664ED /* WebRequestController.h */,
 				94BF86EF1C45F6AA001664ED /* WebRequestController.m */,
+				944C748A1C46D22900306EA8 /* DefaultsLogController.h */,
+				944C748B1C46D22900306EA8 /* DefaultsLogController.m */,
 			);
 			path = "WatchSugar WatchKit Extension";
 			sourceTree = "<group>";
@@ -647,6 +652,7 @@
 			files = (
 				94BF86F01C45F6AA001664ED /* WebRequestController.m in Sources */,
 				94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */,
+				944C748C1C46D22900306EA8 /* DefaultsLogController.m in Sources */,
 				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
 				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,
 				94313BA21C1F98F900F74345 /* GlanceController.m in Sources */,

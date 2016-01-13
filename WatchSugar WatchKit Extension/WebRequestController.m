@@ -11,6 +11,8 @@
 
 #import <AFNetworking/AFNetworking.h>
 
+#import "DefaultsLogController.h"
+
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
@@ -23,6 +25,8 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 - (void)performFetchInBackground:(BOOL)inBackground
 {
     self.lastFetchAttempt = [NSDate date];
+    
+    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"performFetchInBackground:%@", inBackground ? @"YES" : @"NO"]];
     
     if (!self.dexcomToken) {
         [self authenticateWithDexcomInBackground:inBackground];
@@ -58,6 +62,8 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)authenticateWithDexcomInBackground:(BOOL)inBackground
 {
+    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"authenticateWithDexcomInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    
     NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/LoginSubscriberAccount";
     NSDictionary *parameters = @{@"accountId": @"***REMOVED***",
                                  @"password": @"A***REMOVED***",
@@ -89,6 +95,8 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)fetchSubscriptionsInBackground:(BOOL)inBackground
 {
+    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ListSubscriberAccountSubscriptions?sessionId=%@", self.dexcomToken];
     NSString *parameters = nil;
     
@@ -118,6 +126,8 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)fetchLatestBloodSugarInBackground:(BOOL)inBackground
 {
+    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ReadLastGlucoseFromSubscriptions?sessionId=%@", self.dexcomToken];
     NSArray *parameters = @[self.subscriptionId];
     
@@ -147,11 +157,6 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                    inBackground:inBackground];
 }
 
--(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData
-{
-    [self setLatestBloodSugarData:latestBloodSugarData inBackground:NO];
-}
-
 static const NSInteger kMaxReadings = 20;
 
 -(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
@@ -159,7 +164,6 @@ static const NSInteger kMaxReadings = 20;
     _latestBloodSugarData = latestBloodSugarData;
     
     if (_latestBloodSugarData) {
-        
         NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
         lastReadings = lastReadings ? lastReadings : @[];
         NSDictionary *latestReading = [lastReadings lastObject];
@@ -184,6 +188,8 @@ static const NSInteger kMaxReadings = 20;
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
+            
             if (!inBackground) {
                 for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
                     [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
@@ -191,6 +197,8 @@ static const NSInteger kMaxReadings = 20;
             }
             
         } else {
+            [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
+            
             if (!inBackground) {
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
             }

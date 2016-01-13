@@ -11,16 +11,23 @@
 #import <WatchConnectivity/WatchConnectivity.h>
 #import <ClockKit/ClockKit.h>
 
+#import "DefaultsLogController.h"
+
 @interface ExtensionDelegate () <WCSessionDelegate>
 
 @end
 
 @implementation ExtensionDelegate
 
-- (void)applicationDidFinishLaunching {
+- (void)applicationDidFinishLaunching
+{
+    [DefaultsLogController addLogMessage:@"applicationDidFinishLaunching"];
+
     
     if (!self.webRequestController) {
         self.webRequestController = [[WebRequestController alloc] init];
+        
+        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"ExtensionDelegate allocated: %@", self.webRequestController]];
     }
 }
 
