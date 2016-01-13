@@ -7,6 +7,7 @@
 //
 
 #import "WebRequestController.h"
+#import <ClockKit/ClockKit.h>
 
 #import <AFNetworking/AFNetworking.h>
 
@@ -200,6 +201,11 @@ static const NSInteger kMaxReadings = 20;
             
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
+                [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+            }
+            
         } else {
             if (!inBackground) {
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
