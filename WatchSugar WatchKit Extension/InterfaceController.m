@@ -132,4 +132,9 @@
     NSLog(@"%@", [DefaultsLogController allLogMessages]);
 }
 
+- (IBAction)clearLogTapped:(id)sender
+{
+    [DefaultsLogController clearAllLogMessages];
+}
+
 @end

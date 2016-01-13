@@ -45,4 +45,10 @@ NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
     return logMessagesArray;
 }
 
++ (void)clearAllLogMessages
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

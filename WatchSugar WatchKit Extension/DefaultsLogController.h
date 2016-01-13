@@ -13,6 +13,9 @@ extern NSString *const WSDefaults_LogMessageArray;
 @interface DefaultsLogController : NSObject
 
 + (void)addLogMessage:(NSString *)logMessage;
+
 + (NSArray <NSString *> *)allLogMessages;
+
++ (void)clearAllLogMessages;
 
 @end

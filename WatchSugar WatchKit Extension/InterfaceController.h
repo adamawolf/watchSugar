@@ -17,5 +17,6 @@
 @property (nonatomic, strong) IBOutlet WKInterfaceLabel *trendLabel;
 
 - (IBAction)dumpLogTapped:(id)sender;
+- (IBAction)clearLogTapped:(id)sender;
 
 @end
