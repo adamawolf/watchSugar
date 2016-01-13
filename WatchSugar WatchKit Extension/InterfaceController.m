@@ -26,9 +26,12 @@
 {
     [super willActivate];
     
-    [self updateDisplay];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationDexcomDataChanged object:nil];
+}
+
+- (void)didAppear
+{
+    [self updateDisplay]; 
 }
 
 - (void)didDeactivate
@@ -43,9 +46,8 @@
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
-    if ([[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
-        [webRequestController performFetchInBackground:YES];
-        dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
+        [webRequestController performFetchInBackground:NO];
     }
     
     NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];

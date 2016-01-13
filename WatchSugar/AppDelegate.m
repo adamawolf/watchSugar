@@ -10,7 +10,6 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-#import <MagicalRecord/MagicalRecord.h>
 #import "Reading+CoreDataProperties.h"
 
 #import <WatchConnectivity/WatchConnectivity.h>
@@ -39,10 +38,10 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    //initialize CoreData
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
-    
-    DDLogDebug(@"%@", [MagicalRecord currentStack]);
+//    //initialize CoreData
+//    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"WatchSugar"];
+//    
+//    DDLogDebug(@"%@", [MagicalRecord currentStack]);
     
     //initialize WatchConnectivity
     if ([WCSession isSupported]) {
@@ -274,60 +273,60 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 {
     _latestBloodSugarData = latestBloodSugarData;
     
-    if (_latestBloodSugarData) {
-        NSManagedObjectContext *currentThreadContext = [NSManagedObjectContext MR_context];
-        Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO inContext:currentThreadContext];
-        NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
-        int64_t epochMilliseconds = [STDate longLongValue];
-        if ([latestReading.timestamp longLongValue] != epochMilliseconds)
-        {
-            void(^saveBlock)(NSManagedObjectContext *) = ^(NSManagedObjectContext *localContext){
-                Reading *newReading = [Reading MR_createEntityInContext:localContext];
-                newReading.timestamp = @(epochMilliseconds);
-                newReading.trend = _latestBloodSugarData[@"Trend"];
-                newReading.value = _latestBloodSugarData[@"Value"];
-            };
-            
-            void(^postSaveBlock)() = ^(){
-                [self sendAllBloodSugarReadingsFromPastDay];
-                if (_backgroundFetchCompletionHandler) {
-                    DDLogDebug(@"fetch handler: UIBackgroundFetchResultNewData");
-                    _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
-                    _backgroundFetchCompletionHandler = NULL;
-                    
-                    dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
-                }
-            };
-            
-            if (!inBackground) {
-                //asynchronous
-                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-                    saveBlock(localContext);
-                } completion:^(BOOL contextDidSave, NSError *error) {
-                    postSaveBlock();
-                }];
-            } else {
-                //synchronous
-                [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
-                    saveBlock(localContext);
-                }];
-                postSaveBlock();
-            }
-        } else {
-            DDLogDebug(@"Latest Egv value has already been saved to Core Data. Skipping.");
-            if (_backgroundFetchCompletionHandler) {
-                DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
-                _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
-                _backgroundFetchCompletionHandler = NULL;
-                
-                dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
-            }
-        }
-        
-        if (!inBackground) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
-        }
-    }
+//    if (_latestBloodSugarData) {
+//        NSManagedObjectContext *currentThreadContext = [NSManagedObjectContext MR_context];
+//        Reading * latestReading = [Reading MR_findFirstOrderedByAttribute:@"timestamp" ascending:NO inContext:currentThreadContext];
+//        NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
+//        int64_t epochMilliseconds = [STDate longLongValue];
+//        if ([latestReading.timestamp longLongValue] != epochMilliseconds)
+//        {
+//            void(^saveBlock)(NSManagedObjectContext *) = ^(NSManagedObjectContext *localContext){
+//                Reading *newReading = [Reading MR_createEntityInContext:localContext];
+//                newReading.timestamp = @(epochMilliseconds);
+//                newReading.trend = _latestBloodSugarData[@"Trend"];
+//                newReading.value = _latestBloodSugarData[@"Value"];
+//            };
+//            
+//            void(^postSaveBlock)() = ^(){
+//                [self sendAllBloodSugarReadingsFromPastDay];
+//                if (_backgroundFetchCompletionHandler) {
+//                    DDLogDebug(@"fetch handler: UIBackgroundFetchResultNewData");
+//                    _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
+//                    _backgroundFetchCompletionHandler = NULL;
+//                    
+//                    dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
+//                }
+//            };
+//            
+//            if (!inBackground) {
+//                //asynchronous
+//                [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+//                    saveBlock(localContext);
+//                } completion:^(BOOL contextDidSave, NSError *error) {
+//                    postSaveBlock();
+//                }];
+//            } else {
+//                //synchronous
+//                [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *localContext) {
+//                    saveBlock(localContext);
+//                }];
+//                postSaveBlock();
+//            }
+//        } else {
+//            DDLogDebug(@"Latest Egv value has already been saved to Core Data. Skipping.");
+//            if (_backgroundFetchCompletionHandler) {
+//                DDLogDebug(@"fetch handler: UIBackgroundFetchResultNoData");
+//                _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
+//                _backgroundFetchCompletionHandler = NULL;
+//                
+//                dispatch_semaphore_signal(self.backgroundFetchCompletionSemaphore);
+//            }
+//        }
+//        
+//        if (!inBackground) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
+//        }
+//    }
 }
 
 #pragma mark - WCSessionDelegate methods

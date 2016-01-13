@@ -18,7 +18,10 @@
 @implementation ExtensionDelegate
 
 - (void)applicationDidFinishLaunching {
-    self.webRequestController = [[WebRequestController alloc] init];
+    
+    if (!self.webRequestController) {
+        self.webRequestController = [[WebRequestController alloc] init];
+    }
 }
 
 - (void)applicationDidBecomeActive {

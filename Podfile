@@ -3,7 +3,6 @@
 
 target 'WatchSugar' do
     pod 'AFNetworking'
-    pod 'MagicalRecord'
     pod 'CocoaLumberjack'
 end
 

@@ -39,10 +39,16 @@
 - (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler {
     // Get the current complication data from the extension delegate.    
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    if (!extensionDelegate.webRequestController) {
+        extensionDelegate.webRequestController = [[WebRequestController alloc] init];
+    }
+    
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
-    [webRequestController performFetchInBackground:YES];
-    dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
+        [webRequestController performFetchInBackground:YES];
+        dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    }
     
     //...
     

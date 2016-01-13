@@ -136,7 +136,9 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
                                withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                                   NSLog(@"received blood sugar data: %@", responseObject);
+                                   if (!inBackground) {
+                                       NSLog(@"received blood sugar data: %@", responseObject);
+                                   }
                                    [self setLatestBloodSugarData:responseObject[0][@"Egv"] inBackground:inBackground];
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
@@ -176,11 +178,12 @@ static const NSInteger kMaxReadings = 20;
     if (_latestBloodSugarData) {
         
         NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+        lastReadings = lastReadings ? lastReadings : @[];
         NSDictionary *latestReading = [lastReadings lastObject];
         
         NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
-        if ([latestReading[@"timestamp"] longLongValue] != epochMilliseconds)
+        if (!latestReading || [latestReading[@"timestamp"] longLongValue] != epochMilliseconds)
         {
             NSDictionary *newReading = @{
                                          @"timestamp": @(epochMilliseconds),
