@@ -29,6 +29,7 @@
 		94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */; };
 		94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */; };
 		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
+		DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,9 +395,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94313BAB1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit Extension" */;
 			buildPhases = (
+				9581497F8FA3596DB170DD2D /* Check Pods Manifest.lock */,
 				94313B8C1C1F98F900F74345 /* Sources */,
 				94313B8D1C1F98F900F74345 /* Frameworks */,
 				94313B8E1C1F98F900F74345 /* Resources */,
+				2635532384EAEE43F729D78E /* Embed Pods Frameworks */,
+				5CDBDE75ABFC2831BA7AA5AD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -509,6 +514,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2635532384EAEE43F729D78E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		56BFA33FE9AF6774ACF8F8BF /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -522,6 +542,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CDBDE75ABFC2831BA7AA5AD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9581497F8FA3596DB170DD2D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C31BDFEE2C7AD22F4F8CA855 /* Check Pods Manifest.lock */ = {
@@ -735,6 +785,7 @@
 		};
 		94313BAC1C1F98F900F74345 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -753,6 +804,7 @@
 		};
 		94313BAD1C1F98F900F74345 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
