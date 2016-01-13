@@ -2,9 +2,9 @@
 # platform :ios, '6.0'
 
 target 'WatchSugar' do
-pod 'AFNetworking'
-pod 'MagicalRecord'
-pod 'CocoaLumberjack'
+    pod 'AFNetworking'
+    pod 'MagicalRecord'
+    pod 'CocoaLumberjack'
 end
 
 

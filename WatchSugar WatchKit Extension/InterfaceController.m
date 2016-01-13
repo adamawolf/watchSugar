@@ -28,7 +28,7 @@
     
     [self updateDisplay];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationBloodSugarDataChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationDexcomDataChanged object:nil];
 }
 
 - (void)didDeactivate
@@ -41,18 +41,26 @@
 - (void)updateDisplay
 {
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
-    if (extensionDelegate.bloodSugarValues.count) {
-        NSDictionary *mostRecent = extensionDelegate.bloodSugarValues[0];
+    if ([[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
+        [webRequestController performFetchInBackground:YES];
+        dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    }
+    
+    NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+
+    if (lastReadings.count) {
+        NSDictionary *latestReading = [lastReadings lastObject];
         
-        int mostRecentValue = [mostRecent[@"value"] intValue];
+        int mostRecentValue = [latestReading[@"value"] intValue];
         self.bloodSugarLabel.text = [NSString stringWithFormat:@"%d", mostRecentValue];
         
-        NSTimeInterval epoch = [mostRecent[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
         NSString *agoString = [InterfaceController humanHourMinuteSecondStringFromTimeInterval:[[NSDate date] timeIntervalSince1970] - epoch];
         self.agoLabel.text = [NSString stringWithFormat:@"%@ ago", agoString];
         
-        self.trendLabel.text = [NSString stringWithFormat:@"Trend %d", [mostRecent[@"trend"] intValue]];
+        self.trendLabel.text = [NSString stringWithFormat:@"Trend %d", [latestReading[@"trend"] intValue]];
     } else {
         self.bloodSugarLabel.text = @"--";
         self.agoLabel.text = @"";

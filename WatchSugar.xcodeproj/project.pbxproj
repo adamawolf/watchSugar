@@ -29,6 +29,7 @@
 		94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */; };
 		94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */; };
 		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
+		94BF86F01C45F6AA001664ED /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BF86EF1C45F6AA001664ED /* WebRequestController.m */; };
 		DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
@@ -129,6 +130,8 @@
 		94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reading+CoreDataProperties.m"; sourceTree = "<group>"; };
 		94693FD31C260A8A00436C64 /* Reading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reading.h; sourceTree = "<group>"; };
 		94693FD41C260A8A00436C64 /* Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reading.m; sourceTree = "<group>"; };
+		94BF86EE1C45F6AA001664ED /* WebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestController.h; sourceTree = "<group>"; };
+		94BF86EF1C45F6AA001664ED /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
 		94E378BB1C2A492B00FE1131 /* WatchSugar.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugar.pch; sourceTree = "<group>"; };
 		94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugarExtension.pch; sourceTree = "<group>"; };
 		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,6 +280,8 @@
 				94313BA61C1F98F900F74345 /* Assets.xcassets */,
 				94313BA81C1F98F900F74345 /* Info.plist */,
 				94313B951C1F98F900F74345 /* Supporting Files */,
+				94BF86EE1C45F6AA001664ED /* WebRequestController.h */,
+				94BF86EF1C45F6AA001664ED /* WebRequestController.m */,
 			);
 			path = "WatchSugar WatchKit Extension";
 			sourceTree = "<group>";
@@ -640,6 +645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94BF86F01C45F6AA001664ED /* WebRequestController.m in Sources */,
 				94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */,
 				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
 				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,

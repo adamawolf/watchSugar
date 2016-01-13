@@ -248,19 +248,19 @@ static const NSTimeInterval kRefreshInterval = 120.0f; //seconds
 
 - (void)sendAllBloodSugarReadingsFromPastDay
 {
-    int64_t hourAgoEpochMilliseconds = (int64_t)([[NSDate date] timeIntervalSince1970] - (24 * 60)) * 1000;
-    NSArray *readingsPastHour = [Reading MR_findAllSortedBy:@"timestamp" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"timestamp > %ld", hourAgoEpochMilliseconds]];
-    
-    NSMutableArray *readingDictionaries = [NSMutableArray new];
-    [readingsPastHour enumerateObjectsUsingBlock:^(Reading *obj, NSUInteger idx, BOOL *stop) {
-        [readingDictionaries addObject:@{
-                                         @"timestamp": obj.timestamp,
-                                         @"value": obj.value,
-                                         @"trend": obj.trend,
-                                         }];
-    }];
-    
-    [[WCSession defaultSession] transferCurrentComplicationUserInfo:@{@"readings": readingDictionaries}];
+//    int64_t hourAgoEpochMilliseconds = (int64_t)([[NSDate date] timeIntervalSince1970] - (24 * 60)) * 1000;
+//    NSArray *readingsPastHour = [Reading MR_findAllSortedBy:@"timestamp" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"timestamp > %ld", hourAgoEpochMilliseconds]];
+//    
+//    NSMutableArray *readingDictionaries = [NSMutableArray new];
+//    [readingsPastHour enumerateObjectsUsingBlock:^(Reading *obj, NSUInteger idx, BOOL *stop) {
+//        [readingDictionaries addObject:@{
+//                                         @"timestamp": obj.timestamp,
+//                                         @"value": obj.value,
+//                                         @"trend": obj.trend,
+//                                         }];
+//    }];
+//    
+//    [[WCSession defaultSession] transferCurrentComplicationUserInfo:@{@"readings": readingDictionaries}];
 }
 
 #pragma mark - Custom setter methods

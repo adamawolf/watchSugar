@@ -7,11 +7,10 @@
 //
 
 #import <WatchKit/WatchKit.h>
-
-extern NSString *const WSNotificationBloodSugarDataChanged;
+#import "WebRequestController.h"
 
 @interface ExtensionDelegate : NSObject <WKExtensionDelegate>
 
-@property (nonatomic, strong) NSArray *bloodSugarValues;
+@property (nonatomic, strong) WebRequestController *webRequestController;
 
 @end

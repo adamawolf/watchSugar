@@ -39,16 +39,24 @@
 - (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler {
     // Get the current complication data from the extension delegate.    
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    
+    [webRequestController performFetchInBackground:YES];
+    dispatch_semaphore_wait(webRequestController.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    
+    //...
     
     NSString *bloodSugarValue = @"-";
     UIImage *trendImage = nil;
-    if (extensionDelegate.bloodSugarValues.count) {
-        NSDictionary *mostRecent = extensionDelegate.bloodSugarValues[0];
+    
+    NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+    if (lastReadings.count) {
+        NSDictionary *latestReading = [lastReadings lastObject];
         
-        int mostRecentValue = [mostRecent[@"value"] intValue];
+        int mostRecentValue = [latestReading[@"value"] intValue];
         bloodSugarValue = [NSString stringWithFormat:@"%d", mostRecentValue];
         
-        int trend = [mostRecent[@"trend"] intValue];
+        int trend = [latestReading[@"trend"] intValue];
         NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
         trendImage = [UIImage imageNamed:trendImageName];
     }
