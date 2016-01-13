@@ -19,6 +19,7 @@ extern NSString *const WSDefaults_LastReadings;
 
 @property (nonatomic, strong) NSDate *lastFetchAttempt;
 
-- (void)performFetchInBackground:(BOOL)inBackground;
+- (void)performFetch;
+- (void)performFetchAndWait;
 
 @end

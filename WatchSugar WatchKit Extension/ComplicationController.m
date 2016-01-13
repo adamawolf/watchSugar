@@ -38,23 +38,8 @@
 
 #pragma mark - Timeline Population
 
-- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler {
-    // Get the current complication data from the extension delegate.    
-    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-    if (!extensionDelegate.webRequestController) {
-        extensionDelegate.webRequestController = [[WebRequestController alloc] init];
-        
-        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication allocated: %@", extensionDelegate.webRequestController]];
-    }
-    
-    WebRequestController *webRequestController = extensionDelegate.webRequestController;
-    
-    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
-        [webRequestController performFetchInBackground:YES];
-    }
-    
-    //...
-    
+- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler
+{
     NSString *bloodSugarValue = @"-";
     UIImage *trendImage = nil;
     NSString *timeStampAsDate = nil;
@@ -110,8 +95,8 @@
     handler(entry);
 }
 
-- (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler {
-    // Call the handler with the timeline entries prior to the given date
+- (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler
+{
     handler(nil);
 }
 
@@ -122,14 +107,60 @@
 
 #pragma mark Update Scheduling
 
-- (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler {
+- (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler
+{
     NSDate *futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
+    
+    static NSDateFormatter *_timeStampDateFormatter = nil;
+    if (!_timeStampDateFormatter) {
+        _timeStampDateFormatter = [[NSDateFormatter alloc] init];
+        _timeStampDateFormatter.dateStyle = NSDateFormatterShortStyle;
+        _timeStampDateFormatter.timeStyle = NSDateFormatterShortStyle;
+    }
+    
+    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getNextRequestedUpdateDateWithHandler requesting future date: %@", [_timeStampDateFormatter stringFromDate:futureDate]]];
+    
     handler(futureDate);
 }
 
 - (void)requestedUpdateDidBegin
 {
     [DefaultsLogController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
+    
+    NSDictionary *previousLatestReading = [[[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings] lastObject];
+    
+    // Get the current complication data from the extension delegate.
+    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    if (!extensionDelegate.webRequestController) {
+        extensionDelegate.webRequestController = [[WebRequestController alloc] init];
+        
+        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
+    }
+    
+    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    
+    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
+        [webRequestController performFetchAndWait];
+    }
+    
+    BOOL didChange = NO;
+    
+    NSDictionary *latestReading = [[[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings] lastObject];
+    
+    if (!previousLatestReading && latestReading) {
+        didChange = YES;
+    } else if (previousLatestReading && latestReading) {
+        NSTimeInterval previousEpoch = [previousLatestReading[@"timestamp"] doubleValue] / 1000.00;
+        NSTimeInterval latestEpoch = [latestReading[@"timestamp"] doubleValue] / 1000.00;
+        
+        didChange = previousEpoch != latestEpoch;
+    }
+    
+    if (didChange) {
+        for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
+            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+        }
+    }
 }
 
 - (void)requestedUpdateBudgetExhausted

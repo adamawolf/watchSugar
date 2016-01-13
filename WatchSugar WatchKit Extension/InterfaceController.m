@@ -49,7 +49,7 @@
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
     if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
-        [webRequestController performFetchInBackground:NO];
+        [webRequestController performFetch];
     }
     
     NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];

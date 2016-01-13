@@ -18,23 +18,58 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 @interface WebRequestController ()
 
+@property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;
+
 @end
 
 @implementation WebRequestController
 
-- (void)performFetchInBackground:(BOOL)inBackground
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.fetchSemaphore = dispatch_semaphore_create(0);
+    }
+    return self;
+}
+
+- (void)performFetch
 {
     self.lastFetchAttempt = [NSDate date];
     
-    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"performFetchInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsLogController addLogMessage:@"performFetch"];
     
     if (!self.dexcomToken) {
-        [self authenticateWithDexcomInBackground:inBackground];
+        [self authenticateWithDexcomInBackground:NO];
     } else {
         if (!self.subscriptionId) {
-            [self fetchSubscriptionsInBackground:inBackground];
+            [self fetchSubscriptionsInBackground:NO];
         } else {
-            [self fetchLatestBloodSugarInBackground:inBackground];
+            [self fetchLatestBloodSugarInBackground:NO];
+        }
+    }
+}
+
+- (void)performFetchAndWait
+{
+    [self performFetchAndWaitInternal];
+    
+    dispatch_semaphore_wait(self.fetchSemaphore, DISPATCH_TIME_FOREVER);
+}
+
+- (void)performFetchAndWaitInternal
+{
+    self.lastFetchAttempt = [NSDate date];
+    
+    [DefaultsLogController addLogMessage:@"performFetchAndWait"];
+    
+    if (!self.dexcomToken) {
+        [self authenticateWithDexcomInBackground:YES];
+    } else {
+        if (!self.subscriptionId) {
+            [self fetchSubscriptionsInBackground:YES];
+        } else {
+            [self fetchLatestBloodSugarInBackground:YES];
         }
     }
 }
@@ -83,11 +118,15 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                    
                                    if (!self.subscriptionId) {
                                        [self fetchSubscriptionsInBackground:inBackground];
+                                   } else {
+                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    if (!inBackground) {
                                        NSLog(@"error: %@", error);
+                                   } else {
+                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                    inBackground:inBackground];
@@ -114,11 +153,15 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                    
                                    if (!self.latestBloodSugarData) {
                                        [self fetchLatestBloodSugarInBackground:inBackground];
+                                   } else {
+                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    if (!inBackground) {
                                        NSLog(@"error: %@", error);
+                                   } else {
+                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                    inBackground:inBackground];
@@ -151,7 +194,13 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                        self.subscriptionId = nil;
                                        self.latestBloodSugarData = nil;
                                        
-                                       [self performFetchInBackground:inBackground];
+                                       if (inBackground) {
+                                           [self performFetchAndWaitInternal];
+                                       } else {
+                                           [self performFetch];
+                                       }
+                                   } else {
+                                       dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                    inBackground:inBackground];
@@ -207,6 +256,10 @@ static const NSInteger kMaxReadings = 20;
         if (!inBackground) {
             [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
         }
+    }
+    
+    if (inBackground) {
+        dispatch_semaphore_signal(self.fetchSemaphore);
     }
 }
 
