@@ -64,7 +64,12 @@
         NSString *agoString = [InterfaceController humanHourMinuteSecondStringFromTimeInterval:[[NSDate date] timeIntervalSince1970] - epoch];
         self.agoLabel.text = [NSString stringWithFormat:@"%@ ago", agoString];
         
-        self.trendLabel.text = [NSString stringWithFormat:@"Trend %d", [latestReading[@"trend"] intValue]];
+        int trend = [latestReading[@"trend"] intValue];
+        NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
+        UIImage *trendImage = [UIImage imageNamed:trendImageName];
+        trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.trendImage setImage:trendImage];
+        
     } else {
         self.bloodSugarLabel.text = @"--";
         self.agoLabel.text = @"";

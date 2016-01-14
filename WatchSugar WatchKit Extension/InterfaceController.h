@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet WKInterfaceLabel *bloodSugarLabel;
 @property (nonatomic, strong) IBOutlet WKInterfaceLabel *agoLabel;
 @property (nonatomic, strong) IBOutlet WKInterfaceLabel *trendLabel;
+@property (nonatomic, strong) IBOutlet WKInterfaceImage *trendImage;
 
 - (IBAction)dumpLogTapped:(id)sender;
 - (IBAction)clearLogTapped:(id)sender;
