@@ -29,6 +29,7 @@
     [super willActivate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationDexcomDataChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
 }
 
 - (void)didAppear
@@ -45,6 +46,8 @@
 
 - (void)updateDisplay
 {
+    NSLog(@"watch updateDisplay");
+    
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
@@ -86,6 +89,11 @@
 #pragma mark - Notification handler methods
 
 - (void)handleBloodSugarDataChanged:(NSNotification *)notification
+{
+    [self updateDisplay];
+}
+
+- (void)handleApplicationDidBecomeActive:(NSNotification *)notification
 {
     [self updateDisplay];
 }
