@@ -34,11 +34,6 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
 }
 
-- (void)didAppear
-{
-    [self updateDisplay]; 
-}
-
 - (void)didDeactivate
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
