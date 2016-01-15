@@ -11,6 +11,8 @@
 
 #import "DefaultsLogController.h"
 
+static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
+
 @interface InterfaceController()
 
 @end
@@ -51,7 +53,7 @@
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
     
-    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
+    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
         [webRequestController performFetch];
     }
     
