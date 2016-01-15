@@ -158,10 +158,22 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                    }
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                                   NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
                                    if (!inBackground) {
                                        NSLog(@"error: %@", error);
+                                       NSLog(@"error response: %@", jsonError);
                                    } else {
-                                       dispatch_semaphore_signal(self.fetchSemaphore);
+                                       [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground error response: %@", jsonError]];
+                                   }
+                                   
+                                   self.dexcomToken = nil;
+                                   self.subscriptionId = nil;
+                                   self.latestBloodSugarData = nil;
+                                   
+                                   if (inBackground) {
+                                       [self performFetchAndWaitInternal];
+                                   } else {
+                                       [self performFetch];
                                    }
                                }
                                    inBackground:inBackground];
