@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class AuthenticationController;
+
 @interface ViewController : UIViewController
+
+@property (nonatomic, strong) AuthenticationController *authenticationController;
+
+@property (nonatomic, strong) IBOutletCollection(UIView) NSArray <UIView *> *loginViews;
+@property (nonatomic, strong) IBOutletCollection(UIView) NSArray <UIView *> *loggedInViews;
+
+- (IBAction)loginButtonTapped:(id)sender;
+- (IBAction)logoutButtonTapped:(id)sender;
 
 @end
 

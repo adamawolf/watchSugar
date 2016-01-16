@@ -9,7 +9,13 @@
 #import "AppDelegate.h"
 #import <WatchConnectivity/WatchConnectivity.h>
 
+#import "ViewController.h"
+
+#import "AuthenticationController.h"
+
 @interface AppDelegate () <WCSessionDelegate>
+
+@property (nonatomic, strong) AuthenticationController *authenticationController;
 
 @end
 
@@ -18,6 +24,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.authenticationController = [[AuthenticationController alloc] init];
+    
     //initialize CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -30,6 +38,9 @@
         
         DDLogDebug(@"activate session called on device");
     }
+    
+    ViewController *rootInterfaceController = (ViewController *)self.window.rootViewController;
+    rootInterfaceController.authenticationController = self.authenticationController;
     
     return YES;
 }
