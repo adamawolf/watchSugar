@@ -86,7 +86,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     }
     
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0" forHTTPHeaderField:@"User-Agent"];
+    [requestSerializer setValue:@"CGM-Store/4 CFNetwork/758.0.2 Darwin/15.0.0" forHTTPHeaderField:@"User-Agent"];
     [manager setRequestSerializer:requestSerializer];
     
     AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];

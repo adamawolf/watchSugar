@@ -32,6 +32,7 @@
 		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
 		94BF86F01C45F6AA001664ED /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BF86EF1C45F6AA001664ED /* WebRequestController.m */; };
 		94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
+		94C7E43D1C4AE3CC00BB99E4 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E43C1C4AE3CC00BB99E4 /* WebRequestController.m */; };
 		DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
@@ -138,6 +139,8 @@
 		94BF86EF1C45F6AA001664ED /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
 		94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationController.h; sourceTree = "<group>"; };
 		94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationController.m; sourceTree = "<group>"; };
+		94C7E43B1C4AE3CC00BB99E4 /* WebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestController.h; sourceTree = "<group>"; };
+		94C7E43C1C4AE3CC00BB99E4 /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
 		94E378BB1C2A492B00FE1131 /* WatchSugar.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugar.pch; sourceTree = "<group>"; };
 		94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugarExtension.pch; sourceTree = "<group>"; };
 		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -225,6 +228,8 @@
 				94313B5E1C1F98F900F74345 /* ViewController.m */,
 				94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */,
 				94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */,
+				94C7E43B1C4AE3CC00BB99E4 /* WebRequestController.h */,
+				94C7E43C1C4AE3CC00BB99E4 /* WebRequestController.m */,
 				94693FCD1C2609E200436C64 /* Core Data */,
 				94313B601C1F98F900F74345 /* Main.storyboard */,
 				94313B631C1F98F900F74345 /* Assets.xcassets */,
@@ -630,6 +635,7 @@
 				94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */,
 				94313B5F1C1F98F900F74345 /* ViewController.m in Sources */,
 				94693FD61C260A8A00436C64 /* Reading.m in Sources */,
+				94C7E43D1C4AE3CC00BB99E4 /* WebRequestController.m in Sources */,
 				94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */,
 				94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */,
 				94313B591C1F98F900F74345 /* main.m in Sources */,

@@ -12,10 +12,12 @@
 #import "ViewController.h"
 
 #import "AuthenticationController.h"
+#import "WebRequestController.h"
 
 @interface AppDelegate () <WCSessionDelegate>
 
 @property (nonatomic, strong) AuthenticationController *authenticationController;
+@property (nonatomic, strong) WebRequestController *webRequestController;
 
 @end
 
@@ -25,6 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.authenticationController = [[AuthenticationController alloc] init];
+    self.webRequestController = [[WebRequestController alloc] init];
     
     //initialize CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -41,6 +44,7 @@
     
     ViewController *rootInterfaceController = (ViewController *)self.window.rootViewController;
     rootInterfaceController.authenticationController = self.authenticationController;
+    rootInterfaceController.webRequestController = self.webRequestController;
     
     return YES;
 }

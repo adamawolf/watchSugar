@@ -8,10 +8,15 @@
 
 #import "ViewController.h"
 #import "AuthenticationController.h"
+#import "WebRequestController.h"
 
-@interface ViewController () <AuthenticationControllerDelegate>
+@interface ViewController () <AuthenticationControllerDelegate, WebRequestControllerDelegate>
 
 @property (nonatomic, assign) WSLoginStatus renderedStatus;
+
+@property (nonatomic, strong) NSString *errorMessage;
+
+@property (nonatomic, strong) NSString *dexcomToken;
 
 @end
 
@@ -33,6 +38,7 @@
     [super viewWillAppear:animated];
     
     self.authenticationController.delegate = self;
+    self.webRequestController.delegate = self;
     
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
@@ -42,13 +48,22 @@
     [super viewWillDisappear:animated];
     
     self.authenticationController.delegate = nil;
+    self.webRequestController.delegate = nil;
 }
 
 #pragma mark - Action methods
 
 - (IBAction)loginButtonTapped:(id)sender
 {
-    [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
+    NSString *accountName = self.accountNameTextView.text;
+    NSString *password = self.passwordTextView.text;
+    
+    if (accountName.length && password.length) {
+        [self.webRequestController authenticateWithDexcomAccountName:accountName andPassword:password];
+    } else {
+        self.errorMessage = @"Account name and password required.";
+        [self updateDisplayFromAuthenticationControllerAnimated:NO];
+    }
 }
 
 - (IBAction)logoutButtonTapped:(id)sender
@@ -68,6 +83,14 @@
         
         switch (currentStatus) {
             case WSLoginStatus_NotLoggedIn:
+                if (self.errorMessage == nil) {
+                    self.loginInformationLabel.text = @"Login to get started";
+                    self.loginInformationLabel.textColor = [UIColor blackColor];
+                } else {
+                    self.loginInformationLabel.text = self.errorMessage;
+                    self.loginInformationLabel.textColor = [UIColor redColor];
+                }
+                
                 [viewsToAppear addObjectsFromArray:self.loginViews];
                 [viewsToDisappear addObjectsFromArray:self.loggedInViews];
                 break;
@@ -117,6 +140,39 @@
 - (void)authenticationController:(AuthenticationController *)authenticationController didChangeLoginStatus:(WSLoginStatus)loginStatus
 {
     [self updateDisplayFromAuthenticationControllerAnimated:YES];
+}
+
+#pragma mark - WebRequestControllerDelegate methods
+
+- (void)webRequestController:(WebRequestController *)webRequestController authenticationDidSucceedWithToken:(NSString *)token
+{
+    self.dexcomToken = token;
+    
+    [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
+}
+
+- (void)webRequestController:(WebRequestController *)webRequestController authenticationDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+{
+    switch (errorCode) {
+        case WebRequestControllerErrorCode_AccountNotFound:
+            self.errorMessage = @"Error: Account name not found.";
+            break;
+            
+        case WebRequestControllerErrorCode_InvalidPassword:
+            self.errorMessage = @"Error: Invalid password.";
+            break;
+            
+        case WebRequestControllerErrorCode_MaxAttemptsReached:
+            self.errorMessage = @"Error: Max login attempts. Wait 10 minutes.";
+            break;
+            
+        default:
+            self.errorMessage = @"Error: Unknown error, please check your connection.";
+            break;
+            
+    }
+    
+    [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
 @end
