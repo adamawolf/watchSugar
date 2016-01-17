@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSString *dexcomDisplayName;
 @property (nonatomic, strong) NSString *dexcomEmail;
 
-@property (nonatomic, assign) BOOL loading;
+@property (nonatomic, strong) NSDictionary *pendingAuthenticationPayload;
 
 @end
 
@@ -63,7 +63,10 @@
     NSString *password = self.passwordTextView.text;
     
     if (accountName.length && password.length) {
-        self.loading = YES;
+        self.pendingAuthenticationPayload = @{
+                                       @"accountName": accountName,
+                                       @"password": password
+                                       };
         [self updateDisplayFromAuthenticationControllerAnimated:NO];
         
         [self.webRequestController authenticateWithDexcomAccountName:accountName andPassword:password];
@@ -78,6 +81,7 @@
     self.accountNameTextView.text = nil;
     self.passwordTextView.text = nil;
     
+    [self.authenticationController clearAuthenticationPayload];
     [self.authenticationController setDexcomDisplayName:nil andEmail:nil];
     [self.authenticationController changeToLoginStatus:WSLoginStatus_NotLoggedIn];
 }
@@ -102,7 +106,7 @@
                     self.loginInformationLabel.textColor = [UIColor redColor];
                 }
                 
-                self.loginButton.enabled = !self.loading;
+                self.loginButton.enabled = !self.pendingAuthenticationPayload;
                 
                 [viewsToAppear addObjectsFromArray:self.loginViews];
                 [viewsToDisappear addObjectsFromArray:self.loggedInViews];
@@ -151,12 +155,16 @@
             appearBlock();
         }
     }
+    
+    DDLogDebug(@"current saved authentication payload: %@", [self.authenticationController authenticationPayload]);
 }
 
 - (void)checkForCompleteAuthentication
 {
     if (self.dexcomToken && self.dexcomDisplayName && self.dexcomEmail) {
-        self.loading = NO;
+        [self.authenticationController saveAuthenticationPayloadToKeychain:self.pendingAuthenticationPayload];
+        self.pendingAuthenticationPayload = nil;
+        
         [self.authenticationController setDexcomDisplayName:self.dexcomDisplayName andEmail:self.dexcomEmail];
         self.dexcomToken = self.dexcomDisplayName = self.dexcomEmail = nil;
         [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
@@ -201,7 +209,7 @@
             
     }
     
-    self.loading = NO;
+    self.pendingAuthenticationPayload = nil;
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
@@ -218,7 +226,8 @@
     
     self.dexcomToken = nil;
     self.dexcomEmail = nil;
-    self.loading = NO;
+    
+    self.pendingAuthenticationPayload = nil;
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
@@ -235,7 +244,8 @@
     
     self.dexcomToken = nil;
     self.dexcomEmail = nil;
-    self.loading = NO;
+
+    self.pendingAuthenticationPayload = nil;
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 

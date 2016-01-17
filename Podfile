@@ -4,10 +4,12 @@
 target 'WatchSugar' do
     pod 'AFNetworking'
     pod 'CocoaLumberjack'
+    pod 'UICKeyChainStore'
 end
 
 
 target 'WatchSugar WatchKit Extension' do
     platform :watchos, '2.0'
     pod 'AFNetworking'
+    pod 'UICKeyChainStore'
 end

@@ -7,6 +7,7 @@
 //
 
 #import "AuthenticationController.h"
+#import "UICKeyChainStore.h"
 
 NSString *const WSDefaults_LoginStatus = @"WSDefaults_LoginStatus";
 NSString *const WSDefaults_LoggedInDisplayName  = @"WSDefaults_LoggedInDisplayName";
@@ -38,6 +39,34 @@ NSString *const WSDefaults_LoggedInEmail = @"WSDefaults_LoggedInEmail";
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.delegate authenticationController:self didChangeLoginStatus:self.loginStatus];
+}
+
+- (void)saveAuthenticationPayloadToKeychain:(NSDictionary *)authenticationPayload
+{
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStore];
+    keychain[@"accountName"] = authenticationPayload[@"accountName"];
+    keychain[@"password"] = authenticationPayload[@"password"];
+}
+
+- (NSDictionary *)authenticationPayload
+{
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStore];
+    
+    if ([keychain contains:@"accountName"] && [keychain contains:@"password"]) {
+        return @{
+                 @"accountName": keychain[@"accountName"],
+                 @"password": keychain[@"password"],
+                 };
+    } else {
+        return nil;
+    }
+}
+
+- (void)clearAuthenticationPayload
+{
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStore];
+    keychain[@"accountName"] = nil;
+    keychain[@"password"] = nil;
 }
 
 - (void)setDexcomDisplayName:(NSString *)displayName andEmail:(NSString *)email
