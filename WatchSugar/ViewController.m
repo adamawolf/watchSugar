@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSString *dexcomDisplayName;
 @property (nonatomic, strong) NSString *dexcomEmail;
 
+@property (nonatomic, assign) BOOL loading;
+
 @end
 
 @implementation ViewController
@@ -61,6 +63,9 @@
     NSString *password = self.passwordTextView.text;
     
     if (accountName.length && password.length) {
+        self.loading = YES;
+        [self updateDisplayFromAuthenticationControllerAnimated:NO];
+        
         [self.webRequestController authenticateWithDexcomAccountName:accountName andPassword:password];
     } else {
         self.errorMessage = @"Account name and password required.";
@@ -70,6 +75,9 @@
 
 - (IBAction)logoutButtonTapped:(id)sender
 {
+    self.accountNameTextView.text = nil;
+    self.passwordTextView.text = nil;
+    
     [self.authenticationController setDexcomDisplayName:nil andEmail:nil];
     [self.authenticationController changeToLoginStatus:WSLoginStatus_NotLoggedIn];
 }
@@ -93,6 +101,8 @@
                     self.loginInformationLabel.text = self.errorMessage;
                     self.loginInformationLabel.textColor = [UIColor redColor];
                 }
+                
+                self.loginButton.enabled = !self.loading;
                 
                 [viewsToAppear addObjectsFromArray:self.loginViews];
                 [viewsToDisappear addObjectsFromArray:self.loggedInViews];
@@ -146,6 +156,7 @@
 - (void)checkForCompleteAuthentication
 {
     if (self.dexcomToken && self.dexcomDisplayName && self.dexcomEmail) {
+        self.loading = NO;
         [self.authenticationController setDexcomDisplayName:self.dexcomDisplayName andEmail:self.dexcomEmail];
         self.dexcomToken = self.dexcomDisplayName = self.dexcomEmail = nil;
         [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
@@ -190,6 +201,7 @@
             
     }
     
+    self.loading = NO;
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
@@ -205,6 +217,9 @@
     self.errorMessage = @"Unexpected behavior after authentication. Please report.";
     
     self.dexcomToken = nil;
+    self.dexcomEmail = nil;
+    self.loading = NO;
+    [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
 - (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidSucceedWithEmail:(NSString *)email
@@ -219,6 +234,9 @@
     self.errorMessage = @"Unexpected behavior after authentication. Please report.";
     
     self.dexcomToken = nil;
+    self.dexcomEmail = nil;
+    self.loading = NO;
+    [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
 @end
