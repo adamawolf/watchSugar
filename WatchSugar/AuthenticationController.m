@@ -9,7 +9,7 @@
 #import "AuthenticationController.h"
 
 NSString *const WSDefaults_LoginStatus = @"WSDefaults_LoginStatus";
-NSString *const WSDefaults_LoggedInUsername  = @"WSDefaults_LoggedInUsername";
+NSString *const WSDefaults_LoggedInDisplayName  = @"WSDefaults_LoggedInDisplayName";
 NSString *const WSDefaults_LoggedInEmail = @"WSDefaults_LoggedInEmail";
 
 @implementation AuthenticationController
@@ -23,6 +23,9 @@ NSString *const WSDefaults_LoggedInEmail = @"WSDefaults_LoggedInEmail";
         if (self.loginStatus == WSLoginStatus_None) {
             [self changeToLoginStatus:WSLoginStatus_NotLoggedIn];
         }
+        
+        self.displayName = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LoggedInDisplayName];
+        self.email = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LoggedInEmail];
     }
     return self;
 }
@@ -35,6 +38,27 @@ NSString *const WSDefaults_LoggedInEmail = @"WSDefaults_LoggedInEmail";
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.delegate authenticationController:self didChangeLoginStatus:self.loginStatus];
+}
+
+- (void)setDexcomDisplayName:(NSString *)displayName andEmail:(NSString *)email
+{
+    self.displayName = displayName;
+    
+    if (self.displayName == nil) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LoggedInDisplayName];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:self.displayName forKey:WSDefaults_LoggedInDisplayName];
+    }
+    
+    self.email = email;
+    
+    if (self.email == nil) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LoggedInEmail];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:self.email forKey:WSDefaults_LoggedInEmail];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

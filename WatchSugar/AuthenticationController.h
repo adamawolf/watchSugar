@@ -30,8 +30,12 @@ typedef NS_ENUM(NSUInteger, WSLoginStatus) {
 
 @property (nonatomic, assign) WSLoginStatus loginStatus;
 
+@property (nonatomic, strong) NSString *displayName;
+@property (nonatomic, strong) NSString *email;
+
 @property (nonatomic, weak) id<AuthenticationControllerDelegate> delegate;
 
 - (void)changeToLoginStatus:(WSLoginStatus)loginStatus;
+- (void)setDexcomDisplayName:(NSString *)displayName andEmail:(NSString *)email;
 
 @end

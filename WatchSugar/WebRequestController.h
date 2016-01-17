@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, WebRequestControllerErrorCode) {
     WebRequestControllerErrorCode_UnknownError,
+    WebRequestControllerErrorCode_InvalidRequest,
     WebRequestControllerErrorCode_AccountNotFound,
     WebRequestControllerErrorCode_InvalidPassword,
     WebRequestControllerErrorCode_MaxAttemptsReached,
@@ -22,6 +23,12 @@ typedef NS_ENUM(NSUInteger, WebRequestControllerErrorCode) {
 - (void)webRequestController:(WebRequestController *)webRequestController authenticationDidSucceedWithToken:(NSString *)token;
 - (void)webRequestController:(WebRequestController *)webRequestController authenticationDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode;
 
+- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidSucceedWithName:(NSString *)displayName;
+- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode;
+
+- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidSucceedWithEmail:(NSString *)email;
+- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode;
+
 @end
 
 @interface WebRequestController : NSObject
@@ -29,5 +36,8 @@ typedef NS_ENUM(NSUInteger, WebRequestControllerErrorCode) {
 @property (nonatomic, weak) id<WebRequestControllerDelegate> delegate;
 
 - (void)authenticateWithDexcomAccountName:(NSString *)accountName andPassword:(NSString *)password;
+
+- (void)readDexcomDisplayNameForToken:(NSString *)dexcomToken;
+- (void)readDexcomEmailForToken:(NSString *)dexcomToken;
 
 @end

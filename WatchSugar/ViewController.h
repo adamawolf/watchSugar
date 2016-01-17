@@ -24,6 +24,9 @@
 @property (nonatomic, strong) IBOutlet UITextField *passwordTextView;
 @property (nonatomic, strong) IBOutlet UIButton *loginButton;
 
+@property (nonatomic, strong) IBOutlet UILabel *displayNameLabel;
+@property (nonatomic, strong) IBOutlet UILabel *emailLabel;
+
 - (IBAction)loginButtonTapped:(id)sender;
 - (IBAction)logoutButtonTapped:(id)sender;
 

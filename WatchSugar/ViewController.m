@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSString *errorMessage;
 
 @property (nonatomic, strong) NSString *dexcomToken;
+@property (nonatomic, strong) NSString *dexcomDisplayName;
+@property (nonatomic, strong) NSString *dexcomEmail;
 
 @end
 
@@ -68,6 +70,7 @@
 
 - (IBAction)logoutButtonTapped:(id)sender
 {
+    [self.authenticationController setDexcomDisplayName:nil andEmail:nil];
     [self.authenticationController changeToLoginStatus:WSLoginStatus_NotLoggedIn];
 }
 
@@ -97,6 +100,11 @@
             case WSLoginStatus_LoggedIn:
                 [viewsToAppear addObjectsFromArray:self.loggedInViews];
                 [viewsToDisappear addObjectsFromArray:self.loginViews];
+                
+                //input data into logged in fields
+                self.displayNameLabel.text = self.authenticationController.displayName;
+                self.emailLabel.text = self.authenticationController.email;
+                
                 break;
                 
             default:
@@ -135,6 +143,15 @@
     }
 }
 
+- (void)checkForCompleteAuthentication
+{
+    if (self.dexcomToken && self.dexcomDisplayName && self.dexcomEmail) {
+        [self.authenticationController setDexcomDisplayName:self.dexcomDisplayName andEmail:self.dexcomEmail];
+        self.dexcomToken = self.dexcomDisplayName = self.dexcomEmail = nil;
+        [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
+    }
+}
+
 #pragma mark - AuthenticationControllerDelegate methods
 
 - (void)authenticationController:(AuthenticationController *)authenticationController didChangeLoginStatus:(WSLoginStatus)loginStatus
@@ -147,8 +164,9 @@
 - (void)webRequestController:(WebRequestController *)webRequestController authenticationDidSucceedWithToken:(NSString *)token
 {
     self.dexcomToken = token;
-    
-    [self.authenticationController changeToLoginStatus:WSLoginStatus_LoggedIn];
+
+    [self.webRequestController readDexcomDisplayNameForToken:self.dexcomToken];
+    [self.webRequestController readDexcomEmailForToken:self.dexcomToken];
 }
 
 - (void)webRequestController:(WebRequestController *)webRequestController authenticationDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
@@ -173,6 +191,34 @@
     }
     
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
+}
+
+- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidSucceedWithName:(NSString *)displayName
+{
+    self.dexcomDisplayName = displayName;
+    
+    [self checkForCompleteAuthentication];
+}
+
+- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+{
+    self.errorMessage = @"Unexpected behavior after authentication. Please report.";
+    
+    self.dexcomToken = nil;
+}
+
+- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidSucceedWithEmail:(NSString *)email
+{
+    self.dexcomEmail = email;
+    
+    [self checkForCompleteAuthentication];
+}
+
+- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+{
+    self.errorMessage = @"Unexpected behavior after authentication. Please report.";
+    
+    self.dexcomToken = nil;
 }
 
 @end

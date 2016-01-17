@@ -55,6 +55,52 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
                                }];
 }
 
+- (void)readDexcomDisplayNameForToken:(NSString *)dexcomToken
+{
+    if (!dexcomToken) {
+        [self.delegate webRequestController:self authenticationDidFailWithErrorCode:WebRequestControllerErrorCode_InvalidRequest];
+        return;
+    }
+    
+    NSString *URLString = [NSString stringWithFormat:@"https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherAccountDisplayName?sessionId=%@", dexcomToken];
+    
+    [WebRequestController dexcomPOSTToURLString:URLString
+                                 withParameters:nil
+                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                                   [self.delegate webRequestController:self displayNameRequestDidSucceedWithName:responseObject];
+                               }
+                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                                   NSDictionary *errorResponse = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
+                                   NSLog(@"readDexcomDisplayNameForToken failure with error response: %@", errorResponse);
+                                   
+                                   WebRequestControllerErrorCode errorCode = WebRequestControllerErrorCode_UnknownError;
+                                   [self.delegate webRequestController:self displayNameRequestDidFailWithErrorCode:errorCode];
+                               }];
+}
+
+- (void)readDexcomEmailForToken:(NSString *)dexcomToken
+{
+    if (!dexcomToken) {
+        [self.delegate webRequestController:self authenticationDidFailWithErrorCode:WebRequestControllerErrorCode_InvalidRequest];
+        return;
+    }
+    
+    NSString *URLString = [NSString stringWithFormat:@"https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherAccountEmail?sessionId=%@", dexcomToken];
+    
+    [WebRequestController dexcomPOSTToURLString:URLString
+                                 withParameters:nil
+                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                                   [self.delegate webRequestController:self emailRequestDidSucceedWithEmail:responseObject];
+                               }
+                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                                   NSDictionary *errorResponse = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
+                                   NSLog(@"readDexcomEmailForToken failure with error response: %@", errorResponse);
+                                   
+                                   WebRequestControllerErrorCode errorCode = WebRequestControllerErrorCode_UnknownError;
+                                   [self.delegate webRequestController:self emailRequestDidFailWithErrorCode:errorCode];
+                               }];
+}
+
 #pragma mark - Static Helper methods
 
 + (void)dexcomPOSTToURLString:(NSString *)URLString
@@ -66,6 +112,7 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
 
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
     [requestSerializer setValue:@"CGM-Store/4 CFNetwork/758.0.2 Darwin/15.0.0" forHTTPHeaderField:@"User-Agent"];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [manager setRequestSerializer:requestSerializer];
     
     AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
