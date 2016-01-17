@@ -39,13 +39,14 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     
     [DefaultsController addLogMessage:@"performFetch"];
     
+    //TODO: cache the dexcom token in user defaults, to avoid extra web requests when token would still be valid across instantiations of extensiondelegate
     if (!self.dexcomToken) {
-        [self authenticateWithDexcomInBackground:NO];
+        [self authenticateWithDexcomAndWait:NO];
     } else {
         if (!self.subscriptionId) {
-            [self fetchSubscriptionsInBackground:NO];
+            [self fetchSubscriptionsAndWait:NO];
         } else {
-            [self fetchLatestBloodSugarInBackground:NO];
+            [self fetchLatestBloodSugarAndWait:NO];
         }
     }
 }
@@ -64,12 +65,12 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [DefaultsController addLogMessage:@"performFetchAndWait"];
     
     if (!self.dexcomToken) {
-        [self authenticateWithDexcomInBackground:YES];
+        [self authenticateWithDexcomAndWait:YES];
     } else {
         if (!self.subscriptionId) {
-            [self fetchSubscriptionsInBackground:YES];
+            [self fetchSubscriptionsAndWait:YES];
         } else {
-            [self fetchLatestBloodSugarInBackground:YES];
+            [self fetchLatestBloodSugarAndWait:YES];
         }
     }
 }
@@ -78,10 +79,10 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
-                 inBackground:(BOOL)inBackground
+                 shouldWait:(BOOL)shouldWait
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    if (inBackground) {
+    if (shouldWait) {
         manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     }
     
@@ -95,9 +96,9 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
 }
 
-- (void)authenticateWithDexcomInBackground:(BOOL)inBackground
+- (void)authenticateWithDexcomAndWait:(BOOL)shouldWait
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"authenticateWithDexcomInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"authenticateWithDexcomAndWait:%@", shouldWait ? @"YES" : @"NO"]];
     
     NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/LoginSubscriberAccount";
     NSDictionary *parameters = @{@"accountId": @"***REMOVED***",
@@ -107,34 +108,34 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
                                withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"received dexcom token: %@", responseObject);
                                    }
                                    self.dexcomToken = responseObject;
                                    
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
                                    }
                                    
                                    if (!self.subscriptionId) {
-                                       [self fetchSubscriptionsInBackground:inBackground];
+                                       [self fetchSubscriptionsAndWait:shouldWait];
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"error: %@", error);
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
-                                   inBackground:inBackground];
+                                   shouldWait:shouldWait];
 }
 
-- (void)fetchSubscriptionsInBackground:(BOOL)inBackground
+- (void)fetchSubscriptionsAndWait:(BOOL)shouldWait
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsAndWait:%@", shouldWait ? @"YES" : @"NO"]];
     
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ListSubscriberAccountSubscriptions?sessionId=%@", self.dexcomToken];
     NSString *parameters = nil;
@@ -142,46 +143,46 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
                                withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"received subscription list: %@", responseObject);
                                    }
                                    self.subscriptionId = responseObject[0][@"SubscriptionId"];
                                    
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        [[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
                                    }
                                    
                                    if (!self.latestBloodSugarData) {
-                                       [self fetchLatestBloodSugarInBackground:inBackground];
+                                       [self fetchLatestBloodSugarAndWait:shouldWait];
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"error: %@", error);
                                        NSLog(@"error response: %@", jsonError);
                                    } else {
-                                       [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground error response: %@", jsonError]];
+                                       [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsAndWait error response: %@", jsonError]];
                                    }
                                    
                                    self.dexcomToken = nil;
                                    self.subscriptionId = nil;
                                    self.latestBloodSugarData = nil;
                                    
-                                   if (inBackground) {
+                                   if (shouldWait) {
                                        [self performFetchAndWaitInternal];
                                    } else {
                                        [self performFetch];
                                    }
                                }
-                                   inBackground:inBackground];
+                                   shouldWait:shouldWait];
 }
 
-- (void)fetchLatestBloodSugarInBackground:(BOOL)inBackground
+- (void)fetchLatestBloodSugarAndWait:(BOOL)shouldWait
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait:%@", shouldWait ? @"YES" : @"NO"]];
     
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ReadLastGlucoseFromSubscriptions?sessionId=%@", self.dexcomToken];
     NSArray *parameters = @[self.subscriptionId];
@@ -189,14 +190,14 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
                                withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
                                    }
-                                   [self setLatestBloodSugarData:responseObject[0][@"Egv"] inBackground:inBackground];
+                                   [self setLatestBloodSugarData:responseObject[0][@"Egv"] inBackground:shouldWait];
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
-                                   if (!inBackground) {
+                                   if (!shouldWait) {
                                        NSLog(@"error: %@", error);
                                        NSLog(@"error response: %@", jsonError);
                                    }
@@ -206,7 +207,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                        self.subscriptionId = nil;
                                        self.latestBloodSugarData = nil;
                                        
-                                       if (inBackground) {
+                                       if (shouldWait) {
                                            [self performFetchAndWaitInternal];
                                        } else {
                                            [self performFetch];
@@ -215,7 +216,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
-                                   inBackground:inBackground];
+                                   shouldWait:shouldWait];
 }
 
 static const NSInteger kMaxReadings = 20;
