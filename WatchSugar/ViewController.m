@@ -10,7 +10,7 @@
 #import "AuthenticationController.h"
 #import "WebRequestController.h"
 
-@interface ViewController () <AuthenticationControllerDelegate, WebRequestControllerDelegate>
+@interface ViewController () <AuthenticationControllerDelegate, WebRequestControllerDelegate, UITextFieldDelegate>
 
 @property (nonatomic, assign) WSLoginStatus renderedStatus;
 
@@ -237,6 +237,21 @@
     self.dexcomEmail = nil;
     self.loading = NO;
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
+}
+
+#pragma mark - UITextFieldDelegate methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.accountNameTextView) {
+        [self.passwordTextView becomeFirstResponder];
+    } else {
+        [self.passwordTextView resignFirstResponder];
+        
+        [self loginButtonTapped:self.loginButton];
+    }
+    
+    return YES;
 }
 
 @end
