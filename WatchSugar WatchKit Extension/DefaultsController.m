@@ -6,11 +6,12 @@
 //  Copyright © 2016 Flairify. All rights reserved.
 //
 
-#import "DefaultsLogController.h"
+#import "DefaultsController.h"
 
 NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
+NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 
-@implementation DefaultsLogController
+@implementation DefaultsController
 
 + (void)addLogMessage:(NSString *)logMessage
 {
@@ -48,6 +49,17 @@ NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 + (void)clearAllLogMessages
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (WSLoginStatus)lastKnownLoginStatus
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_LastKnownLoginStatus];
+}
+
++ (void)setLastKnownLoginStatus:(WSLoginStatus)status
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:status forKey:WSDefaults_LastKnownLoginStatus];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

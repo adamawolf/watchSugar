@@ -11,7 +11,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-#import "DefaultsLogController.h"
+#import "DefaultsController.h"
 
 NSString *const WSNotificationDexcomDataChanged = @"WSNotificationDexcomDataChanged";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
@@ -37,7 +37,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 {
     self.lastFetchAttempt = [NSDate date];
     
-    [DefaultsLogController addLogMessage:@"performFetch"];
+    [DefaultsController addLogMessage:@"performFetch"];
     
     if (!self.dexcomToken) {
         [self authenticateWithDexcomInBackground:NO];
@@ -61,7 +61,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 {
     self.lastFetchAttempt = [NSDate date];
     
-    [DefaultsLogController addLogMessage:@"performFetchAndWait"];
+    [DefaultsController addLogMessage:@"performFetchAndWait"];
     
     if (!self.dexcomToken) {
         [self authenticateWithDexcomInBackground:YES];
@@ -97,7 +97,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)authenticateWithDexcomInBackground:(BOOL)inBackground
 {
-    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"authenticateWithDexcomInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"authenticateWithDexcomInBackground:%@", inBackground ? @"YES" : @"NO"]];
     
     NSString *URLString = @"https://share1.dexcom.com/ShareWebServices/Services/General/LoginSubscriberAccount";
     NSDictionary *parameters = @{@"accountId": @"***REMOVED***",
@@ -134,7 +134,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)fetchSubscriptionsInBackground:(BOOL)inBackground
 {
-    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground:%@", inBackground ? @"YES" : @"NO"]];
     
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ListSubscriberAccountSubscriptions?sessionId=%@", self.dexcomToken];
     NSString *parameters = nil;
@@ -163,7 +163,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
                                        NSLog(@"error: %@", error);
                                        NSLog(@"error response: %@", jsonError);
                                    } else {
-                                       [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground error response: %@", jsonError]];
+                                       [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchSubscriptionsInBackground error response: %@", jsonError]];
                                    }
                                    
                                    self.dexcomToken = nil;
@@ -181,7 +181,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 - (void)fetchLatestBloodSugarInBackground:(BOOL)inBackground
 {
-    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarInBackground:%@", inBackground ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarInBackground:%@", inBackground ? @"YES" : @"NO"]];
     
     NSString *URLString = [NSString stringWithFormat:@"https://share1.dexcom.com/ShareWebServices/Services/Subscriber/ReadLastGlucoseFromSubscriptions?sessionId=%@", self.dexcomToken];
     NSArray *parameters = @[self.subscriptionId];
@@ -249,7 +249,7 @@ static const NSInteger kMaxReadings = 20;
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
+            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
             
             if (!inBackground) {
                 for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
@@ -258,7 +258,7 @@ static const NSInteger kMaxReadings = 20;
             }
             
         } else {
-            [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
+            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
             
             if (!inBackground) {
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");

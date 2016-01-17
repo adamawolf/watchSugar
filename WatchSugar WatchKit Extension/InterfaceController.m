@@ -9,7 +9,8 @@
 #import "InterfaceController.h"
 #import "ExtensionDelegate.h"
 
-#import "DefaultsLogController.h"
+#import "DefaultsController.h"
+#import "WebRequestController.h"
 
 static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
@@ -32,6 +33,11 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationDexcomDataChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
+}
+
+- (void)didAppear
+{
+    [self updateDisplay];
 }
 
 - (void)didDeactivate
@@ -99,12 +105,12 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 - (IBAction)dumpLogTapped:(id)sender
 {
-    NSLog(@"%@", [DefaultsLogController allLogMessages]);
+    NSLog(@"%@", [DefaultsController allLogMessages]);
 }
 
 - (IBAction)clearLogTapped:(id)sender
 {
-    [DefaultsLogController clearAllLogMessages];
+    [DefaultsController clearAllLogMessages];
 }
 
 @end

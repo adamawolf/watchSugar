@@ -7,10 +7,13 @@
 //
 
 #import <WatchKit/WatchKit.h>
-#import "WebRequestController.h"
+
+@class WebRequestController;
+@class AuthenticationController;
 
 @interface ExtensionDelegate : NSObject <WKExtensionDelegate>
 
+@property (nonatomic, strong) AuthenticationController * authenticationController;
 @property (nonatomic, strong) WebRequestController *webRequestController;
 
 @end

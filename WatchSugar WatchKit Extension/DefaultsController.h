@@ -8,14 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const WSDefaults_LogMessageArray;
+#import "AuthenticationController.h"
 
-@interface DefaultsLogController : NSObject
+extern NSString *const WSDefaults_LogMessageArray;
+extern NSString *const WSDefaults_LastKnownLoginStatus;
+
+@interface DefaultsController : NSObject
 
 + (void)addLogMessage:(NSString *)logMessage;
 
 + (NSArray <NSString *> *)allLogMessages;
 
 + (void)clearAllLogMessages;
+
++ (WSLoginStatus)lastKnownLoginStatus;
++ (void)setLastKnownLoginStatus:(WSLoginStatus)status;
 
 @end

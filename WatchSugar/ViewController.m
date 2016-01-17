@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import "AuthenticationController.h"
 #import "WebRequestController.h"
 
@@ -163,6 +164,7 @@
 {
     if (self.dexcomToken && self.dexcomDisplayName && self.dexcomEmail) {
         [self.authenticationController saveAuthenticationPayloadToKeychain:self.pendingAuthenticationPayload];
+        
         self.pendingAuthenticationPayload = nil;
         
         [self.authenticationController setDexcomDisplayName:self.dexcomDisplayName andEmail:self.dexcomEmail];
@@ -176,6 +178,10 @@
 - (void)authenticationController:(AuthenticationController *)authenticationController didChangeLoginStatus:(WSLoginStatus)loginStatus
 {
     [self updateDisplayFromAuthenticationControllerAnimated:YES];
+    
+    //alert the watch app
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate updateApplicationContext];
 }
 
 #pragma mark - WebRequestControllerDelegate methods

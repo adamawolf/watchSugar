@@ -14,5 +14,7 @@ extern NSString *const WSNotificationDexcomDataChanged;
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)updateApplicationContext;
+
 @end
 

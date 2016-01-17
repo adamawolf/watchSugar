@@ -10,7 +10,9 @@
 
 #import "ExtensionDelegate.h"
 
-#import "DefaultsLogController.h"
+#import "DefaultsController.h"
+
+#import "WebRequestController.h"
 
 @interface ComplicationController ()
 
@@ -66,9 +68,9 @@
         }
         timeStampAsDate = [_timeStampDateFormatter stringFromDate:timeStampDate];
         
-        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning BS of %@, reading date %@", bloodSugarValue, timeStampAsDate]];
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning BS of %@, reading date %@", bloodSugarValue, timeStampAsDate]];
     } else {
-        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning %@", bloodSugarValue]];
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning %@", bloodSugarValue]];
     }
     
     // Create the template and timeline entry.
@@ -118,14 +120,14 @@
         _timeStampDateFormatter.timeStyle = NSDateFormatterShortStyle;
     }
     
-    [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"getNextRequestedUpdateDateWithHandler requesting future date: %@", [_timeStampDateFormatter stringFromDate:futureDate]]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getNextRequestedUpdateDateWithHandler requesting future date: %@", [_timeStampDateFormatter stringFromDate:futureDate]]];
     
     handler(futureDate);
 }
 
 - (void)requestedUpdateDidBegin
 {
-    [DefaultsLogController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
+    [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
     
     NSDictionary *previousLatestReading = [[[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings] lastObject];
     
@@ -134,7 +136,7 @@
     if (!extensionDelegate.webRequestController) {
         extensionDelegate.webRequestController = [[WebRequestController alloc] init];
         
-        [DefaultsLogController addLogMessage:[NSString stringWithFormat:@"requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
     }
     
     WebRequestController *webRequestController = extensionDelegate.webRequestController;
@@ -165,7 +167,7 @@
 
 - (void)requestedUpdateBudgetExhausted
 {
-    [DefaultsLogController addLogMessage:@"ComplicationController requestedUpdateBudgetExhausted!"];
+    [DefaultsController addLogMessage:@"ComplicationController requestedUpdateBudgetExhausted!"];
 }
 
 #pragma mark - Placeholder Templates

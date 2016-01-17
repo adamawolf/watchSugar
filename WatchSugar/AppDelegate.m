@@ -54,11 +54,33 @@
 
 }
 
+#pragma mark - Helper methods
+
+- (void)updateApplicationContext
+{
+    NSMutableDictionary *context = [NSMutableDictionary new];
+    context[@"loginStatus"] = @(self.authenticationController.loginStatus);
+    
+    NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
+    if (authenticationPayload) {
+        context[@"authenticationPayload"] = authenticationPayload;
+    }
+    
+    NSError *anError;
+    [[WCSession defaultSession] updateApplicationContext:context error:&anError];
+    
+    if (anError) {
+        DDLogDebug(@"error updateApplicationContext: %@", anError);
+    }
+}
+
 #pragma mark - WCSessionDelegate methods
 
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message
 {
-
+    if ([message[@"watchIsRequestingAuthenticationPayload"] boolValue]) {
+        [self updateApplicationContext];
+    }
 }
 
 @end
