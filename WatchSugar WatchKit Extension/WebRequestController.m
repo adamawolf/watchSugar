@@ -220,16 +220,16 @@ static const NSInteger kMaxReadings = 20;
                 }
             }
             
+            if (!inBackground) {
+                [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
+            }
+            
         } else {
             [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
             
             if (!inBackground) {
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
             }
-        }
-        
-        if (!inBackground) {
-            //[[NSNotificationCenter defaultCenter] postNotificationName:WSNotificationDexcomDataChanged object:nil userInfo:nil];
         }
     }
     

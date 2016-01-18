@@ -14,7 +14,7 @@
 
 static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
-@interface InterfaceController()
+@interface InterfaceController() <WebRequestControllerDelegate>
 
 @end
 
@@ -31,6 +31,10 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 {
     [super willActivate];
     
+    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    webRequestController.delegate = self;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
 }
 
@@ -42,6 +46,10 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 - (void)didDeactivate
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    webRequestController.delegate = nil;
     
     [super didDeactivate];
 }
@@ -110,6 +118,13 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 - (IBAction)clearLogTapped:(id)sender
 {
     [DefaultsController clearAllLogMessages];
+}
+
+#pragma mark - WebRequestControllerDelegate methods
+
+- (void)webRequestControllerDidFetchNewBloodSugarData:(WebRequestController *)webRequestController
+{
+    [self updateDisplay];
 }
 
 @end
