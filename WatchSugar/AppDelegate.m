@@ -23,11 +23,17 @@
 
 @implementation AppDelegate
 
+- (void)initializeSubControllers
+{
+    self.authenticationController = [[AuthenticationController alloc] init];
+    if (!self.webRequestController) {
+        self.webRequestController = [[WebRequestController alloc] init];
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.authenticationController = [[AuthenticationController alloc] init];
-    self.webRequestController = [[WebRequestController alloc] init];
+    [self initializeSubControllers];
     
     //initialize CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];

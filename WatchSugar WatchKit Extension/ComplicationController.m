@@ -133,10 +133,10 @@
     
     // Get the current complication data from the extension delegate.
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-    if (!extensionDelegate.webRequestController) {
-        extensionDelegate.webRequestController = [[WebRequestController alloc] init];
+    if (!extensionDelegate.webRequestController || !extensionDelegate.authenticationController) {
+        [extensionDelegate initializeSubControllers];
         
-        [DefaultsController addLogMessage:[NSString stringWithFormat:@"requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"ComplicationController requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
     }
     
     WebRequestController *webRequestController = extensionDelegate.webRequestController;

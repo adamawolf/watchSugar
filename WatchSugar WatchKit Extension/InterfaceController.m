@@ -31,7 +31,6 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 {
     [super willActivate];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleBloodSugarDataChanged:) name:WSNotificationDexcomDataChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
 }
 

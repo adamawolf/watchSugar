@@ -22,17 +22,20 @@
 
 @implementation ExtensionDelegate
 
+- (void)initializeSubControllers
+{
+    self.authenticationController = [[AuthenticationController alloc] init];
+    if (!self.webRequestController) {
+        self.webRequestController = [[WebRequestController alloc] init];
+        self.webRequestController.authenticationController = self.authenticationController;
+    }
+}
+
 - (void)applicationDidFinishLaunching
 {
     [DefaultsController addLogMessage:@"applicationDidFinishLaunching"];
     
-    self.authenticationController = [[AuthenticationController alloc] init];
-    
-    if (!self.webRequestController) {
-        self.webRequestController = [[WebRequestController alloc] init];
-        
-        [DefaultsController addLogMessage:[NSString stringWithFormat:@"ExtensionDelegate allocated: %@", self.webRequestController]];
-    }
+    [self initializeSubControllers];
     
     //initialize WatchConnectivity
     if ([WCSession isSupported]) {

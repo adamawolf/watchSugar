@@ -16,4 +16,6 @@
 @property (nonatomic, strong) AuthenticationController * authenticationController;
 @property (nonatomic, strong) WebRequestController *webRequestController;
 
+- (void)initializeSubControllers;
+
 @end

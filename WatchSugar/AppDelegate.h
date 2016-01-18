@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const WSNotificationDexcomDataChanged;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)updateApplicationContext;
+- (void)initializeSubControllers;
 
 @end
 

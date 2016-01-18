@@ -8,13 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const WSNotificationDexcomDataChanged;
 extern NSString *const WSDefaults_LastReadings;
+
+@class WebRequestController;
+@class AuthenticationController;
+
+@protocol WebRequestControllerDelegate <NSObject>
+
+- (void)webRequestControllerDidFetchNewBloodSugarData:(WebRequestController *)webRequestController;
+
+@end
 
 @interface WebRequestController : NSObject
 
+@property (nonatomic, weak) id<WebRequestControllerDelegate> delegate;
+
+@property (nonatomic, strong) AuthenticationController *authenticationController;
+
 @property (nonatomic, strong) NSString *dexcomToken;
-@property (nonatomic, strong) NSString *subscriptionId;
 @property (nonatomic, strong) NSDictionary * latestBloodSugarData;
 
 @property (nonatomic, strong) NSDate *lastFetchAttempt;
