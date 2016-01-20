@@ -14,6 +14,10 @@
 
 #import "WebRequestController.h"
 
+static NSTimeInterval kBufferEGVToComplicationUpdate = 45.0f;
+static NSTimeInterval kMinimumComplicationUpdateInterval = 9.0f * 60.0f;
+static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
+
 @interface ComplicationController ()
 
 @end
@@ -64,7 +68,7 @@
         if (!_timeStampDateFormatter) {
             _timeStampDateFormatter = [[NSDateFormatter alloc] init];
             _timeStampDateFormatter.dateStyle = NSDateFormatterShortStyle;
-            _timeStampDateFormatter.timeStyle = NSDateFormatterShortStyle;
+            _timeStampDateFormatter.timeStyle = NSDateFormatterMediumStyle;
         }
         timeStampAsDate = [_timeStampDateFormatter stringFromDate:timeStampDate];
         
@@ -111,13 +115,32 @@
 
 - (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler
 {
-    NSDate *futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
+    NSDate *futureDate = nil;
+    
+    //dexcom system captures an EGV every 5 minutes
+    //knowing that, let's be smart about the complication update interval.
+    //make it update 1) 45 seconds after an anticipated EGV reading and 2) no sooner than 9 minutes from now
+    
+    NSDictionary * latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
+    if (!latestReading) {
+        futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
+    } else {
+        NSTimeInterval timestamp = [latestReading[@"timestamp"] doubleValue] / 1000.00;
+        NSTimeInterval nextTimestamp = timestamp + kBufferEGVToComplicationUpdate;
+        
+        NSTimeInterval nineMinutesFromNowTimestamp = [[NSDate date] timeIntervalSince1970] + kMinimumComplicationUpdateInterval;
+        while (nextTimestamp < nineMinutesFromNowTimestamp) {
+            nextTimestamp += kEGVReadingInterval;
+        }
+        
+        futureDate = [NSDate dateWithTimeIntervalSince1970:nextTimestamp];
+    }
     
     static NSDateFormatter *_timeStampDateFormatter = nil;
     if (!_timeStampDateFormatter) {
         _timeStampDateFormatter = [[NSDateFormatter alloc] init];
         _timeStampDateFormatter.dateStyle = NSDateFormatterShortStyle;
-        _timeStampDateFormatter.timeStyle = NSDateFormatterShortStyle;
+        _timeStampDateFormatter.timeStyle = NSDateFormatterMediumStyle;
     }
     
     [DefaultsController addLogMessage:[NSString stringWithFormat:@"getNextRequestedUpdateDateWithHandler requesting future date: %@", [_timeStampDateFormatter stringFromDate:futureDate]]];
