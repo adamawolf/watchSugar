@@ -111,7 +111,6 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"CGM-Store/4 CFNetwork/758.0.2 Darwin/15.0.0" forHTTPHeaderField:@"User-Agent"];
     [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [manager setRequestSerializer:requestSerializer];
     
