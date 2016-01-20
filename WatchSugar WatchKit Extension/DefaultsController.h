@@ -12,6 +12,7 @@
 
 extern NSString *const WSDefaults_LogMessageArray;
 extern NSString *const WSDefaults_LastKnownLoginStatus;
+extern NSString *const WSDefaults_LastReadings;
 
 @interface DefaultsController : NSObject
 
@@ -23,5 +24,7 @@ extern NSString *const WSDefaults_LastKnownLoginStatus;
 
 + (WSLoginStatus)lastKnownLoginStatus;
 + (void)setLastKnownLoginStatus:(WSLoginStatus)status;
+
++ (NSArray <NSDictionary *> *)latestBloodSugarReadings;
 
 @end

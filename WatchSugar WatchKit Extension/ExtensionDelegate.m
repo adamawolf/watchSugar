@@ -96,6 +96,9 @@
     NSString *logMessage = [NSString stringWithFormat:@"handled updated applicationContext from device: %u", [applicationContext[@"loginStatus"] intValue]];
     NSLog(@"%@", logMessage);
     [DefaultsController addLogMessage:logMessage];
+    
+    InterfaceController *interfaceController = (InterfaceController *)[WKExtension sharedExtension].rootInterfaceController;
+    [interfaceController updateDisplay];
 }
 
 @end

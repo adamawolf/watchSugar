@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const WSDefaults_LastReadings;
-
 @class WebRequestController;
 @class AuthenticationController;
 

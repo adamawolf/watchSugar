@@ -11,6 +11,9 @@
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController">
                     <items>
                         <label alignment="left" text="watchSugar" id="PB0-pX-1SE"/>
+                        <label alignment="left" text="Please log in on your paired iPhone." numberOfLines="0" id="bge-eS-3L5">
+                            <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        </label>
                         <group width="1" alignment="left" id="OY1-CM-hss">
                             <items>
                                 <label alignment="left" text="102" id="CJe-pa-4I6">
@@ -26,7 +29,7 @@
                                 </group>
                             </items>
                         </group>
-                        <label alignment="left" text="4m28s ago" id="Wx1-hA-sNc">
+                        <label alignment="left" text="from 11/19 4:39 PM" minimumScaleFactor="0.5" id="Wx1-hA-sNc">
                             <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
                         <button width="1" alignment="left" title="Print Log" id="5q6-t2-tUU">
@@ -45,11 +48,14 @@
                     <connections>
                         <outlet property="agoLabel" destination="Wx1-hA-sNc" id="rH3-pH-WRn"/>
                         <outlet property="bloodSugarLabel" destination="CJe-pa-4I6" id="CdY-9S-vxh"/>
+                        <outlet property="clearLogButton" destination="EtU-cu-QZN" id="9CE-LY-tHv"/>
+                        <outlet property="notLoggedInLabel" destination="bge-eS-3L5" id="kCS-Cn-DvL"/>
+                        <outlet property="printLogButton" destination="5q6-t2-tUU" id="gZd-Bf-GG6"/>
                         <outlet property="trendImage" destination="KQ9-6d-wMe" id="Hzh-MI-ic0"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="259" y="338"/>
+            <point key="canvasLocation" x="235" y="331"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">

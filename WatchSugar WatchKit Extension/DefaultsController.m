@@ -10,6 +10,7 @@
 
 NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
+NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 @implementation DefaultsController
 
@@ -61,6 +62,13 @@ NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginSta
 {
     [[NSUserDefaults standardUserDefaults] setInteger:status forKey:WSDefaults_LastKnownLoginStatus];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSArray <NSDictionary *> *)latestBloodSugarReadings
+{
+    NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+    
+    return lastReadings;
 }
 
 @end

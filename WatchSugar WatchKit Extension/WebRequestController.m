@@ -15,8 +15,6 @@
 
 static NSString *const kDexcomApplicationId_G5PlatinumApp = @"***REMOVED***";
 
-NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
-
 @interface WebRequestController ()
 
 @property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;

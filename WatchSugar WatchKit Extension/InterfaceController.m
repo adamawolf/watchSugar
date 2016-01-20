@@ -58,50 +58,65 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 {
     NSLog(@"watch updateDisplay");
     
-    ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    WSLoginStatus loginStatus = [DefaultsController lastKnownLoginStatus];
     
-    if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
-        [webRequestController performFetch];
-    }
-    
-    NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
-
-    if (lastReadings.count) {
-        NSDictionary *latestReading = [lastReadings lastObject];
+    if (loginStatus == WSLoginStatus_LoggedIn) {
+        [self.bloodSugarLabel setHidden:NO];
+        [self.agoLabel setHidden:NO];
+        [self.trendImage setHidden:NO];
+        [self.printLogButton setHidden:NO];
+        [self.clearLogButton setHidden:NO];
         
-        int mostRecentValue = [latestReading[@"value"] intValue];
-        self.bloodSugarLabel.text = [NSString stringWithFormat:@"%d", mostRecentValue];
+        [self.notLoggedInLabel setHidden:YES];
         
-        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
+        WebRequestController *webRequestController = extensionDelegate.webRequestController;
         
-        static NSDateFormatter *_timeStampDateFormatter = nil;
-        if (!_timeStampDateFormatter) {
-            _timeStampDateFormatter = [[NSDateFormatter alloc] init];
-            _timeStampDateFormatter.dateFormat = @"M-d h:mm a";
+        if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
+            [webRequestController performFetch];
         }
+        
+        NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
 
-        self.agoLabel.text = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
-        
-        int trend = [latestReading[@"trend"] intValue];
-        NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
-        UIImage *trendImage = [UIImage imageNamed:trendImageName];
-        trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [self.trendImage setImage:trendImage];
-        
+        if (lastReadings.count) {
+            NSDictionary *latestReading = [lastReadings lastObject];
+            
+            int mostRecentValue = [latestReading[@"value"] intValue];
+            self.bloodSugarLabel.text = [NSString stringWithFormat:@"%d", mostRecentValue];
+            
+            NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+            
+            static NSDateFormatter *_timeStampDateFormatter = nil;
+            if (!_timeStampDateFormatter) {
+                _timeStampDateFormatter = [[NSDateFormatter alloc] init];
+                _timeStampDateFormatter.dateFormat = @"M-d h:mm a";
+            }
+
+            self.agoLabel.text = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
+            
+            int trend = [latestReading[@"trend"] intValue];
+            NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
+            UIImage *trendImage = [UIImage imageNamed:trendImageName];
+            trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [self.trendImage setImage:trendImage];
+            
+        } else {
+            self.bloodSugarLabel.text = @"--";
+            self.agoLabel.text = @"";
+            [self.trendImage setImage:nil];
+        }
     } else {
-        self.bloodSugarLabel.text = @"--";
-        self.agoLabel.text = @"";
-        self.trendLabel.text = @"";
+        [self.bloodSugarLabel setHidden:YES];
+        [self.agoLabel setHidden:YES];
+        [self.trendImage setHidden:YES];
+        [self.printLogButton setHidden:YES];
+        [self.clearLogButton setHidden:YES];
+        
+        [self.notLoggedInLabel setHidden:NO];
     }
 }
 
 #pragma mark - Notification handler methods
-
-- (void)handleBloodSugarDataChanged:(NSNotification *)notification
-{
-    [self updateDisplay];
-}
 
 - (void)handleApplicationDidBecomeActive:(NSNotification *)notification
 {
