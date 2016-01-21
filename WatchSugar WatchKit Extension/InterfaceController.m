@@ -99,6 +99,8 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
             UIImage *trendImage = [UIImage imageNamed:trendImageName];
             trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             [self.trendImage setImage:trendImage];
+         
+            [DefaultsController addLogMessage:[NSString stringWithFormat:@"InterfaceController updateDisplay: %@ %@", [NSString stringWithFormat:@"%d", mostRecentValue], [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]]]];
             
         } else {
             self.bloodSugarLabel.text = @"--";
