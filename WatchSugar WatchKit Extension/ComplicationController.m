@@ -64,6 +64,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     NSString *bloodSugarValue = @"-";
     UIImage *trendImage = nil;
     NSDate *timeStampAsDate = nil;
+    NSTimeInterval epoch = 0.0f;
     
     if (reading) {
         int mostRecentValue = [reading[@"value"] intValue];
@@ -73,28 +74,55 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
         NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
         trendImage = [UIImage imageNamed:trendImageName];
         
-        NSTimeInterval epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
         timeStampAsDate = [NSDate dateWithTimeIntervalSince1970:epoch];
     }
     
     // Create the template and timeline entry.
+    CLKImageProvider *smallTrendImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
+    CLKSimpleTextProvider * simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+    
     CLKComplicationTimelineEntry* entry = nil;
     timeStampAsDate = timeStampAsDate ? timeStampAsDate : [NSDate date];
     if (complication.family == CLKComplicationFamilyModularSmall) {
         CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
-        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
-        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+        smallStackImageTemplate.line1ImageProvider = smallTrendImageProvider;
+        smallStackImageTemplate.line2TextProvider = simpleTextProvider;
         
         entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:smallStackImageTemplate];
     } else if (complication.family == CLKComplicationFamilyCircularSmall) {
         CLKComplicationTemplateCircularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateCircularSmallStackImage alloc] init];
-        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
-        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+        smallStackImageTemplate.line1ImageProvider = smallTrendImageProvider;
+        smallStackImageTemplate.line2TextProvider = simpleTextProvider;
         
         entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:smallStackImageTemplate];
-    }
-    else {
-        // ...configure entries for other complication families.
+    } else if (complication.family == CLKComplicationFamilyUtilitarianSmall) {
+        CLKComplicationTemplateUtilitarianSmallFlat *smallFlatImageTemplate = [[CLKComplicationTemplateUtilitarianSmallFlat alloc] init];
+        smallFlatImageTemplate.imageProvider = smallTrendImageProvider;
+        smallFlatImageTemplate.textProvider = simpleTextProvider;
+        
+        entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:smallFlatImageTemplate];
+    } else if (complication.family == CLKComplicationFamilyUtilitarianLarge) {
+        CLKComplicationTemplateUtilitarianLargeFlat *largeFlatImageTemplate = [[CLKComplicationTemplateUtilitarianLargeFlat alloc] init];
+        largeFlatImageTemplate.imageProvider = smallTrendImageProvider;
+        largeFlatImageTemplate.textProvider = simpleTextProvider;
+        
+        entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:largeFlatImageTemplate];
+    } else if (complication.family == CLKComplicationFamilyModularLarge) {
+        CLKComplicationTemplateModularLargeStandardBody *standardBodyTemplate = [[CLKComplicationTemplateModularLargeStandardBody alloc] init];
+        standardBodyTemplate.headerImageProvider = smallTrendImageProvider;
+        standardBodyTemplate.headerTextProvider = simpleTextProvider;
+        
+        static NSDateFormatter *_timeStampDateFormatter = nil;
+        if (!_timeStampDateFormatter) {
+            _timeStampDateFormatter = [[NSDateFormatter alloc] init];
+            _timeStampDateFormatter.dateFormat = @"M-d h:mm a";
+        }
+        NSString *dateString = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
+        
+        standardBodyTemplate.body1TextProvider = [CLKSimpleTextProvider textProviderWithText:dateString];
+        
+        entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:standardBodyTemplate];
     }
     
     return entry;
@@ -238,19 +266,49 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     CLKComplicationTemplate* template = nil;
     
+    CLKImageProvider *smallTrendImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_0"]];
+    CLKSimpleTextProvider * simpleTextProvider =[CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];;
+    
     // Create the template and timeline entry.
     if (complication.family == CLKComplicationFamilyModularSmall) {
         CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
-        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_4"]];
-        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        smallStackImageTemplate.line1ImageProvider = smallTrendImageProvider;
+        smallStackImageTemplate.line2TextProvider = simpleTextProvider;
         
         template = smallStackImageTemplate;
     } else if (complication.family == CLKComplicationFamilyCircularSmall) {
         CLKComplicationTemplateCircularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateCircularSmallStackImage alloc] init];
-        smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_4"]];
-        smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];
+        smallStackImageTemplate.line1ImageProvider = smallTrendImageProvider;
+        smallStackImageTemplate.line2TextProvider = simpleTextProvider;
         
         template = smallStackImageTemplate;
+    } else if (complication.family == CLKComplicationFamilyUtilitarianSmall) {
+        CLKComplicationTemplateUtilitarianSmallFlat *smallFlatImageTemplate = [[CLKComplicationTemplateUtilitarianSmallFlat alloc] init];
+        smallFlatImageTemplate.imageProvider = smallTrendImageProvider;
+        smallFlatImageTemplate.textProvider = simpleTextProvider;
+        
+        template = smallFlatImageTemplate;
+    } else if (complication.family == CLKComplicationFamilyUtilitarianLarge) {
+        CLKComplicationTemplateUtilitarianLargeFlat *largeFlatImageTemplate = [[CLKComplicationTemplateUtilitarianLargeFlat alloc] init];
+        largeFlatImageTemplate.imageProvider = smallTrendImageProvider;
+        largeFlatImageTemplate.textProvider = simpleTextProvider;
+        
+        template = largeFlatImageTemplate;
+    } else if (complication.family == CLKComplicationFamilyModularLarge) {
+        CLKComplicationTemplateModularLargeStandardBody *standardBodyTemplate = [[CLKComplicationTemplateModularLargeStandardBody alloc] init];
+        standardBodyTemplate.headerImageProvider = smallTrendImageProvider;
+        standardBodyTemplate.headerTextProvider = simpleTextProvider;
+        
+        static NSDateFormatter *_timeStampDateFormatter = nil;
+        if (!_timeStampDateFormatter) {
+            _timeStampDateFormatter = [[NSDateFormatter alloc] init];
+            _timeStampDateFormatter.dateFormat = @"M-d h:mm a";
+        }
+        NSString *dateString = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate date]]];
+        
+        standardBodyTemplate.body1TextProvider = [CLKSimpleTextProvider textProviderWithText:dateString];
+        
+        template = standardBodyTemplate;
     }
     
     handler(template);
