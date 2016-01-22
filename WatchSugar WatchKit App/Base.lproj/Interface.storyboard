@@ -46,11 +46,11 @@
                         </button>
                     </items>
                     <connections>
-                        <outlet property="agoLabel" destination="Wx1-hA-sNc" id="rH3-pH-WRn"/>
                         <outlet property="bloodSugarLabel" destination="CJe-pa-4I6" id="CdY-9S-vxh"/>
                         <outlet property="clearLogButton" destination="EtU-cu-QZN" id="9CE-LY-tHv"/>
                         <outlet property="notLoggedInLabel" destination="bge-eS-3L5" id="kCS-Cn-DvL"/>
                         <outlet property="printLogButton" destination="5q6-t2-tUU" id="gZd-Bf-GG6"/>
+                        <outlet property="readingDateLabel" destination="Wx1-hA-sNc" id="EIH-JG-3YE"/>
                         <outlet property="trendImage" destination="KQ9-6d-wMe" id="Hzh-MI-ic0"/>
                     </connections>
                 </controller>

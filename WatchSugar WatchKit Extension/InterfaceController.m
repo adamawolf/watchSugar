@@ -62,7 +62,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     
     if (loginStatus == WSLoginStatus_LoggedIn) {
         [self.bloodSugarLabel setHidden:NO];
-        [self.agoLabel setHidden:NO];
+        [self.readingDateLabel setHidden:NO];
         [self.trendImage setHidden:NO];
         [self.printLogButton setHidden:NO];
         [self.clearLogButton setHidden:NO];
@@ -92,7 +92,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
                 _timeStampDateFormatter.dateFormat = @"M-d h:mm a";
             }
 
-            self.agoLabel.text = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
+            self.readingDateLabel.text = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
             
             int trend = [latestReading[@"trend"] intValue];
             NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
@@ -104,12 +104,12 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
             
         } else {
             self.bloodSugarLabel.text = @"--";
-            self.agoLabel.text = @"";
+            self.readingDateLabel.text = @"";
             [self.trendImage setImage:nil];
         }
     } else {
         [self.bloodSugarLabel setHidden:YES];
-        [self.agoLabel setHidden:YES];
+        [self.readingDateLabel setHidden:YES];
         [self.trendImage setHidden:YES];
         [self.printLogButton setHidden:YES];
         [self.clearLogButton setHidden:YES];
