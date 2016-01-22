@@ -26,88 +26,126 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 #pragma mark - Timeline Configuration
 
-- (void)getSupportedTimeTravelDirectionsForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimeTravelDirections directions))handler {
-    handler(CLKComplicationTimeTravelDirectionNone);
+- (void)getSupportedTimeTravelDirectionsForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimeTravelDirections directions))handler
+{
+    handler(CLKComplicationTimeTravelDirectionBackward);
 }
 
-- (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler {
+- (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler
+{
+    NSDate *date = [NSDate date];
+    
+    NSArray *bloodSugarEntries = [DefaultsController latestBloodSugarReadings];
+    NSDictionary *earliestReading = [bloodSugarEntries firstObject];
+    
+    if (earliestReading) {
+        NSTimeInterval earliestTimestamp = [earliestReading[@"timestamp"] doubleValue] / 1000.00;
+        NSDate *earliestDate = [NSDate dateWithTimeIntervalSince1970:earliestTimestamp];
+        date = earliestDate;
+    }
+    
+    handler(date);
+}
+
+- (void)getTimelineEndDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler
+{
     handler(nil);
 }
 
-- (void)getTimelineEndDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler {
-    handler(nil);
-}
-
-- (void)getPrivacyBehaviorForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationPrivacyBehavior privacyBehavior))handler {
+- (void)getPrivacyBehaviorForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationPrivacyBehavior privacyBehavior))handler
+{
     handler(CLKComplicationPrivacyBehaviorShowOnLockScreen);
 }
 
 #pragma mark - Timeline Population
 
-- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler
++ (CLKComplicationTimelineEntry *)createTimelineEntryForReading:(NSDictionary *)reading forComplication:(CLKComplication *)complication
 {
     NSString *bloodSugarValue = @"-";
     UIImage *trendImage = nil;
-    NSString *timeStampAsDate = nil;
+    NSDate *timeStampAsDate = nil;
     
-    NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
-    if (lastReadings.count) {
-        NSDictionary *latestReading = [lastReadings lastObject];
-        
-        int mostRecentValue = [latestReading[@"value"] intValue];
+    if (reading) {
+        int mostRecentValue = [reading[@"value"] intValue];
         bloodSugarValue = [NSString stringWithFormat:@"%d", mostRecentValue];
         
-        int trend = [latestReading[@"trend"] intValue];
+        int trend = [reading[@"trend"] intValue];
         NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
         trendImage = [UIImage imageNamed:trendImageName];
         
-        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
-        NSDate *timeStampDate = [NSDate dateWithTimeIntervalSince1970:epoch];
-        
-        static NSDateFormatter *_timeStampDateFormatter = nil;
-        if (!_timeStampDateFormatter) {
-            _timeStampDateFormatter = [[NSDateFormatter alloc] init];
-            _timeStampDateFormatter.dateStyle = NSDateFormatterShortStyle;
-            _timeStampDateFormatter.timeStyle = NSDateFormatterMediumStyle;
-        }
-        timeStampAsDate = [_timeStampDateFormatter stringFromDate:timeStampDate];
-        
-        [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning BS of %@, reading date %@", bloodSugarValue, timeStampAsDate]];
-    } else {
-        [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication returning %@", bloodSugarValue]];
+        NSTimeInterval epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        timeStampAsDate = [NSDate dateWithTimeIntervalSince1970:epoch];
     }
     
     // Create the template and timeline entry.
     CLKComplicationTimelineEntry* entry = nil;
-    NSDate* now = [NSDate date];
+    timeStampAsDate = timeStampAsDate ? timeStampAsDate : [NSDate date];
     if (complication.family == CLKComplicationFamilyModularSmall) {
         CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
         smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
         smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
-
-        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:smallStackImageTemplate];
+        
+        entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:smallStackImageTemplate];
     } else if (complication.family == CLKComplicationFamilyCircularSmall) {
         CLKComplicationTemplateCircularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateCircularSmallStackImage alloc] init];
         smallStackImageTemplate.line1ImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
         smallStackImageTemplate.line2TextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
         
-        entry = [CLKComplicationTimelineEntry entryWithDate:now complicationTemplate:smallStackImageTemplate];
+        entry = [CLKComplicationTimelineEntry entryWithDate:timeStampAsDate complicationTemplate:smallStackImageTemplate];
     }
     else {
         // ...configure entries for other complication families.
     }
     
-    // Pass the timeline entry back to ClockKit.
-    handler(entry);
+    return entry;
+}
+
+- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler
+{
+    NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
+    NSDictionary *latestReading = [lastReadings lastObject];
+    
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication rendering %@", latestReading]];
+
+    handler([ComplicationController createTimelineEntryForReading:latestReading forComplication:complication]);
 }
 
 - (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler
 {
-    handler(nil);
+    NSTimeInterval latestAcceptableTimestamp = [date timeIntervalSince1970];
+    
+    NSMutableArray <CLKComplicationTimelineEntry *>*entries = [NSMutableArray new];
+    
+    NSArray <NSDictionary *> *latestReadings = [DefaultsController latestBloodSugarReadings];
+    
+    __block NSDictionary *eligibleReading = nil;
+    [latestReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary * currentReading, NSUInteger idx, BOOL *stop) {
+        NSTimeInterval currentReadingTimestamp = [currentReading[@"timestamp"] doubleValue] / 1000.00;
+        
+        if (currentReading != [latestReadings lastObject] && currentReadingTimestamp < latestAcceptableTimestamp) {
+            eligibleReading = currentReading;
+            *stop = YES;
+        }
+    }];
+    
+    while (eligibleReading && entries.count < limit) {
+        [entries addObject:[ComplicationController createTimelineEntryForReading:eligibleReading forComplication:complication]];
+        
+        NSInteger indexOfEligibleReading = [latestReadings indexOfObject:eligibleReading];
+        if (indexOfEligibleReading > 0) {
+            eligibleReading = latestReadings[indexOfEligibleReading - 1];
+        } else {
+            eligibleReading = nil;
+        }
+    }
+    
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getTimelineEntriesForComplication beforeDate:%@ limit:%d : %@", date, (int)limit, entries]];
+    
+    handler(entries);
 }
 
-- (void)getTimelineEntriesForComplication:(CLKComplication *)complication afterDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler {
-    // Call the handler with the timeline entries after to the given date
+- (void)getTimelineEntriesForComplication:(CLKComplication *)complication afterDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler
+{
     handler(nil);
 }
 

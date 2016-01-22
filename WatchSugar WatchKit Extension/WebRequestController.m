@@ -14,6 +14,8 @@
 #import "DefaultsController.h"
 
 static NSString *const kDexcomApplicationId_G5PlatinumApp = @"***REMOVED***";
+static const NSInteger kMaxBloodSugarReadings = 6 * 12;
+static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 @interface WebRequestController ()
 
@@ -178,8 +180,6 @@ static NSString *const kDexcomApplicationId_G5PlatinumApp = @"***REMOVED***";
                                    shouldWait:shouldWait];
 }
 
-static const NSInteger kMaxReadings = 20;
-
 -(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
 {
     _latestBloodSugarData = latestBloodSugarData;
@@ -202,14 +202,21 @@ static const NSInteger kMaxReadings = 20;
             NSMutableArray *mutableLastReadings = [lastReadings mutableCopy];
             [mutableLastReadings addObject:newReading];
             
-            while ([mutableLastReadings count] > kMaxReadings) {
+            //prohibit too many readings
+            while ([mutableLastReadings count] > kMaxBloodSugarReadings) {
+                [mutableLastReadings removeObjectAtIndex:0];
+            }
+            
+            //prohibit readings from more than kMaximumReadingHistoryInterval ago
+            NSTimeInterval oldestAllowableTimeInterval = [[NSDate date] timeIntervalSince1970] - kMaximumReadingHistoryInterval;
+            while ([mutableLastReadings firstObject] && [[mutableLastReadings firstObject][@"timestamp"] doubleValue] / 1000.00 < oldestAllowableTimeInterval) {
                 [mutableLastReadings removeObjectAtIndex:0];
             }
             
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
+            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@, %u readings", latestBloodSugarData, inBackground ? @"YES" : @"NO", mutableLastReadings.count]];
             
             if (!inBackground) {
                 for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
