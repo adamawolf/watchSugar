@@ -8,13 +8,13 @@
 
 #import <WatchKit/WatchKit.h>
 
-@class WebRequestController;
+@class WatchWebRequestController;
 @class AuthenticationController;
 
 @interface ExtensionDelegate : NSObject <WKExtensionDelegate>
 
 @property (nonatomic, strong) AuthenticationController * authenticationController;
-@property (nonatomic, strong) WebRequestController *webRequestController;
+@property (nonatomic, strong) WatchWebRequestController *webRequestController;
 
 - (void)initializeSubControllers;
 

@@ -13,7 +13,7 @@
 
 #import "DefaultsController.h"
 
-#import "WebRequestController.h"
+#import "WatchWebRequestController.h"
 #import "AuthenticationController.h"
 
 @interface ExtensionDelegate () <WCSessionDelegate>
@@ -26,7 +26,7 @@
 {
     self.authenticationController = [[AuthenticationController alloc] init];
     if (!self.webRequestController) {
-        self.webRequestController = [[WebRequestController alloc] init];
+        self.webRequestController = [[WatchWebRequestController alloc] init];
         self.webRequestController.authenticationController = self.authenticationController;
     }
 }

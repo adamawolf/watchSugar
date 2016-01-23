@@ -6,24 +6,23 @@
 //  Copyright © 2016 Flairify. All rights reserved.
 //
 
-#import "WebRequestController.h"
+#import "WatchWebRequestController.h"
 #import <ClockKit/ClockKit.h>
 
 #import <AFNetworking/AFNetworking.h>
 
 #import "DefaultsController.h"
 
-static NSString *const kDexcomApplicationId_G5PlatinumApp = @"***REMOVED***";
 static const NSInteger kMaxBloodSugarReadings = 6 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
-@interface WebRequestController ()
+@interface WatchWebRequestController ()
 
 @property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;
 
 @end
 
-@implementation WebRequestController
+@implementation WatchWebRequestController
 
 - (instancetype)init
 {
@@ -45,8 +44,6 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
         return;
     }
-    
-    //TODO: cache the dexcom token in user defaults, to avoid extra web requests when token would still be valid across instantiations of extensiondelegate
     
     if (!self.dexcomToken) {
         NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
@@ -76,8 +73,6 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         return;
     }
     
-    //TODO: cache the dexcom token in user defaults, to avoid extra web requests when token would still be valid across instantiations of extensiondelegate
-    
     if (!self.dexcomToken) {
         NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
         [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] shouldWait:YES];
@@ -86,33 +81,12 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     }
 }
 
-+ (void)dexcomPOSTToURLString:(NSString *)URLString
-               withParameters:(id)parameters
-             withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
-             withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
-                 shouldWait:(BOOL)shouldWait
-{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    if (shouldWait) {
-        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-    }
-    
-    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [manager setRequestSerializer:requestSerializer];
-    
-    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
-    [manager setResponseSerializer:responseSerializer];
-    
-    [manager POST:URLString parameters:parameters progress:NULL success:success failure:failure];
-}
-
 - (void)authenticateWithDexcomAccountName:(NSString *)accountName andPassword:(NSString *)password shouldWait:(BOOL)shouldWait
 {
     NSString *URLString = @"https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountByName";
     NSDictionary *parameters = @{@"accountName": accountName,
                                  @"password": password,
-                                 @"applicationId": kDexcomApplicationId_G5PlatinumApp};
+                                 @"applicationId": WSDexcomApplicationId_G5PlatinumApp};
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters

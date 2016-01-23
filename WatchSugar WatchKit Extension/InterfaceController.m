@@ -10,11 +10,11 @@
 #import "ExtensionDelegate.h"
 
 #import "DefaultsController.h"
-#import "WebRequestController.h"
+#import "WatchWebRequestController.h"
 
 static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
-@interface InterfaceController() <WebRequestControllerDelegate>
+@interface InterfaceController() <WatchWebRequestControllerDelegate>
 
 @end
 
@@ -32,7 +32,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     [super willActivate];
     
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
     webRequestController.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidBecomeActive:) name:@"UIApplicationDidBecomeActiveNotification" object:nil];
@@ -48,7 +48,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
     webRequestController.delegate = nil;
     
     [super didDeactivate];
@@ -70,7 +70,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         [self.notLoggedInLabel setHidden:YES];
         
         ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
-        WebRequestController *webRequestController = extensionDelegate.webRequestController;
+        WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
         
         if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
             [webRequestController performFetch];
@@ -137,9 +137,9 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
     [DefaultsController clearAllLogMessages];
 }
 
-#pragma mark - WebRequestControllerDelegate methods
+#pragma mark - WatchWebRequestControllerDelegate methods
 
-- (void)webRequestControllerDidFetchNewBloodSugarData:(WebRequestController *)webRequestController
+- (void)webRequestControllerDidFetchNewBloodSugarData:(WatchWebRequestController *)webRequestController
 {
     [self updateDisplay];
 }

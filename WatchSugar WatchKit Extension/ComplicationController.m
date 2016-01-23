@@ -12,7 +12,7 @@
 
 #import "DefaultsController.h"
 
-#import "WebRequestController.h"
+#import "WatchWebRequestController.h"
 
 static NSTimeInterval kBufferEGVToComplicationUpdate = 45.0f;
 static NSTimeInterval kMinimumComplicationUpdateInterval = 9.0f * 60.0f;
@@ -228,7 +228,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
         [DefaultsController addLogMessage:[NSString stringWithFormat:@"ComplicationController requestedUpdateDidBegin allocated: %@", extensionDelegate.webRequestController]];
     }
     
-    WebRequestController *webRequestController = extensionDelegate.webRequestController;
+    WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
     
     if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
         [webRequestController performFetchAndWait];

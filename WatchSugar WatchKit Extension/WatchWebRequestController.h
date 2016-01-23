@@ -7,19 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WebRequestController.h"
 
-@class WebRequestController;
+@class WatchWebRequestController;
 @class AuthenticationController;
 
-@protocol WebRequestControllerDelegate <NSObject>
+@protocol WatchWebRequestControllerDelegate <NSObject>
 
-- (void)webRequestControllerDidFetchNewBloodSugarData:(WebRequestController *)webRequestController;
+- (void)webRequestControllerDidFetchNewBloodSugarData:(WatchWebRequestController *)webRequestController;
 
 @end
 
-@interface WebRequestController : NSObject
+@interface WatchWebRequestController : NSObject
 
-@property (nonatomic, weak) id<WebRequestControllerDelegate> delegate;
+@property (nonatomic, weak) id<WatchWebRequestControllerDelegate> delegate;
 
 @property (nonatomic, strong) AuthenticationController *authenticationController;
 

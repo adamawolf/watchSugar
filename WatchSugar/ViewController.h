@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class AuthenticationController;
-@class WebRequestController;
+@class DeviceWebRequestController;
 
 @interface ViewController : UIViewController
 
 @property (nonatomic, strong) AuthenticationController *authenticationController;
-@property (nonatomic, strong) WebRequestController *webRequestController;
+@property (nonatomic, strong) DeviceWebRequestController *webRequestController;
 
 @property (nonatomic, strong) IBOutletCollection(UIView) NSArray <UIView *> *loginViews;
 @property (nonatomic, strong) IBOutletCollection(UIView) NSArray <UIView *> *loggedInViews;

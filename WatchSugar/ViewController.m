@@ -9,9 +9,9 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "AuthenticationController.h"
-#import "WebRequestController.h"
+#import "DeviceWebRequestController.h"
 
-@interface ViewController () <AuthenticationControllerDelegate, WebRequestControllerDelegate, UITextFieldDelegate>
+@interface ViewController () <AuthenticationControllerDelegate, DeviceWebRequestControllerDelegate, UITextFieldDelegate>
 
 @property (nonatomic, assign) WSLoginStatus renderedStatus;
 
@@ -184,9 +184,9 @@
     [appDelegate updateApplicationContext];
 }
 
-#pragma mark - WebRequestControllerDelegate methods
+#pragma mark - DeviceWebRequestControllerDelegate methods
 
-- (void)webRequestController:(WebRequestController *)webRequestController authenticationDidSucceedWithToken:(NSString *)token
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController authenticationDidSucceedWithToken:(NSString *)token
 {
     self.dexcomToken = token;
 
@@ -194,7 +194,7 @@
     [self.webRequestController readDexcomEmailForToken:self.dexcomToken];
 }
 
-- (void)webRequestController:(WebRequestController *)webRequestController authenticationDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController authenticationDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
 {
     switch (errorCode) {
         case WebRequestControllerErrorCode_AccountNotFound:
@@ -219,14 +219,14 @@
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
-- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidSucceedWithName:(NSString *)displayName
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController displayNameRequestDidSucceedWithName:(NSString *)displayName
 {
     self.dexcomDisplayName = displayName;
     
     [self checkForCompleteAuthentication];
 }
 
-- (void)webRequestController:(WebRequestController *)webRequestController displayNameRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController displayNameRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
 {
     self.errorMessage = @"Unexpected behavior after authentication. Please report.";
     
@@ -237,14 +237,14 @@
     [self updateDisplayFromAuthenticationControllerAnimated:NO];
 }
 
-- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidSucceedWithEmail:(NSString *)email
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController emailRequestDidSucceedWithEmail:(NSString *)email
 {
     self.dexcomEmail = email;
     
     [self checkForCompleteAuthentication];
 }
 
-- (void)webRequestController:(WebRequestController *)webRequestController emailRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
+- (void)webRequestController:(DeviceWebRequestController *)webRequestController emailRequestDidFailWithErrorCode:(WebRequestControllerErrorCode)errorCode
 {
     self.errorMessage = @"Unexpected behavior after authentication. Please report.";
     

@@ -12,12 +12,12 @@
 #import "ViewController.h"
 
 #import "AuthenticationController.h"
-#import "WebRequestController.h"
+#import "DeviceWebRequestController.h"
 
 @interface AppDelegate () <WCSessionDelegate>
 
 @property (nonatomic, strong) AuthenticationController *authenticationController;
-@property (nonatomic, strong) WebRequestController *webRequestController;
+@property (nonatomic, strong) DeviceWebRequestController *webRequestController;
 
 @end
 
@@ -27,7 +27,7 @@
 {
     self.authenticationController = [[AuthenticationController alloc] init];
     if (!self.webRequestController) {
-        self.webRequestController = [[WebRequestController alloc] init];
+        self.webRequestController = [[DeviceWebRequestController alloc] init];
     }
 }
 
