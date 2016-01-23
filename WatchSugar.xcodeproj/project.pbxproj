@@ -32,10 +32,10 @@
 		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
 		9484D9211C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
 		9484D9221C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
+		9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
 		94BF86F01C45F6AA001664ED /* WatchWebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */; };
 		94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
 		94C7E43D1C4AE3CC00BB99E4 /* DeviceWebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */; };
-		94C7E4491C4B330900BB99E4 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4481C4B330900BB99E4 /* AuthenticationController.m */; };
 		DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */; };
 /* End PBXBuildFile section */
 
@@ -142,12 +142,10 @@
 		9484D9201C52FB2800B467C5 /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
 		94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchWebRequestController.h; sourceTree = "<group>"; };
 		94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchWebRequestController.m; sourceTree = "<group>"; };
-		94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationController.h; sourceTree = "<group>"; };
-		94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationController.m; sourceTree = "<group>"; };
+		94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationController.h; path = WatchSugar/AuthenticationController.h; sourceTree = "<group>"; };
+		94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationController.m; path = WatchSugar/AuthenticationController.m; sourceTree = "<group>"; };
 		94C7E43B1C4AE3CC00BB99E4 /* DeviceWebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceWebRequestController.h; sourceTree = "<group>"; };
 		94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceWebRequestController.m; sourceTree = "<group>"; };
-		94C7E4471C4B330900BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationController.h; sourceTree = "<group>"; };
-		94C7E4481C4B330900BB99E4 /* AuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationController.m; sourceTree = "<group>"; };
 		94E378BB1C2A492B00FE1131 /* WatchSugar.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugar.pch; sourceTree = "<group>"; };
 		94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugarExtension.pch; sourceTree = "<group>"; };
 		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,8 +232,6 @@
 				94313B5B1C1F98F900F74345 /* AppDelegate.m */,
 				94313B5D1C1F98F900F74345 /* ViewController.h */,
 				94313B5E1C1F98F900F74345 /* ViewController.m */,
-				94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */,
-				94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */,
 				94C7E43B1C4AE3CC00BB99E4 /* DeviceWebRequestController.h */,
 				94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */,
 				94693FCD1C2609E200436C64 /* Core Data */,
@@ -300,8 +296,6 @@
 				94313BA41C1F98F900F74345 /* ComplicationController.m */,
 				94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */,
 				94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */,
-				94C7E4471C4B330900BB99E4 /* AuthenticationController.h */,
-				94C7E4481C4B330900BB99E4 /* AuthenticationController.m */,
 				944C748A1C46D22900306EA8 /* DefaultsController.h */,
 				944C748B1C46D22900306EA8 /* DefaultsController.m */,
 				94313BA61C1F98F900F74345 /* Assets.xcassets */,
@@ -337,6 +331,8 @@
 			children = (
 				9484D91F1C52FB2800B467C5 /* WebRequestController.h */,
 				9484D9201C52FB2800B467C5 /* WebRequestController.m */,
+				94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */,
+				94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -683,11 +679,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				94BF86F01C45F6AA001664ED /* WatchWebRequestController.m in Sources */,
-				94C7E4491C4B330900BB99E4 /* AuthenticationController.m in Sources */,
 				94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */,
 				9484D9221C52FB2800B467C5 /* WebRequestController.m in Sources */,
 				944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */,
 				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
+				9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */,
 				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,
 				94313BA21C1F98F900F74345 /* GlanceController.m in Sources */,
 				94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */,
