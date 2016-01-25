@@ -12,6 +12,12 @@ NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
+#define kTestReadings(epochMilliseconds) @[@{ \
+                                            @"timestamp": @((epochMilliseconds)), \
+                                            @"trend": @(5),\
+                                            @"value": @(102), \
+                                        },]
+
 @implementation DefaultsController
 
 + (void)addLogMessage:(NSString *)logMessage
@@ -66,7 +72,14 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings
 {
+#ifndef kTestReadings
     NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+#else
+    NSDate *date = [NSDate date];
+    NSTimeInterval epoch = [date timeIntervalSince1970] - (60.0f * 61.0f);
+    epoch *= 1000.0f;
+    NSArray *lastReadings = kTestReadings(epoch);
+#endif
     
     return lastReadings;
 }
