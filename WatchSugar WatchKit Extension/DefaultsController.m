@@ -12,11 +12,11 @@ NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
-#define kTestReadings(epochMilliseconds) @[@{ \
-                                            @"timestamp": @((epochMilliseconds)), \
-                                            @"trend": @(5),\
-                                            @"value": @(102), \
-                                        },]
+//#define kTestReadings(epochMilliseconds) @[@{ \
+//                                            @"timestamp": @((epochMilliseconds)), \
+//                                            @"trend": @(5),\
+//                                            @"value": @(102), \
+//                                        },]
 
 @implementation DefaultsController
 

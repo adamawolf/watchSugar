@@ -124,7 +124,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                    if (!shouldWait) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
                                    }
-                                   [self setLatestBloodSugarData:responseObject[0] inBackground:shouldWait];
+                                   [self setLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil inBackground:shouldWait];
                                }
                                withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
@@ -158,8 +158,18 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 {
     _latestBloodSugarData = latestBloodSugarData;
     
+    void(^updateUI)() = ^() {
+        for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
+            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+        }
+        
+        if (!inBackground) {
+            [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
+        }
+    };
+    
     if (_latestBloodSugarData) {
-        NSArray *lastReadings = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings];
+        NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
         lastReadings = lastReadings ? lastReadings : @[];
         NSDictionary *latestReading = [lastReadings lastObject];
         
@@ -192,15 +202,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
             
             [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@, %u readings", latestBloodSugarData, inBackground ? @"YES" : @"NO", mutableLastReadings.count]];
             
-            if (!inBackground) {
-                for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-                    [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
-                }
-            }
-            
-            if (!inBackground) {
-                [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
-            }
+            updateUI();
             
         } else {
             [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
@@ -209,6 +211,9 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
             }
         }
+    } else {
+        //going from having a recent reading to not, update display or complications
+        updateUI();
     }
     
     if (inBackground) {

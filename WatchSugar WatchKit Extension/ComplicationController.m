@@ -17,6 +17,7 @@
 static NSTimeInterval kBufferEGVToComplicationUpdate = 45.0f;
 static NSTimeInterval kMinimumComplicationUpdateInterval = 9.0f * 60.0f;
 static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
+static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 
 @interface ComplicationController ()
 
@@ -61,26 +62,29 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 + (CLKComplicationTimelineEntry *)createTimelineEntryForReading:(NSDictionary *)reading forComplication:(CLKComplication *)complication
 {
-    NSString *bloodSugarValue = @"-";
-    UIImage *trendImage = nil;
+    NSString *bloodSugarValueString = @"--";
+    UIImage *trendImage = [UIImage imageNamed:@"trend_0"];
     NSDate *timeStampAsDate = nil;
     NSTimeInterval epoch = 0.0f;
     
-    if (reading) {
-        int mostRecentValue = [reading[@"value"] intValue];
-        bloodSugarValue = [NSString stringWithFormat:@"%d", mostRecentValue];
+    if (reading && !reading[@"lastValidSignalDate"]) {
+        int readingValue = [reading[@"value"] intValue];
+        bloodSugarValueString = [NSString stringWithFormat:@"%d", readingValue];
         
-        int trend = [reading[@"trend"] intValue];
-        NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
+        int readingTrend = [reading[@"trend"] intValue];
+        NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", readingTrend];
         trendImage = [UIImage imageNamed:trendImageName];
         
         epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
         timeStampAsDate = [NSDate dateWithTimeIntervalSince1970:epoch];
+    } else if (reading[@"lastValidSignalDate"]) {
+        bloodSugarValueString = @"---";
+        timeStampAsDate = reading[@"lastValidSignalDate"];
     }
     
     // Create the template and timeline entry.
     CLKImageProvider *smallTrendImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
-    CLKSimpleTextProvider * simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValue] shortText:bloodSugarValue];
+    CLKSimpleTextProvider * simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValueString] shortText:bloodSugarValueString];
     
     CLKComplicationTimelineEntry* entry = nil;
     timeStampAsDate = timeStampAsDate ? timeStampAsDate : [NSDate date];
@@ -133,6 +137,17 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
     NSDictionary *latestReading = [lastReadings lastObject];
     
+    if(latestReading) {
+        //a reading should only be considered current within an hour of when it was taken, otherwise we should fail over to a blank reading state
+        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00;
+        if ([[NSDate date] timeIntervalSince1970] - epoch > kReadingFreshnessInterval) {
+            NSDate *lastFreshReadingDate = [NSDate dateWithTimeIntervalSince1970:epoch + kReadingFreshnessInterval];
+            latestReading = @{
+                              @"lastValidSignalDate": lastFreshReadingDate,
+                              };
+        }
+    }
+    
     [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication rendering %@", latestReading]];
 
     handler([ComplicationController createTimelineEntryForReading:latestReading forComplication:complication]);
@@ -146,11 +161,17 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     NSArray <NSDictionary *> *latestReadings = [DefaultsController latestBloodSugarReadings];
     
+    NSDictionary *freshLatestReading = [latestReadings lastObject];
+    NSTimeInterval epoch = [freshLatestReading[@"timestamp"] doubleValue] / 1000.00;
+    if ([[NSDate date] timeIntervalSince1970] - epoch > kReadingFreshnessInterval) {
+        freshLatestReading = nil;
+    }
+    
     __block NSDictionary *eligibleReading = nil;
     [latestReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary * currentReading, NSUInteger idx, BOOL *stop) {
         NSTimeInterval currentReadingTimestamp = [currentReading[@"timestamp"] doubleValue] / 1000.00;
         
-        if (currentReading != [latestReadings lastObject] && currentReadingTimestamp < latestAcceptableTimestamp) {
+        if (currentReading != freshLatestReading && currentReadingTimestamp < latestAcceptableTimestamp) {
             eligibleReading = currentReading;
             *stop = YES;
         }
@@ -218,7 +239,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 {
     [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
     
-    NSDictionary *previousLatestReading = [[[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings] lastObject];
+    NSDictionary *previousLatestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     
     // Get the current complication data from the extension delegate.
     ExtensionDelegate *extensionDelegate = (ExtensionDelegate *)[WKExtension sharedExtension].delegate;
@@ -236,7 +257,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     BOOL didChange = NO;
     
-    NSDictionary *latestReading = [[[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LastReadings] lastObject];
+    NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     
     if (!previousLatestReading && latestReading) {
         didChange = YES;
