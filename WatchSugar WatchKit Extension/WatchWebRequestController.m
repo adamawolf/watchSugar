@@ -19,6 +19,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 @interface WatchWebRequestController ()
 
 @property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;
+@property (nonatomic, assign) BOOL isAttemptingReAuth;
 
 @end
 
@@ -36,9 +37,15 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 - (void)performFetch
 {
     self.lastFetchAttempt = [NSDate date];
+    self.isAttemptingReAuth = NO;
     
-    [DefaultsController addLogMessage:@"performFetch"];
+    [self performFetchInternal];
+}
 
+- (void)performFetchInternal
+{
+    [DefaultsController addLogMessage:@"performFetch"];
+    
     NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
     if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
         [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
@@ -138,14 +145,19 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                        }
                                    }
                                    
-                                   if ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"]) {
+                                   if (!self.isAttemptingReAuth &&
+                                       ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"] ||
+                                        [jsonError[@"Code"] isEqualToString:@"SessionIdNotFound"])
+                                       ) {
+                                       self.isAttemptingReAuth = YES;
+                                       
                                        self.dexcomToken = nil;
                                        self.latestBloodSugarData = nil;
                                        
                                        if (shouldWait) {
                                            [self performFetchAndWaitInternal];
                                        } else {
-                                           [self performFetch];
+                                           [self performFetchInternal];
                                        }
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
