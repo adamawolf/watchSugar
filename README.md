@@ -15,4 +15,4 @@ watchSugar uses [Objective Clean](http://objclean.com/) to enforce a conistent s
 
 In order to authenticate a user's Dexcom Share account with Dexcom's backend a valid Dexcom Application ID is needed. Application IDs are not provided in this repository and must be obtained manually.
 
-Once you have the Dexcom Application ID you wish to use set it in Definitions.h. Please be mindful of step 2. above, if you wish to send me a pull request. You'll know your Dexcom Application ID is functioning as expected when the on-device Login flow is successful.
+Once you have the Dexcom Application ID you wish to use set it in Definitions.h. Please be mindful of the above Step 2. if you wish to send me a pull request. You'll know your Dexcom Application ID is functioning as expected when the on-device Login flow is successful.
