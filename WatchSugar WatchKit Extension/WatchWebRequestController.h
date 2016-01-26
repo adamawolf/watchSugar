@@ -25,11 +25,9 @@
 @property (nonatomic, strong) AuthenticationController *authenticationController;
 
 @property (nonatomic, strong) NSString *dexcomToken;
-@property (nonatomic, strong) NSDictionary *latestBloodSugarData;
 
 @property (nonatomic, strong) NSDate *lastFetchAttempt;
 
-- (void)performFetch;
-- (void)performFetchAndWait;
+- (void)performFetchWhileWaiting:(BOOL)isWaiting;
 
 @end

@@ -252,7 +252,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
     
     if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > 60.0f) {
-        [webRequestController performFetchAndWait];
+        [webRequestController performFetchWhileWaiting:YES];
     }
     
     BOOL didChange = NO;

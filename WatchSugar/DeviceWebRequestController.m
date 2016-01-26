@@ -50,7 +50,7 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
                                    
                                    [self.delegate webRequestController:self authenticationDidFailWithErrorCode:errorCode];
                                }
-                                     shouldWait:NO];
+                                     isWaiting:NO];
 }
 
 - (void)readDexcomDisplayNameForToken:(NSString *)dexcomToken
@@ -74,7 +74,7 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
                                    WebRequestControllerErrorCode errorCode = WebRequestControllerErrorCode_UnknownError;
                                    [self.delegate webRequestController:self displayNameRequestDidFailWithErrorCode:errorCode];
                                }
-                                     shouldWait:NO];
+                                     isWaiting:NO];
 }
 
 - (void)readDexcomEmailForToken:(NSString *)dexcomToken
@@ -98,7 +98,7 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
                                          WebRequestControllerErrorCode errorCode = WebRequestControllerErrorCode_UnknownError;
                                          [self.delegate webRequestController:self emailRequestDidFailWithErrorCode:errorCode];
                                      }
-                                           shouldWait:NO];
+                                           isWaiting:NO];
 }
 
 @end

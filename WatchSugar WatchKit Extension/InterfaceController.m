@@ -79,7 +79,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
         
         if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
-            [webRequestController performFetch];
+            [webRequestController performFetchWhileWaiting:NO];
         }
         
         NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];

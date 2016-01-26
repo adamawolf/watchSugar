@@ -16,6 +16,6 @@ extern NSString *const WSDexcomApplicationId_G5PlatinumApp;
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
-                   shouldWait:(BOOL)shouldWait;
+                   isWaiting:(BOOL)isWaiting;
 
 @end

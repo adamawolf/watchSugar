@@ -18,10 +18,12 @@ NSString *const WSDexcomApplicationId_G5PlatinumApp = WSDexcomApplicationId;
                withParameters:(id)parameters
              withSuccessBlock:(void (^)(NSURLSessionDataTask *, id))success
              withFailureBlock:(void (^)(NSURLSessionDataTask *, NSError *))failure
-                   shouldWait:(BOOL)shouldWait
+                   isWaiting:(BOOL)isWaiting
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    if (shouldWait) {
+    if (isWaiting) {
+        //when called from ComplicationController, we block on main thread with semaphores while web requests occur
+        //this would cause a deadlock for the success or failure call backs, hence if waiting we use a background queue
         manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     }
     

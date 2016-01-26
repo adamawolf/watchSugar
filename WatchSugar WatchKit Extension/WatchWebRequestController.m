@@ -35,61 +35,45 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     return self;
 }
 
-- (void)performFetch
+//when called from the UI (InterfaceController) requests happen in the background
+//when called from the ComplicationController request happens inline on the same thread as requestedUpdateDidBegin
+//  accomplish this by waiting on a semaphore and signaling that semaphore upon request sequence success, or upon terminal error in request sequence
+- (void)performFetchWhileWaiting:(BOOL)isWaiting
 {
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"performFetchAndWait:%@", isWaiting ? @"YES" : @"NO"]];
+    
     self.lastFetchAttempt = [NSDate date];
     self.isAttemptingReAuth = NO;
     
-    [self performFetchInternal];
+    [self internal_performFetchWhileWaiting:isWaiting];
+    
+    if (isWaiting) {
+        dispatch_semaphore_wait(self.fetchSemaphore, DISPATCH_TIME_FOREVER);
+    }
 }
 
-- (void)performFetchInternal
+- (void)internal_performFetchWhileWaiting:(BOOL)isWaiting
 {
-    [DefaultsController addLogMessage:@"performFetch"];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"internal_performFetchWhileWaiting:%@", isWaiting ? @"YES" : @"NO"]];
     
     NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
     if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
         [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
+        if (isWaiting) {
+            dispatch_semaphore_signal(self.fetchSemaphore);
+        }
         return;
     }
     
     if (!self.dexcomToken) {
         NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
-        [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] shouldWait:NO];
+        [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] isWaiting:isWaiting];
     } else {
-        [self fetchLatestBloodSugarAndWait:NO];
+        [self fetchLatestBloodSugarIsWaiting:isWaiting];
     }
 }
 
-- (void)performFetchAndWait
-{
-    [self performFetchAndWaitInternal];
-    
-    dispatch_semaphore_wait(self.fetchSemaphore, DISPATCH_TIME_FOREVER);
-}
-
-- (void)performFetchAndWaitInternal
-{
-    self.lastFetchAttempt = [NSDate date];
-    
-    [DefaultsController addLogMessage:@"performFetchAndWait"];
-    
-    NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
-    if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
-        [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
-        dispatch_semaphore_signal(self.fetchSemaphore);
-        return;
-    }
-    
-    if (!self.dexcomToken) {
-        NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
-        [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] shouldWait:YES];
-    } else {
-        [self fetchLatestBloodSugarAndWait:YES];
-    }
-}
-
-- (void)authenticateWithDexcomAccountName:(NSString *)accountName andPassword:(NSString *)password shouldWait:(BOOL)shouldWait
+- (void)authenticateWithDexcomAccountName:(NSString *)accountName andPassword:(NSString *)password isWaiting:(BOOL)isWaiting
 {
     NSString *URLString = @"https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountByName";
     NSDictionary *parameters = @{@"accountName": accountName,
@@ -99,48 +83,45 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
                                withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
-                                   if (!shouldWait) {
+                                   if (!isWaiting) {
                                        NSLog(@"received dexcom token: %@", responseObject);
                                    } else {
                                        [DefaultsController addLogMessage:[NSString stringWithFormat:@"received dexcom token: %@", responseObject]];
                                    }
                                    self.dexcomToken = responseObject;
                                    
-                                   if (!self.latestBloodSugarData) {
-                                       [self fetchLatestBloodSugarAndWait:shouldWait];
-                                   } else {
-                                       dispatch_semaphore_signal(self.fetchSemaphore);
-                                   }
+                                   //assumption: every time the aplication authenticates, it next wants to fetch latest blood sugars
+                                   [self fetchLatestBloodSugarIsWaiting:isWaiting];
                                }
                                withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
-                                   if (!shouldWait) {
+                                   if (!isWaiting) {
                                        NSLog(@"error: %@", error);
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
-                                     shouldWait:shouldWait];
+                                     isWaiting:isWaiting];
 }
 
-- (void)fetchLatestBloodSugarAndWait:(BOOL)shouldWait
+- (void)fetchLatestBloodSugarIsWaiting:(BOOL)isWaiting
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait:%@", shouldWait ? @"YES" : @"NO"]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait:%@", isWaiting ? @"YES" : @"NO"]];
     
     NSString *URLString = [NSString stringWithFormat:@"https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?sessionId=%@&minutes=1400&maxCount=1", self.dexcomToken];
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:nil
                                withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
-                                   if (!shouldWait) {
+                                   if (!isWaiting) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
                                    } else {
                                        [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait received blood sugar data: %@", responseObject]];
                                    }
-                                   [self setLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil inBackground:shouldWait];
+                                   [self processLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil isWaiting:isWaiting];
                                }
                                withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
-                                   if (!shouldWait) {
+                                   if (!isWaiting) {
                                        NSLog(@"error: %@", error);
                                        if (jsonError) {
                                            NSLog(@"error response: %@", jsonError);
@@ -157,55 +138,49 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                        }
                                    }
                                    
+                                   //if dexcom token has expired since last used, restart request sequence from beginning by authenticating anew
                                    if (!self.isAttemptingReAuth &&
                                        ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"] ||
                                         [jsonError[@"Code"] isEqualToString:@"SessionIdNotFound"])
                                        ) {
                                        [DefaultsController addLogMessage:@"fetchLatestBloodSugarAndWait -> SessionNotValid"];
                                        
-                                       self.isAttemptingReAuth = YES;
+                                       self.isAttemptingReAuth = YES; //prevent infinite retries, is reset to NO on each top-level performFetchWhileWaiting: call
                                        
                                        self.dexcomToken = nil;
-                                       _latestBloodSugarData = nil;
                                        
-                                       if (shouldWait) {
-                                           [self performFetchAndWaitInternal];
-                                       } else {
-                                           [self performFetchInternal];
-                                       }
+                                       [self performFetchWhileWaiting:isWaiting];
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
-                                   shouldWait:shouldWait];
+                                     isWaiting:isWaiting];
 }
 
-- (void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
+- (void)processLatestBloodSugarData:(NSDictionary *)latestBloodSugarData isWaiting:(BOOL)isWaiting
 {
-    _latestBloodSugarData = latestBloodSugarData;
-    
     void(^updateUI)() = ^() {
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
             [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
         }
         
-        if (!inBackground) {
+        if (!isWaiting) {
             [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
         }
     };
     
-    if (_latestBloodSugarData) {
+    if (latestBloodSugarData) {
         NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
         lastReadings = lastReadings ? lastReadings : @[];
         NSDictionary *latestReading = [lastReadings lastObject];
         
-        NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
+        NSString *STDate = [latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
         if (!latestReading || [latestReading[@"timestamp"] longLongValue] != epochMilliseconds) {
             NSDictionary *newReading = @{
                                          @"timestamp": @(epochMilliseconds),
-                                         @"trend": _latestBloodSugarData[@"Trend"],
-                                         @"value": _latestBloodSugarData[@"Value"],
+                                         @"trend": latestBloodSugarData[@"Trend"],
+                                         @"value": latestBloodSugarData[@"Value"],
                                          };
             
             NSMutableArray *mutableLastReadings = [lastReadings mutableCopy];
@@ -225,15 +200,17 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
             [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@, %u readings", latestBloodSugarData, inBackground ? @"YES" : @"NO", mutableLastReadings.count]];
+            if (isWaiting) {
+                [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@, %u readings", latestBloodSugarData, isWaiting ? @"YES" : @"NO", mutableLastReadings.count]];
+            }
             
             updateUI();
             
         } else {
-            [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, inBackground ? @"YES" : @"NO"]];
-            
-            if (!inBackground) {
+            if (!isWaiting) {
                 NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
+            } else {
+                [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, isWaiting ? @"YES" : @"NO"]];
             }
         }
     } else {
@@ -241,7 +218,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         updateUI();
     }
     
-    if (inBackground) {
+    if (isWaiting) {
         dispatch_semaphore_signal(self.fetchSemaphore);
     }
 }
