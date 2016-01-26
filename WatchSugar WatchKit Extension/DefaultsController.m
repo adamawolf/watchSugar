@@ -81,7 +81,7 @@ NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
     NSArray *lastReadings = kTestReadings(epoch);
 #endif
     
-    return lastReadings;
+    return lastReadings ? lastReadings : @[];
 }
 
 @end

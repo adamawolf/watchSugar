@@ -36,8 +36,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 {
     NSDate *date = [NSDate date];
     
-    NSArray *bloodSugarEntries = [DefaultsController latestBloodSugarReadings];
-    NSDictionary *earliestReading = [bloodSugarEntries firstObject];
+    NSDictionary *earliestReading = [[DefaultsController latestBloodSugarReadings] firstObject];
     
     if (earliestReading) {
         NSTimeInterval earliestTimestamp = [earliestReading[@"timestamp"] doubleValue] / 1000.00;
@@ -134,8 +133,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 
 - (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry *__nullable))handler
 {
-    NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
-    NSDictionary *latestReading = [lastReadings lastObject];
+    NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     
     if (latestReading) {
         //a reading should only be considered current within an hour of when it was taken, otherwise we should fail over to a blank reading state
@@ -269,8 +267,10 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     }
     
     if (didChange) {
+        [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin didChange, updating complication"];
+        
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+            [[CLKComplicationServer sharedInstance] extendTimelineForComplication:complication];
         }
     }
 }

@@ -161,7 +161,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 {
     void(^updateUI)() = ^() {
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
+            [[CLKComplicationServer sharedInstance] extendTimelineForComplication:complication];
         }
         
         if (!isWaiting) {
@@ -170,9 +170,8 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     };
     
     if (latestBloodSugarData) {
-        NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
-        lastReadings = lastReadings ? lastReadings : @[];
-        NSDictionary *latestReading = [lastReadings lastObject];
+        NSArray *readings = [DefaultsController latestBloodSugarReadings];
+        NSDictionary *latestReading = [readings lastObject];
         
         NSString *STDate = [latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
@@ -183,7 +182,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                          @"value": latestBloodSugarData[@"Value"],
                                          };
             
-            NSMutableArray *mutableLastReadings = [lastReadings mutableCopy];
+            NSMutableArray *mutableLastReadings = [readings mutableCopy];
             [mutableLastReadings addObject:newReading];
             
             //prohibit too many readings
