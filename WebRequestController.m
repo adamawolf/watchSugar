@@ -8,8 +8,9 @@
 
 #import "WebRequestController.h"
 #import <AFNetworking/AFNetworking.h>
+#import "Definitions.h"
 
-NSString *const WSDexcomApplicationId_G5PlatinumApp = @"***REMOVED***";
+NSString *const WSDexcomApplicationId_G5PlatinumApp = WSDexcomApplicationId;
 
 @implementation WebRequestController
 
