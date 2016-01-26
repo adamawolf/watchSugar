@@ -1,1055 +1,2468 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		2926D3AD3244B057970398C7 /* libPods-WatchSugar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */; };
-		94313B591C1F98F900F74345 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B581C1F98F900F74345 /* main.m */; };
-		94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5B1C1F98F900F74345 /* AppDelegate.m */; };
-		94313B5F1C1F98F900F74345 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B5E1C1F98F900F74345 /* ViewController.m */; };
-		94313B621C1F98F900F74345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B601C1F98F900F74345 /* Main.storyboard */; };
-		94313B641C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313B631C1F98F900F74345 /* Assets.xcassets */; };
-		94313B671C1F98F900F74345 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B651C1F98F900F74345 /* LaunchScreen.storyboard */; };
-		94313B721C1F98F900F74345 /* WatchSugarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B711C1F98F900F74345 /* WatchSugarTests.m */; };
-		94313B7D1C1F98F900F74345 /* WatchSugarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */; };
-		94313B821C1F98F900F74345 /* WatchSugar WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */; };
-		94313B881C1F98F900F74345 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94313B861C1F98F900F74345 /* Interface.storyboard */; };
-		94313B8A1C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313B891C1F98F900F74345 /* Assets.xcassets */; };
-		94313B911C1F98F900F74345 /* WatchSugar WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		94313B991C1F98F900F74345 /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B981C1F98F900F74345 /* InterfaceController.m */; };
-		94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */; };
-		94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9E1C1F98F900F74345 /* NotificationController.m */; };
-		94313BA21C1F98F900F74345 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA11C1F98F900F74345 /* GlanceController.m */; };
-		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
-		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
-		944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 944C748B1C46D22900306EA8 /* DefaultsController.m */; };
-		94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */; };
-		94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */; };
-		94693FD61C260A8A00436C64 /* Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 94693FD41C260A8A00436C64 /* Reading.m */; };
-		9484D9211C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
-		9484D9221C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
-		9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
-		94BF86F01C45F6AA001664ED /* WatchWebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */; };
-		94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
-		94C7E43D1C4AE3CC00BB99E4 /* DeviceWebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */; };
-		DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		94313B6E1C1F98F900F74345 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94313B531C1F98F900F74345;
-			remoteInfo = WatchSugar;
-		};
-		94313B791C1F98F900F74345 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94313B531C1F98F900F74345;
-			remoteInfo = WatchSugar;
-		};
-		94313B831C1F98F900F74345 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94313B801C1F98F900F74345;
-			remoteInfo = "WatchSugar WatchKit App";
-		};
-		94313B921C1F98F900F74345 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 94313B4C1C1F98F900F74345 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94313B8F1C1F98F900F74345;
-			remoteInfo = "WatchSugar WatchKit Extension";
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		94313BAE1C1F98F900F74345 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				94313B911C1F98F900F74345 /* WatchSugar WatchKit Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313BB21C1F98F900F74345 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				94313B821C1F98F900F74345 /* WatchSugar WatchKit App.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.release.xcconfig"; sourceTree = "<group>"; };
-		94313B541C1F98F900F74345 /* WatchSugar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchSugar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		94313B581C1F98F900F74345 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		94313B5A1C1F98F900F74345 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		94313B5B1C1F98F900F74345 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		94313B5D1C1F98F900F74345 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		94313B5E1C1F98F900F74345 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		94313B611C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		94313B631C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		94313B661C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		94313B681C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchSugarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		94313B711C1F98F900F74345 /* WatchSugarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchSugarTests.m; sourceTree = "<group>"; };
-		94313B731C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchSugarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WatchSugarUITests.m; sourceTree = "<group>"; };
-		94313B7E1C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchSugar WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94313B871C1F98F900F74345 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		94313B891C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		94313B8B1C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchSugar WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		94313B961C1F98F900F74345 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		94313B971C1F98F900F74345 /* InterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceController.h; sourceTree = "<group>"; };
-		94313B981C1F98F900F74345 /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
-		94313B9A1C1F98F900F74345 /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
-		94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
-		94313B9D1C1F98F900F74345 /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
-		94313B9E1C1F98F900F74345 /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
-		94313BA01C1F98F900F74345 /* GlanceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlanceController.h; sourceTree = "<group>"; };
-		94313BA11C1F98F900F74345 /* GlanceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlanceController.m; sourceTree = "<group>"; };
-		94313BA31C1F98F900F74345 /* ComplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComplicationController.h; sourceTree = "<group>"; };
-		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
-		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		94313BA81C1F98F900F74345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		944C748A1C46D22900306EA8 /* DefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsController.h; sourceTree = "<group>"; };
-		944C748B1C46D22900306EA8 /* DefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsController.m; sourceTree = "<group>"; };
-		9458E4BD1C56EE0F007EAC2D /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
-		94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WatchSugar.xcdatamodel; sourceTree = "<group>"; };
-		94693FD11C260A8A00436C64 /* Reading+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reading+CoreDataProperties.h"; sourceTree = "<group>"; };
-		94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reading+CoreDataProperties.m"; sourceTree = "<group>"; };
-		94693FD31C260A8A00436C64 /* Reading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reading.h; sourceTree = "<group>"; };
-		94693FD41C260A8A00436C64 /* Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reading.m; sourceTree = "<group>"; };
-		9484D91F1C52FB2800B467C5 /* WebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestController.h; sourceTree = "<group>"; };
-		9484D9201C52FB2800B467C5 /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
-		94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchWebRequestController.h; sourceTree = "<group>"; };
-		94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchWebRequestController.m; sourceTree = "<group>"; };
-		94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationController.h; path = WatchSugar/AuthenticationController.h; sourceTree = "<group>"; };
-		94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthenticationController.m; path = WatchSugar/AuthenticationController.m; sourceTree = "<group>"; };
-		94C7E43B1C4AE3CC00BB99E4 /* DeviceWebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceWebRequestController.h; sourceTree = "<group>"; };
-		94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceWebRequestController.m; sourceTree = "<group>"; };
-		94E378BB1C2A492B00FE1131 /* WatchSugar.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugar.pch; sourceTree = "<group>"; };
-		94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSugarExtension.pch; sourceTree = "<group>"; };
-		9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar WatchKit Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WatchSugar WatchKit Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.debug.xcconfig"; sourceTree = "<group>"; };
-		DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchSugar WatchKit Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.release.xcconfig"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		94313B511C1F98F900F74345 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2926D3AD3244B057970398C7 /* libPods-WatchSugar.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B6A1C1F98F900F74345 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B751C1F98F900F74345 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B8D1C1F98F900F74345 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DF182833FC8F4A6B57C0CF5A /* libPods-WatchSugar WatchKit Extension.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		367AAA8AF317176C7FBDA3FE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9EC531D99D9251A13DD028A2 /* libPods-WatchSugar.a */,
-				BBE0D7F0109E4774845413B6 /* libPods-WatchSugar WatchKit Extension.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		94313B4B1C1F98F900F74345 = {
-			isa = PBXGroup;
-			children = (
-				9484D91E1C52F9CF00B467C5 /* Shared */,
-				94313B561C1F98F900F74345 /* WatchSugar */,
-				94313B701C1F98F900F74345 /* WatchSugarTests */,
-				94313B7B1C1F98F900F74345 /* WatchSugarUITests */,
-				94313B851C1F98F900F74345 /* WatchSugar WatchKit App */,
-				94313B941C1F98F900F74345 /* WatchSugar WatchKit Extension */,
-				94313B551C1F98F900F74345 /* Products */,
-				CC1D94489A4E9B015A24E80F /* Pods */,
-				367AAA8AF317176C7FBDA3FE /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		94313B551C1F98F900F74345 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				94313B541C1F98F900F74345 /* WatchSugar.app */,
-				94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */,
-				94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */,
-				94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */,
-				94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		94313B561C1F98F900F74345 /* WatchSugar */ = {
-			isa = PBXGroup;
-			children = (
-				94313B5A1C1F98F900F74345 /* AppDelegate.h */,
-				94313B5B1C1F98F900F74345 /* AppDelegate.m */,
-				94313B5D1C1F98F900F74345 /* ViewController.h */,
-				94313B5E1C1F98F900F74345 /* ViewController.m */,
-				94C7E43B1C4AE3CC00BB99E4 /* DeviceWebRequestController.h */,
-				94C7E43C1C4AE3CC00BB99E4 /* DeviceWebRequestController.m */,
-				94693FCD1C2609E200436C64 /* Core Data */,
-				94313B601C1F98F900F74345 /* Main.storyboard */,
-				94313B631C1F98F900F74345 /* Assets.xcassets */,
-				94313B651C1F98F900F74345 /* LaunchScreen.storyboard */,
-				94313B681C1F98F900F74345 /* Info.plist */,
-				94313B571C1F98F900F74345 /* Supporting Files */,
-			);
-			path = WatchSugar;
-			sourceTree = "<group>";
-		};
-		94313B571C1F98F900F74345 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				94313B581C1F98F900F74345 /* main.m */,
-				94E378BB1C2A492B00FE1131 /* WatchSugar.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		94313B701C1F98F900F74345 /* WatchSugarTests */ = {
-			isa = PBXGroup;
-			children = (
-				94313B711C1F98F900F74345 /* WatchSugarTests.m */,
-				94313B731C1F98F900F74345 /* Info.plist */,
-			);
-			path = WatchSugarTests;
-			sourceTree = "<group>";
-		};
-		94313B7B1C1F98F900F74345 /* WatchSugarUITests */ = {
-			isa = PBXGroup;
-			children = (
-				94313B7C1C1F98F900F74345 /* WatchSugarUITests.m */,
-				94313B7E1C1F98F900F74345 /* Info.plist */,
-			);
-			path = WatchSugarUITests;
-			sourceTree = "<group>";
-		};
-		94313B851C1F98F900F74345 /* WatchSugar WatchKit App */ = {
-			isa = PBXGroup;
-			children = (
-				94313B861C1F98F900F74345 /* Interface.storyboard */,
-				94313B891C1F98F900F74345 /* Assets.xcassets */,
-				94313B8B1C1F98F900F74345 /* Info.plist */,
-			);
-			path = "WatchSugar WatchKit App";
-			sourceTree = "<group>";
-		};
-		94313B941C1F98F900F74345 /* WatchSugar WatchKit Extension */ = {
-			isa = PBXGroup;
-			children = (
-				94313B9A1C1F98F900F74345 /* ExtensionDelegate.h */,
-				94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */,
-				94313B971C1F98F900F74345 /* InterfaceController.h */,
-				94313B981C1F98F900F74345 /* InterfaceController.m */,
-				94313B9D1C1F98F900F74345 /* NotificationController.h */,
-				94313B9E1C1F98F900F74345 /* NotificationController.m */,
-				94313BA01C1F98F900F74345 /* GlanceController.h */,
-				94313BA11C1F98F900F74345 /* GlanceController.m */,
-				94313BA31C1F98F900F74345 /* ComplicationController.h */,
-				94313BA41C1F98F900F74345 /* ComplicationController.m */,
-				94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */,
-				94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */,
-				944C748A1C46D22900306EA8 /* DefaultsController.h */,
-				944C748B1C46D22900306EA8 /* DefaultsController.m */,
-				94313BA61C1F98F900F74345 /* Assets.xcassets */,
-				94313BA81C1F98F900F74345 /* Info.plist */,
-				94313B951C1F98F900F74345 /* Supporting Files */,
-			);
-			path = "WatchSugar WatchKit Extension";
-			sourceTree = "<group>";
-		};
-		94313B951C1F98F900F74345 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				94313B961C1F98F900F74345 /* PushNotificationPayload.apns */,
-				94E378BC1C2A4B7D00FE1131 /* WatchSugarExtension.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		94693FCD1C2609E200436C64 /* Core Data */ = {
-			isa = PBXGroup;
-			children = (
-				94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */,
-				94693FD11C260A8A00436C64 /* Reading+CoreDataProperties.h */,
-				94693FD21C260A8A00436C64 /* Reading+CoreDataProperties.m */,
-				94693FD31C260A8A00436C64 /* Reading.h */,
-				94693FD41C260A8A00436C64 /* Reading.m */,
-			);
-			name = "Core Data";
-			sourceTree = "<group>";
-		};
-		9484D91E1C52F9CF00B467C5 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				9458E4BD1C56EE0F007EAC2D /* Definitions.h */,
-				9484D91F1C52FB2800B467C5 /* WebRequestController.h */,
-				9484D9201C52FB2800B467C5 /* WebRequestController.m */,
-				94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */,
-				94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */,
-			);
-			name = Shared;
-			sourceTree = "<group>";
-		};
-		CC1D94489A4E9B015A24E80F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */,
-				78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */,
-				9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */,
-				DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		94313B531C1F98F900F74345 /* WatchSugar */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */;
-			buildPhases = (
-				C31BDFEE2C7AD22F4F8CA855 /* Check Pods Manifest.lock */,
-				94313B501C1F98F900F74345 /* Sources */,
-				94313B511C1F98F900F74345 /* Frameworks */,
-				94313B521C1F98F900F74345 /* Resources */,
-				94313BB21C1F98F900F74345 /* Embed Watch Content */,
-				FB8B0D79A5AFCC27B6A2F2AA /* Embed Pods Frameworks */,
-				56BFA33FE9AF6774ACF8F8BF /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				94313B841C1F98F900F74345 /* PBXTargetDependency */,
-			);
-			name = WatchSugar;
-			productName = WatchSugar;
-			productReference = 94313B541C1F98F900F74345 /* WatchSugar.app */;
-			productType = "com.apple.product-type.application";
-		};
-		94313B6C1C1F98F900F74345 /* WatchSugarTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94313BB61C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarTests" */;
-			buildPhases = (
-				94313B691C1F98F900F74345 /* Sources */,
-				94313B6A1C1F98F900F74345 /* Frameworks */,
-				94313B6B1C1F98F900F74345 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				94313B6F1C1F98F900F74345 /* PBXTargetDependency */,
-			);
-			name = WatchSugarTests;
-			productName = WatchSugarTests;
-			productReference = 94313B6D1C1F98F900F74345 /* WatchSugarTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		94313B771C1F98F900F74345 /* WatchSugarUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94313BB91C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarUITests" */;
-			buildPhases = (
-				94313B741C1F98F900F74345 /* Sources */,
-				94313B751C1F98F900F74345 /* Frameworks */,
-				94313B761C1F98F900F74345 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				94313B7A1C1F98F900F74345 /* PBXTargetDependency */,
-			);
-			name = WatchSugarUITests;
-			productName = WatchSugarUITests;
-			productReference = 94313B781C1F98F900F74345 /* WatchSugarUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-		94313B801C1F98F900F74345 /* WatchSugar WatchKit App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94313BAF1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit App" */;
-			buildPhases = (
-				94313B7F1C1F98F900F74345 /* Resources */,
-				94313BAE1C1F98F900F74345 /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				94313B931C1F98F900F74345 /* PBXTargetDependency */,
-			);
-			name = "WatchSugar WatchKit App";
-			productName = "WatchSugar WatchKit App";
-			productReference = 94313B811C1F98F900F74345 /* WatchSugar WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 94313BAB1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit Extension" */;
-			buildPhases = (
-				9581497F8FA3596DB170DD2D /* Check Pods Manifest.lock */,
-				94313B8C1C1F98F900F74345 /* Sources */,
-				94313B8D1C1F98F900F74345 /* Frameworks */,
-				94313B8E1C1F98F900F74345 /* Resources */,
-				2635532384EAEE43F729D78E /* Embed Pods Frameworks */,
-				5CDBDE75ABFC2831BA7AA5AD /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "WatchSugar WatchKit Extension";
-			productName = "WatchSugar WatchKit Extension";
-			productReference = 94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		94313B4C1C1F98F900F74345 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = Flairify;
-				TargetAttributes = {
-					94313B531C1F98F900F74345 = {
-						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3P4KBPGH6G;
-						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = 1;
-							};
-						};
-					};
-					94313B6C1C1F98F900F74345 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 94313B531C1F98F900F74345;
-					};
-					94313B771C1F98F900F74345 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 94313B531C1F98F900F74345;
-					};
-					94313B801C1F98F900F74345 = {
-						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3P4KBPGH6G;
-					};
-					94313B8F1C1F98F900F74345 = {
-						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3P4KBPGH6G;
-					};
-				};
-			};
-			buildConfigurationList = 94313B4F1C1F98F900F74345 /* Build configuration list for PBXProject "WatchSugar" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 94313B4B1C1F98F900F74345;
-			productRefGroup = 94313B551C1F98F900F74345 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				94313B531C1F98F900F74345 /* WatchSugar */,
-				94313B6C1C1F98F900F74345 /* WatchSugarTests */,
-				94313B771C1F98F900F74345 /* WatchSugarUITests */,
-				94313B801C1F98F900F74345 /* WatchSugar WatchKit App */,
-				94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		94313B521C1F98F900F74345 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94313B671C1F98F900F74345 /* LaunchScreen.storyboard in Resources */,
-				94313B641C1F98F900F74345 /* Assets.xcassets in Resources */,
-				94313B621C1F98F900F74345 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B6B1C1F98F900F74345 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B761C1F98F900F74345 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B7F1C1F98F900F74345 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94313B8A1C1F98F900F74345 /* Assets.xcassets in Resources */,
-				94313B881C1F98F900F74345 /* Interface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B8E1C1F98F900F74345 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		2635532384EAEE43F729D78E /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		56BFA33FE9AF6774ACF8F8BF /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5CDBDE75ABFC2831BA7AA5AD /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9581497F8FA3596DB170DD2D /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		C31BDFEE2C7AD22F4F8CA855 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		FB8B0D79A5AFCC27B6A2F2AA /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		94313B501C1F98F900F74345 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94693FD01C2609FE00436C64 /* WatchSugar.xcdatamodeld in Sources */,
-				94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */,
-				94313B5F1C1F98F900F74345 /* ViewController.m in Sources */,
-				9484D9211C52FB2800B467C5 /* WebRequestController.m in Sources */,
-				94693FD61C260A8A00436C64 /* Reading.m in Sources */,
-				94C7E43D1C4AE3CC00BB99E4 /* DeviceWebRequestController.m in Sources */,
-				94693FD51C260A8A00436C64 /* Reading+CoreDataProperties.m in Sources */,
-				94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */,
-				94313B591C1F98F900F74345 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B691C1F98F900F74345 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94313B721C1F98F900F74345 /* WatchSugarTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B741C1F98F900F74345 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94313B7D1C1F98F900F74345 /* WatchSugarUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		94313B8C1C1F98F900F74345 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				94BF86F01C45F6AA001664ED /* WatchWebRequestController.m in Sources */,
-				94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */,
-				9484D9221C52FB2800B467C5 /* WebRequestController.m in Sources */,
-				944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */,
-				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
-				9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */,
-				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,
-				94313BA21C1F98F900F74345 /* GlanceController.m in Sources */,
-				94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		94313B6F1C1F98F900F74345 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94313B531C1F98F900F74345 /* WatchSugar */;
-			targetProxy = 94313B6E1C1F98F900F74345 /* PBXContainerItemProxy */;
-		};
-		94313B7A1C1F98F900F74345 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94313B531C1F98F900F74345 /* WatchSugar */;
-			targetProxy = 94313B791C1F98F900F74345 /* PBXContainerItemProxy */;
-		};
-		94313B841C1F98F900F74345 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94313B801C1F98F900F74345 /* WatchSugar WatchKit App */;
-			targetProxy = 94313B831C1F98F900F74345 /* PBXContainerItemProxy */;
-		};
-		94313B931C1F98F900F74345 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94313B8F1C1F98F900F74345 /* WatchSugar WatchKit Extension */;
-			targetProxy = 94313B921C1F98F900F74345 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		94313B601C1F98F900F74345 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94313B611C1F98F900F74345 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		94313B651C1F98F900F74345 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94313B661C1F98F900F74345 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		94313B861C1F98F900F74345 /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94313B871C1F98F900F74345 /* Base */,
-			);
-			name = Interface.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		94313BA91C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		94313BAA1C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		94313BAC1C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F096766CA095BF99154126D /* Pods-WatchSugar WatchKit Extension.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
-				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Debug;
-		};
-		94313BAD1C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCC20E10AB0C15C5E518B823 /* Pods-WatchSugar WatchKit Extension.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
-				GCC_PREFIX_HEADER = "WatchSugar WatchKit Extension/WatchSugarExtension.pch";
-				INFOPLIST_FILE = "WatchSugar WatchKit Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Release;
-		};
-		94313BB01C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				IBSC_MODULE = WatchSugar_WatchKit_Extension;
-				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Debug;
-		};
-		94313BB11C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
-				IBSC_MODULE = WatchSugar_WatchKit_Extension;
-				INFOPLIST_FILE = "WatchSugar WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
-			};
-			name = Release;
-		};
-		94313BB41C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C74A2FAACA85AA7E86AA18DF /* Pods-WatchSugar.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
-				INFOPLIST_FILE = WatchSugar/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		94313BB51C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78C2E5D25D2FA96839CABFA1 /* Pods-WatchSugar.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Flairify LLC (3P4KBPGH6G)";
-				GCC_PREFIX_HEADER = WatchSugar/WatchSugar.pch;
-				INFOPLIST_FILE = WatchSugar/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.watchsugar;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		94313BB71C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = WatchSugarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar";
-			};
-			name = Debug;
-		};
-		94313BB81C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = WatchSugarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar";
-			};
-			name = Release;
-		};
-		94313BBA1C1F98F900F74345 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = WatchSugarUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = WatchSugar;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		94313BBB1C1F98F900F74345 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = WatchSugarUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flairify.WatchSugarUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = WatchSugar;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		94313B4F1C1F98F900F74345 /* Build configuration list for PBXProject "WatchSugar" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BA91C1F98F900F74345 /* Debug */,
-				94313BAA1C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94313BAB1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BAC1C1F98F900F74345 /* Debug */,
-				94313BAD1C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94313BAF1C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar WatchKit App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BB01C1F98F900F74345 /* Debug */,
-				94313BB11C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94313BB31C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugar" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BB41C1F98F900F74345 /* Debug */,
-				94313BB51C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94313BB61C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BB71C1F98F900F74345 /* Debug */,
-				94313BB81C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94313BB91C1F98F900F74345 /* Build configuration list for PBXNativeTarget "WatchSugarUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				94313BBA1C1F98F900F74345 /* Debug */,
-				94313BBB1C1F98F900F74345 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		94693FCE1C2609FE00436C64 /* WatchSugar.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */,
-			);
-			currentVersion = 94693FCF1C2609FE00436C64 /* WatchSugar.xcdatamodel */;
-			path = WatchSugar.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
-	};
-	rootObject = 94313B4C1C1F98F900F74345 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>2635532384EAEE43F729D78E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>2926D3AD3244B057970398C7</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9EC531D99D9251A13DD028A2</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>367AAA8AF317176C7FBDA3FE</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>9EC531D99D9251A13DD028A2</string>
+				<string>BBE0D7F0109E4774845413B6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>56BFA33FE9AF6774ACF8F8BF</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>5CDBDE75ABFC2831BA7AA5AD</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>78C2E5D25D2FA96839CABFA1</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-WatchSugar.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B4B1C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>9484D91E1C52F9CF00B467C5</string>
+				<string>94313B561C1F98F900F74345</string>
+				<string>94313B701C1F98F900F74345</string>
+				<string>94313B7B1C1F98F900F74345</string>
+				<string>94313B851C1F98F900F74345</string>
+				<string>94313B941C1F98F900F74345</string>
+				<string>94313B551C1F98F900F74345</string>
+				<string>CC1D94489A4E9B015A24E80F</string>
+				<string>367AAA8AF317176C7FBDA3FE</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B4C1C1F98F900F74345</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0720</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Flairify</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>94313B531C1F98F900F74345</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.2</string>
+						<key>DevelopmentTeam</key>
+						<string>3P4KBPGH6G</string>
+						<key>SystemCapabilities</key>
+						<dict>
+							<key>com.apple.BackgroundModes</key>
+							<dict>
+								<key>enabled</key>
+								<string>1</string>
+							</dict>
+						</dict>
+					</dict>
+					<key>94313B6C1C1F98F900F74345</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.2</string>
+						<key>TestTargetID</key>
+						<string>94313B531C1F98F900F74345</string>
+					</dict>
+					<key>94313B771C1F98F900F74345</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.2</string>
+						<key>TestTargetID</key>
+						<string>94313B531C1F98F900F74345</string>
+					</dict>
+					<key>94313B801C1F98F900F74345</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.2</string>
+						<key>DevelopmentTeam</key>
+						<string>3P4KBPGH6G</string>
+					</dict>
+					<key>94313B8F1C1F98F900F74345</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>7.2</string>
+						<key>DevelopmentTeam</key>
+						<string>3P4KBPGH6G</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>94313B4F1C1F98F900F74345</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>94313B4B1C1F98F900F74345</string>
+			<key>productRefGroup</key>
+			<string>94313B551C1F98F900F74345</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>94313B531C1F98F900F74345</string>
+				<string>94313B6C1C1F98F900F74345</string>
+				<string>94313B771C1F98F900F74345</string>
+				<string>94313B801C1F98F900F74345</string>
+				<string>94313B8F1C1F98F900F74345</string>
+			</array>
+		</dict>
+		<key>94313B4F1C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BA91C1F98F900F74345</string>
+				<string>94313BAA1C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313B501C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94693FD01C2609FE00436C64</string>
+				<string>94C7E43A1C4AD88100BB99E4</string>
+				<string>94313B5F1C1F98F900F74345</string>
+				<string>9484D9211C52FB2800B467C5</string>
+				<string>94693FD61C260A8A00436C64</string>
+				<string>94C7E43D1C4AE3CC00BB99E4</string>
+				<string>94693FD51C260A8A00436C64</string>
+				<string>94313B5C1C1F98F900F74345</string>
+				<string>94313B591C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B511C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>2926D3AD3244B057970398C7</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B521C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94313B671C1F98F900F74345</string>
+				<string>94313B641C1F98F900F74345</string>
+				<string>94313B621C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B531C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>94313BB31C1F98F900F74345</string>
+			<key>buildPhases</key>
+			<array>
+				<string>C31BDFEE2C7AD22F4F8CA855</string>
+				<string>94313B501C1F98F900F74345</string>
+				<string>94313B511C1F98F900F74345</string>
+				<string>94313B521C1F98F900F74345</string>
+				<string>94313BB21C1F98F900F74345</string>
+				<string>FB8B0D79A5AFCC27B6A2F2AA</string>
+				<string>56BFA33FE9AF6774ACF8F8BF</string>
+				<string>OBJCLEANCUSTOMRUNSCRIPTT</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>94313B841C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>WatchSugar</string>
+			<key>productName</key>
+			<string>WatchSugar</string>
+			<key>productReference</key>
+			<string>94313B541C1F98F900F74345</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>94313B541C1F98F900F74345</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>WatchSugar.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>94313B551C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B541C1F98F900F74345</string>
+				<string>94313B6D1C1F98F900F74345</string>
+				<string>94313B781C1F98F900F74345</string>
+				<string>94313B811C1F98F900F74345</string>
+				<string>94313B901C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B561C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B5A1C1F98F900F74345</string>
+				<string>94313B5B1C1F98F900F74345</string>
+				<string>94313B5D1C1F98F900F74345</string>
+				<string>94313B5E1C1F98F900F74345</string>
+				<string>94C7E43B1C4AE3CC00BB99E4</string>
+				<string>94C7E43C1C4AE3CC00BB99E4</string>
+				<string>94693FCD1C2609E200436C64</string>
+				<string>94313B601C1F98F900F74345</string>
+				<string>94313B631C1F98F900F74345</string>
+				<string>94313B651C1F98F900F74345</string>
+				<string>94313B681C1F98F900F74345</string>
+				<string>94313B571C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>WatchSugar</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B571C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B581C1F98F900F74345</string>
+				<string>94E378BB1C2A492B00FE1131</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B581C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B591C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B581C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B5A1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>AppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B5B1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>AppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B5C1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B5B1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B5D1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B5E1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B5F1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B5E1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B601C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B611C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B611C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B621C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B601C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B631C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B641C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B631C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B651C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B661C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B661C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B671C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B651C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B681C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B691C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94313B721C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B6A1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B6B1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B6C1C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>94313BB61C1F98F900F74345</string>
+			<key>buildPhases</key>
+			<array>
+				<string>94313B691C1F98F900F74345</string>
+				<string>94313B6A1C1F98F900F74345</string>
+				<string>94313B6B1C1F98F900F74345</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>94313B6F1C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>WatchSugarTests</string>
+			<key>productName</key>
+			<string>WatchSugarTests</string>
+			<key>productReference</key>
+			<string>94313B6D1C1F98F900F74345</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>94313B6D1C1F98F900F74345</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>WatchSugarTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>94313B6E1C1F98F900F74345</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>94313B4C1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>94313B531C1F98F900F74345</string>
+			<key>remoteInfo</key>
+			<string>WatchSugar</string>
+		</dict>
+		<key>94313B6F1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>94313B531C1F98F900F74345</string>
+			<key>targetProxy</key>
+			<string>94313B6E1C1F98F900F74345</string>
+		</dict>
+		<key>94313B701C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B711C1F98F900F74345</string>
+				<string>94313B731C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>WatchSugarTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B711C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WatchSugarTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B721C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B711C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B731C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B741C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94313B7D1C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B751C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B761C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B771C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>94313BB91C1F98F900F74345</string>
+			<key>buildPhases</key>
+			<array>
+				<string>94313B741C1F98F900F74345</string>
+				<string>94313B751C1F98F900F74345</string>
+				<string>94313B761C1F98F900F74345</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>94313B7A1C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>WatchSugarUITests</string>
+			<key>productName</key>
+			<string>WatchSugarUITests</string>
+			<key>productReference</key>
+			<string>94313B781C1F98F900F74345</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ui-testing</string>
+		</dict>
+		<key>94313B781C1F98F900F74345</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>WatchSugarUITests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>94313B791C1F98F900F74345</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>94313B4C1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>94313B531C1F98F900F74345</string>
+			<key>remoteInfo</key>
+			<string>WatchSugar</string>
+		</dict>
+		<key>94313B7A1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>94313B531C1F98F900F74345</string>
+			<key>targetProxy</key>
+			<string>94313B791C1F98F900F74345</string>
+		</dict>
+		<key>94313B7B1C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B7C1C1F98F900F74345</string>
+				<string>94313B7E1C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>WatchSugarUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B7C1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WatchSugarUITests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B7D1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B7C1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B7E1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B7F1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94313B8A1C1F98F900F74345</string>
+				<string>94313B881C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B801C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>94313BAF1C1F98F900F74345</string>
+			<key>buildPhases</key>
+			<array>
+				<string>94313B7F1C1F98F900F74345</string>
+				<string>94313BAE1C1F98F900F74345</string>
+				<string>OBJCLEANCUSTOMRUNSCRIPTT</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>94313B931C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>WatchSugar WatchKit App</string>
+			<key>productName</key>
+			<string>WatchSugar WatchKit App</string>
+			<key>productReference</key>
+			<string>94313B811C1F98F900F74345</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application.watchapp2</string>
+		</dict>
+		<key>94313B811C1F98F900F74345</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>WatchSugar WatchKit App.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>94313B821C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B811C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B831C1F98F900F74345</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>94313B4C1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>94313B801C1F98F900F74345</string>
+			<key>remoteInfo</key>
+			<string>WatchSugar WatchKit App</string>
+		</dict>
+		<key>94313B841C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>94313B801C1F98F900F74345</string>
+			<key>targetProxy</key>
+			<string>94313B831C1F98F900F74345</string>
+		</dict>
+		<key>94313B851C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B861C1F98F900F74345</string>
+				<string>94313B891C1F98F900F74345</string>
+				<string>94313B8B1C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>WatchSugar WatchKit App</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B861C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B871C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Interface.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B871C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Interface.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B881C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B861C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B891C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B8A1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B891C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B8B1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B8C1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94BF86F01C45F6AA001664ED</string>
+				<string>94313B9C1C1F98F900F74345</string>
+				<string>9484D9221C52FB2800B467C5</string>
+				<string>944C748C1C46D22900306EA8</string>
+				<string>94313B991C1F98F900F74345</string>
+				<string>9484D9231C52FF5700B467C5</string>
+				<string>94313B9F1C1F98F900F74345</string>
+				<string>94313BA21C1F98F900F74345</string>
+				<string>94313BA51C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B8D1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>DF182833FC8F4A6B57C0CF5A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B8E1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>94313BA71C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313B8F1C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>94313BAB1C1F98F900F74345</string>
+			<key>buildPhases</key>
+			<array>
+				<string>9581497F8FA3596DB170DD2D</string>
+				<string>94313B8C1C1F98F900F74345</string>
+				<string>94313B8D1C1F98F900F74345</string>
+				<string>94313B8E1C1F98F900F74345</string>
+				<string>2635532384EAEE43F729D78E</string>
+				<string>5CDBDE75ABFC2831BA7AA5AD</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>WatchSugar WatchKit Extension</string>
+			<key>productName</key>
+			<string>WatchSugar WatchKit Extension</string>
+			<key>productReference</key>
+			<string>94313B901C1F98F900F74345</string>
+			<key>productType</key>
+			<string>com.apple.product-type.watchkit2-extension</string>
+		</dict>
+		<key>94313B901C1F98F900F74345</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.app-extension</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>WatchSugar WatchKit Extension.appex</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>94313B911C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B901C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>94313B921C1F98F900F74345</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>94313B4C1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>94313B8F1C1F98F900F74345</string>
+			<key>remoteInfo</key>
+			<string>WatchSugar WatchKit Extension</string>
+		</dict>
+		<key>94313B931C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>94313B8F1C1F98F900F74345</string>
+			<key>targetProxy</key>
+			<string>94313B921C1F98F900F74345</string>
+		</dict>
+		<key>94313B941C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B9A1C1F98F900F74345</string>
+				<string>94313B9B1C1F98F900F74345</string>
+				<string>94313B971C1F98F900F74345</string>
+				<string>94313B981C1F98F900F74345</string>
+				<string>94313B9D1C1F98F900F74345</string>
+				<string>94313B9E1C1F98F900F74345</string>
+				<string>94313BA01C1F98F900F74345</string>
+				<string>94313BA11C1F98F900F74345</string>
+				<string>94313BA31C1F98F900F74345</string>
+				<string>94313BA41C1F98F900F74345</string>
+				<string>94BF86EE1C45F6AA001664ED</string>
+				<string>94BF86EF1C45F6AA001664ED</string>
+				<string>944C748A1C46D22900306EA8</string>
+				<string>944C748B1C46D22900306EA8</string>
+				<string>94313BA61C1F98F900F74345</string>
+				<string>94313BA81C1F98F900F74345</string>
+				<string>94313B951C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>WatchSugar WatchKit Extension</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B951C1F98F900F74345</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94313B961C1F98F900F74345</string>
+				<string>94E378BC1C2A4B7D00FE1131</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B961C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>PushNotificationPayload.apns</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B971C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>InterfaceController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B981C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>InterfaceController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B991C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B981C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B9A1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ExtensionDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B9B1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ExtensionDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B9C1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B9B1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313B9D1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>NotificationController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B9E1C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>NotificationController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313B9F1C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313B9E1C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313BA01C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>GlanceController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA11C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>GlanceController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA21C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313BA11C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313BA31C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ComplicationController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA41C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ComplicationController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA51C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313BA41C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313BA61C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA71C1F98F900F74345</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94313BA61C1F98F900F74345</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94313BA81C1F98F900F74345</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94313BA91C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BAA1C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>94313BAB1C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BAC1C1F98F900F74345</string>
+				<string>94313BAD1C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313BAC1C1F98F900F74345</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>9F096766CA095BF99154126D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_COMPLICATION_NAME</key>
+				<string>Complication</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>WatchSugar WatchKit Extension/WatchSugarExtension.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar WatchKit Extension/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar.watchkitapp.watchkitextension</string>
+				<key>PRODUCT_NAME</key>
+				<string>${TARGET_NAME}</string>
+				<key>SDKROOT</key>
+				<string>watchos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>4</string>
+				<key>WATCHOS_DEPLOYMENT_TARGET</key>
+				<string>2.0</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BAD1C1F98F900F74345</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>DCC20E10AB0C15C5E518B823</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_COMPLICATION_NAME</key>
+				<string>Complication</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Distribution</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Distribution: Flairify LLC (3P4KBPGH6G)</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>WatchSugar WatchKit Extension/WatchSugarExtension.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar WatchKit Extension/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar.watchkitapp.watchkitextension</string>
+				<key>PRODUCT_NAME</key>
+				<string>${TARGET_NAME}</string>
+				<key>SDKROOT</key>
+				<string>watchos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>4</string>
+				<key>WATCHOS_DEPLOYMENT_TARGET</key>
+				<string>2.0</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>94313BAE1C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string></string>
+			<key>dstSubfolderSpec</key>
+			<string>13</string>
+			<key>files</key>
+			<array>
+				<string>94313B911C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Embed App Extensions</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313BAF1C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BB01C1F98F900F74345</string>
+				<string>94313BB11C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313BB01C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>IBSC_MODULE</key>
+				<string>WatchSugar_WatchKit_Extension</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar WatchKit App/Info.plist</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar.watchkitapp</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>watchos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>4</string>
+				<key>WATCHOS_DEPLOYMENT_TARGET</key>
+				<string>2.0</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BB11C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Distribution</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Distribution: Flairify LLC (3P4KBPGH6G)</string>
+				<key>IBSC_MODULE</key>
+				<string>WatchSugar_WatchKit_Extension</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar WatchKit App/Info.plist</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar.watchkitapp</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>watchos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>4</string>
+				<key>WATCHOS_DEPLOYMENT_TARGET</key>
+				<string>2.0</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>94313BB21C1F98F900F74345</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string>$(CONTENTS_FOLDER_PATH)/Watch</string>
+			<key>dstSubfolderSpec</key>
+			<string>16</string>
+			<key>files</key>
+			<array>
+				<string>94313B821C1F98F900F74345</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>name</key>
+			<string>Embed Watch Content</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>94313BB31C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BB41C1F98F900F74345</string>
+				<string>94313BB51C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313BB41C1F98F900F74345</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>C74A2FAACA85AA7E86AA18DF</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Developer</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>WatchSugar/WatchSugar.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BB51C1F98F900F74345</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>78C2E5D25D2FA96839CABFA1</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>CODE_SIGN_IDENTITY</key>
+				<string>iPhone Distribution</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Distribution: Flairify LLC (3P4KBPGH6G)</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>WatchSugar/WatchSugar.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugar/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.watchsugar</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>94313BB61C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BB71C1F98F900F74345</string>
+				<string>94313BB81C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313BB71C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugarTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.WatchSugarTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BB81C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugarTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.WatchSugarTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/WatchSugar.app/WatchSugar</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>94313BB91C1F98F900F74345</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>94313BBA1C1F98F900F74345</string>
+				<string>94313BBB1C1F98F900F74345</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>94313BBA1C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugarUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.WatchSugarUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>WatchSugar</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>94313BBB1C1F98F900F74345</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>INFOPLIST_FILE</key>
+				<string>WatchSugarUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.flairify.WatchSugarUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>WatchSugar</string>
+				<key>USES_XCTRUNNER</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>944C748A1C46D22900306EA8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>DefaultsController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>944C748B1C46D22900306EA8</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>DefaultsController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>944C748C1C46D22900306EA8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>944C748B1C46D22900306EA8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>9458E4BD1C56EE0F007EAC2D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Definitions.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FCD1C2609E200436C64</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94693FCE1C2609FE00436C64</string>
+				<string>94693FD11C260A8A00436C64</string>
+				<string>94693FD21C260A8A00436C64</string>
+				<string>94693FD31C260A8A00436C64</string>
+				<string>94693FD41C260A8A00436C64</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Core Data</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FCE1C2609FE00436C64</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>94693FCF1C2609FE00436C64</string>
+			</array>
+			<key>currentVersion</key>
+			<string>94693FCF1C2609FE00436C64</string>
+			<key>isa</key>
+			<string>XCVersionGroup</string>
+			<key>path</key>
+			<string>WatchSugar.xcdatamodeld</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>versionGroupType</key>
+			<string>wrapper.xcdatamodel</string>
+		</dict>
+		<key>94693FCF1C2609FE00436C64</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.xcdatamodel</string>
+			<key>path</key>
+			<string>WatchSugar.xcdatamodel</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FD01C2609FE00436C64</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94693FCE1C2609FE00436C64</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94693FD11C260A8A00436C64</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Reading+CoreDataProperties.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FD21C260A8A00436C64</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Reading+CoreDataProperties.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FD31C260A8A00436C64</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>Reading.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FD41C260A8A00436C64</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Reading.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94693FD51C260A8A00436C64</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94693FD21C260A8A00436C64</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94693FD61C260A8A00436C64</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94693FD41C260A8A00436C64</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>9484D91E1C52F9CF00B467C5</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>9458E4BD1C56EE0F007EAC2D</string>
+				<string>9484D91F1C52FB2800B467C5</string>
+				<string>9484D9201C52FB2800B467C5</string>
+				<string>94C7E4381C4AD88100BB99E4</string>
+				<string>94C7E4391C4AD88100BB99E4</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Shared</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9484D91F1C52FB2800B467C5</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WebRequestController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9484D9201C52FB2800B467C5</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WebRequestController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9484D9211C52FB2800B467C5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9484D9201C52FB2800B467C5</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>9484D9221C52FB2800B467C5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>9484D9201C52FB2800B467C5</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>9484D9231C52FF5700B467C5</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94C7E4391C4AD88100BB99E4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94BF86EE1C45F6AA001664ED</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WatchWebRequestController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94BF86EF1C45F6AA001664ED</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WatchWebRequestController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94BF86F01C45F6AA001664ED</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94BF86EF1C45F6AA001664ED</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94C7E4381C4AD88100BB99E4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>AuthenticationController.h</string>
+			<key>path</key>
+			<string>WatchSugar/AuthenticationController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94C7E4391C4AD88100BB99E4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>name</key>
+			<string>AuthenticationController.m</string>
+			<key>path</key>
+			<string>WatchSugar/AuthenticationController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94C7E43A1C4AD88100BB99E4</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94C7E4391C4AD88100BB99E4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94C7E43B1C4AE3CC00BB99E4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>DeviceWebRequestController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94C7E43C1C4AE3CC00BB99E4</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>DeviceWebRequestController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94C7E43D1C4AE3CC00BB99E4</key>
+		<dict>
+			<key>fileRef</key>
+			<string>94C7E43C1C4AE3CC00BB99E4</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>94E378BB1C2A492B00FE1131</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WatchSugar.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>94E378BC1C2A4B7D00FE1131</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>WatchSugarExtension.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>9581497F8FA3596DB170DD2D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>9EC531D99D9251A13DD028A2</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-WatchSugar.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>9F096766CA095BF99154126D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-WatchSugar WatchKit Extension.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BBE0D7F0109E4774845413B6</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-WatchSugar WatchKit Extension.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C31BDFEE2C7AD22F4F8CA855</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>C74A2FAACA85AA7E86AA18DF</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-WatchSugar.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>CC1D94489A4E9B015A24E80F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C74A2FAACA85AA7E86AA18DF</string>
+				<string>78C2E5D25D2FA96839CABFA1</string>
+				<string>9F096766CA095BF99154126D</string>
+				<string>DCC20E10AB0C15C5E518B823</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DCC20E10AB0C15C5E518B823</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-WatchSugar WatchKit Extension.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-WatchSugar WatchKit Extension/Pods-WatchSugar WatchKit Extension.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>DF182833FC8F4A6B57C0CF5A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BBE0D7F0109E4774845413B6</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>FB8B0D79A5AFCC27B6A2F2AA</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-WatchSugar/Pods-WatchSugar-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>OBJCLEANCUSTOMRUNSCRIPTT</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Objective-Clean Run Script</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<integer>0</integer>
+			<key>shellPath</key>
+			<string>/bin/bash</string>
+			<key>shellScript</key>
+			<string>if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then
+if [[ -d "${LOCAL_APPS_DIR}/Objective-Clean.app" ]]; then 
+"${LOCAL_APPS_DIR}"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean "${SRCROOT}" 
+else
+echo "warning: You have to install and set up Objective-Clean to use its features!" 
+fi
+fi</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>94313B4C1C1F98F900F74345</string>
+</dict>
+</plist>
