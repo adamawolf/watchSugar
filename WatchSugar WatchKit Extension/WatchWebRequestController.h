@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) AuthenticationController *authenticationController;
 
-@property (nonatomic, strong) NSDictionary * latestBloodSugarData;
+@property (nonatomic, strong) NSDictionary *latestBloodSugarData;
 
 @property (nonatomic, strong) NSDate *lastFetchAttempt;
 

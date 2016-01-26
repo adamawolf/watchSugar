@@ -29,11 +29,11 @@
 
 - (void)viewDidLoad
 {
-    [self.loginViews enumerateObjectsUsingBlock:^(UIView * view, NSUInteger idx, BOOL *stop) {
+    [self.loginViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.alpha = 0.0f;
     }];
     
-    [self.loggedInViews enumerateObjectsUsingBlock:^(UIView * view, NSUInteger idx, BOOL *stop) {
+    [self.loggedInViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.alpha = 0.0f;
     }];
 }
@@ -119,7 +119,6 @@
                 //input data into logged in fields
                 self.displayNameLabel.text = self.authenticationController.displayName;
                 self.emailLabel.text = self.authenticationController.email;
-                
                 break;
                 
             default:

@@ -28,10 +28,10 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
-                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                               withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    [self.delegate webRequestController:self authenticationDidSucceedWithToken:responseObject];
                                }
-                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                               withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    NSDictionary *errorResponse = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
                                    
                                    WebRequestControllerErrorCode errorCode = WebRequestControllerErrorCode_UnknownError;
@@ -64,10 +64,10 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:nil
-                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                               withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    [self.delegate webRequestController:self displayNameRequestDidSucceedWithName:responseObject];
                                }
-                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                               withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    NSDictionary *errorResponse = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
                                    NSLog(@"readDexcomDisplayNameForToken failure with error response: %@", errorResponse);
                                    
@@ -88,10 +88,10 @@ static NSString *const WSDexcomErrorCode_MaxAttemptsExceeded = @"SSO_Authenticat
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                        withParameters:nil
-                                     withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                                     withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                          [self.delegate webRequestController:self emailRequestDidSucceedWithEmail:responseObject];
                                      }
-                                     withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                                     withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                          NSDictionary *errorResponse = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
                                          NSLog(@"readDexcomEmailForToken failure with error response: %@", errorResponse);
                                          

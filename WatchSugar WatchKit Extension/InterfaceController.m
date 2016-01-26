@@ -18,10 +18,10 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 @end
 
-
 @implementation InterfaceController
 
-- (void)awakeWithContext:(id)context {
+- (void)awakeWithContext:(id)context
+{
     [super awakeWithContext:context];
 
     NSLog(@"watch awakeWithContext");

@@ -13,7 +13,7 @@
 
 @interface ExtensionDelegate : NSObject <WKExtensionDelegate>
 
-@property (nonatomic, strong) AuthenticationController * authenticationController;
+@property (nonatomic, strong) AuthenticationController *authenticationController;
 @property (nonatomic, strong) WatchWebRequestController *webRequestController;
 
 - (void)initializeSubControllers;

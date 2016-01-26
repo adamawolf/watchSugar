@@ -28,6 +28,7 @@ NSString *const WSDefaults_LoggedInEmail = @"WSDefaults_LoggedInEmail";
         self.displayName = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LoggedInDisplayName];
         self.email = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LoggedInEmail];
     }
+    
     return self;
 }
 

@@ -35,7 +35,7 @@ NSString *const WSDefaults_DexcomToken = @"WSDefaults_DexcomToken";
         logMessagesArray = @[];
     }
     
-    NSString * fullEntry = [NSString stringWithFormat:@"%@ - %@", [_logDateFormatter stringFromDate:[NSDate date]], logMessage];
+    NSString *fullEntry = [NSString stringWithFormat:@"%@ - %@", [_logDateFormatter stringFromDate:[NSDate date]], logMessage];
     
     NSMutableArray *mutableLogMessagesArray = [logMessagesArray mutableCopy];
     [mutableLogMessagesArray addObject:fullEntry];

@@ -31,6 +31,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     if (self) {
         self.fetchSemaphore = dispatch_semaphore_create(0);
     }
+    
     return self;
 }
 
@@ -58,14 +59,14 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 {
     [DefaultsController addLogMessage:@"performFetch"];
     
-    NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
+    NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
     if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
         [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
         return;
     }
     
     if (!self.dexcomToken) {
-        NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
+        NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
         [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] shouldWait:NO];
     } else {
         [self fetchLatestBloodSugarAndWait:NO];
@@ -85,7 +86,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     
     [DefaultsController addLogMessage:@"performFetchAndWait"];
     
-    NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
+    NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
     if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
         [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
         dispatch_semaphore_signal(self.fetchSemaphore);
@@ -93,7 +94,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     }
     
     if (!self.dexcomToken) {
-        NSDictionary * authenticationPayload = [self.authenticationController authenticationPayload];
+        NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
         [self authenticateWithDexcomAccountName:authenticationPayload[@"accountName"] andPassword:authenticationPayload[@"password"] shouldWait:YES];
     } else {
         [self fetchLatestBloodSugarAndWait:YES];
@@ -109,7 +110,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:parameters
-                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                               withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    if (!shouldWait) {
                                        NSLog(@"received dexcom token: %@", responseObject);
                                    }
@@ -121,7 +122,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
                                }
-                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                               withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    if (!shouldWait) {
                                        NSLog(@"error: %@", error);
                                    } else {
@@ -139,21 +140,21 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:nil
-                               withSuccessBlock:^(NSURLSessionDataTask * task, id responseObject) {
+                               withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    if (!shouldWait) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
                                    }
                                    [self setLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil inBackground:shouldWait];
                                }
-                               withFailureBlock:^(NSURLSessionDataTask * task, NSError * error) {
+                               withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
                                    if (!shouldWait) {
                                        NSLog(@"error: %@", error);
                                        if (jsonError) {
                                            NSLog(@"error response: %@", jsonError);
                                        } else {
-                                           NSString* errorString = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-                                           NSLog(@"%@",errorString);
+                                           NSString *errorString = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                                           NSLog(@"%@", errorString);
                                        }
                                    }
                                    
@@ -178,7 +179,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                    shouldWait:shouldWait];
 }
 
--(void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
+- (void)setLatestBloodSugarData:(NSDictionary *)latestBloodSugarData inBackground:(BOOL)inBackground
 {
     _latestBloodSugarData = latestBloodSugarData;
     
@@ -199,8 +200,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         
         NSString *STDate = [_latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         int64_t epochMilliseconds = [STDate longLongValue];
-        if (!latestReading || [latestReading[@"timestamp"] longLongValue] != epochMilliseconds)
-        {
+        if (!latestReading || [latestReading[@"timestamp"] longLongValue] != epochMilliseconds) {
             NSDictionary *newReading = @{
                                          @"timestamp": @(epochMilliseconds),
                                          @"trend": _latestBloodSugarData[@"Trend"],

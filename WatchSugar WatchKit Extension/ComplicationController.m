@@ -32,7 +32,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     handler(CLKComplicationTimeTravelDirectionBackward);
 }
 
-- (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler
+- (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate *__nullable date))handler
 {
     NSDate *date = [NSDate date];
     
@@ -48,7 +48,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     handler(date);
 }
 
-- (void)getTimelineEndDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate * __nullable date))handler
+- (void)getTimelineEndDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate *__nullable date))handler
 {
     handler(nil);
 }
@@ -84,9 +84,9 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     
     // Create the template and timeline entry.
     CLKImageProvider *smallTrendImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:trendImage];
-    CLKSimpleTextProvider * simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValueString] shortText:bloodSugarValueString];
+    CLKSimpleTextProvider *simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:[NSString stringWithFormat:@"%@ mg/dL", bloodSugarValueString] shortText:bloodSugarValueString];
     
-    CLKComplicationTimelineEntry* entry = nil;
+    CLKComplicationTimelineEntry *entry = nil;
     timeStampAsDate = timeStampAsDate ? timeStampAsDate : [NSDate date];
     if (complication.family == CLKComplicationFamilyModularSmall) {
         CLKComplicationTemplateModularSmallStackImage *smallStackImageTemplate = [[CLKComplicationTemplateModularSmallStackImage alloc] init];
@@ -132,12 +132,12 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     return entry;
 }
 
-- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry * __nullable))handler
+- (void)getCurrentTimelineEntryForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimelineEntry *__nullable))handler
 {
     NSArray *lastReadings = [DefaultsController latestBloodSugarReadings];
     NSDictionary *latestReading = [lastReadings lastObject];
     
-    if(latestReading) {
+    if (latestReading) {
         //a reading should only be considered current within an hour of when it was taken, otherwise we should fail over to a blank reading state
         NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00;
         if ([[NSDate date] timeIntervalSince1970] - epoch > kReadingFreshnessInterval) {
@@ -153,11 +153,11 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     handler([ComplicationController createTimelineEntryForReading:latestReading forComplication:complication]);
 }
 
-- (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler
+- (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> *__nullable entries))handler
 {
     NSTimeInterval latestAcceptableTimestamp = [date timeIntervalSince1970];
     
-    NSMutableArray <CLKComplicationTimelineEntry *>*entries = [NSMutableArray new];
+    NSMutableArray <CLKComplicationTimelineEntry *> *entries = [NSMutableArray new];
     
     NSArray <NSDictionary *> *latestReadings = [DefaultsController latestBloodSugarReadings];
     
@@ -168,7 +168,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     }
     
     __block NSDictionary *eligibleReading = nil;
-    [latestReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary * currentReading, NSUInteger idx, BOOL *stop) {
+    [latestReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary *currentReading, NSUInteger idx, BOOL *stop) {
         NSTimeInterval currentReadingTimestamp = [currentReading[@"timestamp"] doubleValue] / 1000.00;
         
         if (currentReading != freshLatestReading && currentReadingTimestamp < latestAcceptableTimestamp) {
@@ -193,14 +193,14 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     handler(entries);
 }
 
-- (void)getTimelineEntriesForComplication:(CLKComplication *)complication afterDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> * __nullable entries))handler
+- (void)getTimelineEntriesForComplication:(CLKComplication *)complication afterDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> *__nullable entries))handler
 {
     handler(nil);
 }
 
 #pragma mark Update Scheduling
 
-- (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate * __nullable updateDate))handler
+- (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate *__nullable updateDate))handler
 {
     NSDate *futureDate = nil;
     
@@ -208,7 +208,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     //knowing that, let's be smart about the complication update interval.
     //make it update 1) 45 seconds after an anticipated EGV reading and 2) no sooner than 9 minutes from now
     
-    NSDictionary * latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
+    NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     if (!latestReading) {
         futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
     } else {
@@ -282,13 +282,14 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 
 #pragma mark - Placeholder Templates
 
-- (void)getPlaceholderTemplateForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTemplate * __nullable complicationTemplate))handler {
+- (void)getPlaceholderTemplateForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTemplate *__nullable complicationTemplate))handler
+{
     // This method will be called once per supported complication, and the results will be cached
     
-    CLKComplicationTemplate* template = nil;
+    CLKComplicationTemplate *template = nil;
     
     CLKImageProvider *smallTrendImageProvider = [CLKImageProvider imageProviderWithOnePieceImage:[UIImage imageNamed:@"trend_0"]];
-    CLKSimpleTextProvider * simpleTextProvider =[CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];;
+    CLKSimpleTextProvider *simpleTextProvider = [CLKSimpleTextProvider textProviderWithText:@"-- mg/dL" shortText:@"--"];;
     
     // Create the template and timeline entry.
     if (complication.family == CLKComplicationFamilyModularSmall) {
