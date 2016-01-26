@@ -22,8 +22,6 @@
 		94313B911C1F98F900F74345 /* WatchSugar WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94313B901C1F98F900F74345 /* WatchSugar WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		94313B991C1F98F900F74345 /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B981C1F98F900F74345 /* InterfaceController.m */; };
 		94313B9C1C1F98F900F74345 /* ExtensionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */; };
-		94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313B9E1C1F98F900F74345 /* NotificationController.m */; };
-		94313BA21C1F98F900F74345 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA11C1F98F900F74345 /* GlanceController.m */; };
 		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
 		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
 		944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 944C748B1C46D22900306EA8 /* DefaultsController.m */; };
@@ -120,10 +118,6 @@
 		94313B981C1F98F900F74345 /* InterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceController.m; sourceTree = "<group>"; };
 		94313B9A1C1F98F900F74345 /* ExtensionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionDelegate.h; sourceTree = "<group>"; };
 		94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionDelegate.m; sourceTree = "<group>"; };
-		94313B9D1C1F98F900F74345 /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
-		94313B9E1C1F98F900F74345 /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
-		94313BA01C1F98F900F74345 /* GlanceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlanceController.h; sourceTree = "<group>"; };
-		94313BA11C1F98F900F74345 /* GlanceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlanceController.m; sourceTree = "<group>"; };
 		94313BA31C1F98F900F74345 /* ComplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComplicationController.h; sourceTree = "<group>"; };
 		94313BA41C1F98F900F74345 /* ComplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComplicationController.m; sourceTree = "<group>"; };
 		94313BA61C1F98F900F74345 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -280,10 +274,6 @@
 				94313B9B1C1F98F900F74345 /* ExtensionDelegate.m */,
 				94313B971C1F98F900F74345 /* InterfaceController.h */,
 				94313B981C1F98F900F74345 /* InterfaceController.m */,
-				94313B9D1C1F98F900F74345 /* NotificationController.h */,
-				94313B9E1C1F98F900F74345 /* NotificationController.m */,
-				94313BA01C1F98F900F74345 /* GlanceController.h */,
-				94313BA11C1F98F900F74345 /* GlanceController.m */,
 				94313BA31C1F98F900F74345 /* ComplicationController.h */,
 				94313BA41C1F98F900F74345 /* ComplicationController.m */,
 				94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */,
@@ -678,8 +668,6 @@
 				944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */,
 				94313B991C1F98F900F74345 /* InterfaceController.m in Sources */,
 				9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */,
-				94313B9F1C1F98F900F74345 /* NotificationController.m in Sources */,
-				94313BA21C1F98F900F74345 /* GlanceController.m in Sources */,
 				94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
