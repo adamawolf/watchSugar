@@ -113,6 +113,8 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    if (!shouldWait) {
                                        NSLog(@"received dexcom token: %@", responseObject);
+                                   } else {
+                                       [DefaultsController addLogMessage:[NSString stringWithFormat:@"received dexcom token: %@", responseObject]];
                                    }
                                    self.dexcomToken = responseObject;
                                    
@@ -143,6 +145,8 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
                                    if (!shouldWait) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
+                                   } else {
+                                       [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait received blood sugar data: %@", responseObject]];
                                    }
                                    [self setLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil inBackground:shouldWait];
                                }
@@ -156,16 +160,25 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
                                            NSString *errorString = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
                                            NSLog(@"%@", errorString);
                                        }
+                                   } else {
+                                       if (jsonError) {
+                                           [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait json error: %@", jsonError]];
+                                       } else {
+                                           NSString *errorString = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+                                           [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait error string: %@", errorString]];
+                                       }
                                    }
                                    
                                    if (!self.isAttemptingReAuth &&
                                        ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"] ||
                                         [jsonError[@"Code"] isEqualToString:@"SessionIdNotFound"])
                                        ) {
+                                       [DefaultsController addLogMessage:@"fetchLatestBloodSugarAndWait -> SessionNotValid"];
+                                       
                                        self.isAttemptingReAuth = YES;
                                        
                                        self.dexcomToken = nil;
-                                       self.latestBloodSugarData = nil;
+                                       _latestBloodSugarData = nil;
                                        
                                        if (shouldWait) {
                                            [self performFetchAndWaitInternal];

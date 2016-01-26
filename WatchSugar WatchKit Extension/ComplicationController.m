@@ -188,7 +188,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
         }
     }
     
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getTimelineEntriesForComplication beforeDate:%@ limit:%d : %@", date, (int)limit, entries]];
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getTimelineEntriesForComplication beforeDate:%@ limit:%d : %u returned", date, (int)limit, entries.count]];
     
     handler(entries);
 }
