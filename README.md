@@ -1,6 +1,6 @@
 # watchSugar
 
-An Apple Watch Extension for viewing your Dexcom Share blood sugars values on your watch face.
+An Apple Watch Extension for viewing your Dexcom Share blood sugars on your watch face.
 
 ## How to get started developing
 
