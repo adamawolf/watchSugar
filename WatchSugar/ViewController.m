@@ -36,6 +36,8 @@
     [self.loggedInViews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
         view.alpha = 0.0f;
     }];
+    
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
