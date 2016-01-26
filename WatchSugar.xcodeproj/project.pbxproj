@@ -25,7 +25,6 @@
 		94313BA51C1F98F900F74345 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94313BA41C1F98F900F74345 /* ComplicationController.m */; };
 		94313BA71C1F98F900F74345 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94313BA61C1F98F900F74345 /* Assets.xcassets */; };
 		944C748C1C46D22900306EA8 /* DefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 944C748B1C46D22900306EA8 /* DefaultsController.m */; };
-		9458E4BF1C56FE83007EAC2D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9458E4BE1C56FE83007EAC2D /* README.md */; };
 		9484D9211C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
 		9484D9221C52FB2800B467C5 /* WebRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9484D9201C52FB2800B467C5 /* WebRequestController.m */; };
 		9484D9231C52FF5700B467C5 /* AuthenticationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C7E4391C4AD88100BB99E4 /* AuthenticationController.m */; };
@@ -639,7 +638,6 @@
 				94C7E43A1C4AD88100BB99E4 /* AuthenticationController.m in Sources */,
 				94313B5F1C1F98F900F74345 /* ViewController.m in Sources */,
 				9484D9211C52FB2800B467C5 /* WebRequestController.m in Sources */,
-				9458E4BF1C56FE83007EAC2D /* README.md in Sources */,
 				94C7E43D1C4AE3CC00BB99E4 /* DeviceWebRequestController.m in Sources */,
 				94313B5C1C1F98F900F74345 /* AppDelegate.m in Sources */,
 				94313B591C1F98F900F74345 /* main.m in Sources */,
