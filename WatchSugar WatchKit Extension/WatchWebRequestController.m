@@ -35,18 +35,6 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     return self;
 }
 
-#pragma mark - Custom Setter and Getter methods
-
-- (NSString *)dexcomToken
-{
-    return [DefaultsController dexcomToken];
-}
-
-- (void)setDexcomToken:(NSString *)dexcomToken
-{
-    [DefaultsController setDexcomToken:dexcomToken];
-}
-
 - (void)performFetch
 {
     self.lastFetchAttempt = [NSDate date];

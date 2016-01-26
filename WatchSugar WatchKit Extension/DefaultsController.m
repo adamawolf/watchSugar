@@ -11,7 +11,6 @@
 NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
-NSString *const WSDefaults_DexcomToken = @"WSDefaults_DexcomToken";
 
 //#define kTestReadings(epochMilliseconds) @[@{ \
 //                                            @"timestamp": @((epochMilliseconds)), \
@@ -83,22 +82,6 @@ NSString *const WSDefaults_DexcomToken = @"WSDefaults_DexcomToken";
 #endif
     
     return lastReadings;
-}
-
-+ (NSString *)dexcomToken
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_DexcomToken];
-}
-
-+ (void)setDexcomToken:(NSString *)dexcomToken
-{
-    if (!dexcomToken) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_DexcomToken];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setObject:dexcomToken forKey:WSDefaults_DexcomToken];
-    }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

@@ -27,7 +27,4 @@ extern NSString *const WSDefaults_LastReadings;
 
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings;
 
-+ (NSString *)dexcomToken;
-+ (void)setDexcomToken:(NSString *)dexcomToken;
-
 @end
