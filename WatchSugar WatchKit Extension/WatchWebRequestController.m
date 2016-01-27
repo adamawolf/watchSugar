@@ -121,6 +121,12 @@
                                        [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait received blood sugar data: %@", responseObject]];
                                    }
                                    [self processLatestBloodSugarData:[responseObject firstObject] ? [responseObject firstObject] : nil isWaiting:isWaiting];
+                                   
+                                   //counter-intuitive, but I'm seeing dexcom session tokens constently expire between each complication update
+                                   //most likely this is a "tick-tock" effect between running dexcom's g5 mobile app, and this app side by side.
+                                   //each app's token is invalidating the others. a TODO here is to run charles proxy and try to detect this pattern.
+                                   //for now, minimize requests in complication update to 2: (auth + fetchBS) vs. (failed-fetchBS + auth + fetchBS)
+                                   self.dexcomToken = nil;
                                }
                                withFailureBlock:^(NSURLSessionDataTask *task, NSError *error) {
                                    NSDictionary *jsonError = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:NULL];
