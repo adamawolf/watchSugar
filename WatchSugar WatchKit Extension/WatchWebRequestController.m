@@ -161,7 +161,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 {
     void(^updateUI)() = ^() {
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-            [[CLKComplicationServer sharedInstance] extendTimelineForComplication:complication];
+            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
         }
         
         if (!isWaiting) {

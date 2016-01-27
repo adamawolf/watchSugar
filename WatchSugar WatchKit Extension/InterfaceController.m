@@ -56,8 +56,6 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 - (void)updateDisplay
 {
-    NSLog(@"watch updateDisplay");
-    
     WSLoginStatus loginStatus = [DefaultsController lastKnownLoginStatus];
     
     if (loginStatus == WSLoginStatus_LoggedIn) {

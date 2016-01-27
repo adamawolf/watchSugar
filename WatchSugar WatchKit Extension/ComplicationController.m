@@ -270,7 +270,7 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
         [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin didChange, updating complication"];
         
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
-            [[CLKComplicationServer sharedInstance] extendTimelineForComplication:complication];
+            [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
         }
     }
 }
