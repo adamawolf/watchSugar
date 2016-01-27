@@ -14,6 +14,11 @@ extern NSString *const WSDefaults_LogMessageArray;
 extern NSString *const WSDefaults_LastKnownLoginStatus;
 extern NSString *const WSDefaults_LastReadings;
 
+typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
+    WSProcessReadingResultNewResultAdded,
+    WSProcessReadingResultNothingChanged,
+};
+
 @interface DefaultsController : NSObject
 
 + (void)addLogMessage:(NSString *)logMessage;
@@ -26,5 +31,7 @@ extern NSString *const WSDefaults_LastReadings;
 + (void)setLastKnownLoginStatus:(WSLoginStatus)status;
 
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings;
+
++ (WSProcessReadingResult)processNewBloodSugarData:(NSDictionary *)prospectiveNewBloodSugarData;
 
 @end

@@ -13,9 +13,6 @@
 
 #import "DefaultsController.h"
 
-static const NSInteger kMaxBloodSugarReadings = 6 * 12;
-static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
-
 @interface WatchWebRequestController ()
 
 @property (nonatomic, strong) dispatch_semaphore_t fetchSemaphore;
@@ -159,7 +156,11 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 - (void)processLatestBloodSugarData:(NSDictionary *)latestBloodSugarData isWaiting:(BOOL)isWaiting
 {
-    void(^updateUI)() = ^() {
+    WSProcessReadingResult processResult = [DefaultsController processNewBloodSugarData:latestBloodSugarData];
+    
+    if (processResult == WSProcessReadingResultNewResultAdded) {
+        
+        //update complication, and if running in foreground, update UI
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
             [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
         }
@@ -167,56 +168,27 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         if (!isWaiting) {
             [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
         }
-    };
-    
-    if (latestBloodSugarData) {
-        NSArray *readings = [DefaultsController latestBloodSugarReadings];
-        NSDictionary *latestReading = [readings lastObject];
         
-        NSString *STDate = [latestBloodSugarData[@"ST"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
-        int64_t epochMilliseconds = [STDate longLongValue];
-        if (!latestReading || [latestReading[@"timestamp"] longLongValue] != epochMilliseconds) {
-            NSDictionary *newReading = @{
-                                         @"timestamp": @(epochMilliseconds),
-                                         @"trend": latestBloodSugarData[@"Trend"],
-                                         @"value": latestBloodSugarData[@"Value"],
-                                         };
-            
-            NSMutableArray *mutableLastReadings = [readings mutableCopy];
-            [mutableLastReadings addObject:newReading];
-            
-            //prohibit too many readings
-            while ([mutableLastReadings count] > kMaxBloodSugarReadings) {
-                [mutableLastReadings removeObjectAtIndex:0];
-            }
-            
-            //prohibit readings from more than kMaximumReadingHistoryInterval ago
-            NSTimeInterval oldestAllowableTimeInterval = [[NSDate date] timeIntervalSince1970] - kMaximumReadingHistoryInterval;
-            while ([mutableLastReadings firstObject] && [[mutableLastReadings firstObject][@"timestamp"] doubleValue] / 1000.00 < oldestAllowableTimeInterval) {
-                [mutableLastReadings removeObjectAtIndex:0];
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setObject:mutableLastReadings forKey:WSDefaults_LastReadings];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            if (isWaiting) {
-                [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:%@ inBackground:%@, %u readings", latestBloodSugarData, isWaiting ? @"YES" : @"NO", mutableLastReadings.count]];
-            }
-            
-            updateUI();
-            
+        //log success
+        NSDictionary *latestResult = [[DefaultsController latestBloodSugarReadings] lastObject];
+        NSString *message = [NSString stringWithFormat:@"Save COMPLETE setLatestBloodSugarData:inBackground:%@, latest is now : %@", isWaiting ? @"YES" : @"NO", latestResult];
+        if (!isWaiting) {
+            NSLog(@"%@", message);
         } else {
-            if (!isWaiting) {
-                NSLog(@"Latest Egv value has already been saved to Core Data. Skipping.");
-            } else {
-                [DefaultsController addLogMessage:[NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, isWaiting ? @"YES" : @"NO"]];
-            }
+            [DefaultsController addLogMessage:message];
         }
+        
     } else {
-        //going from having a recent reading to not, update display or complications
-        updateUI();
+        //log skip
+        NSString *message = [NSString stringWithFormat:@"Save skipped setLatestBloodSugarData:%@ inBackground:%@", latestBloodSugarData, isWaiting ? @"YES" : @"NO"];
+        if (!isWaiting) {
+            NSLog(@"%@", message);
+        } else {
+            [DefaultsController addLogMessage:message];
+        }
     }
     
+    //this is the end of the request sequence, if the main thread is waiting on us, signal
     if (isWaiting) {
         dispatch_semaphore_signal(self.fetchSemaphore);
     }

@@ -66,7 +66,8 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     NSDate *timeStampAsDate = nil;
     NSTimeInterval epoch = 0.0f;
     
-    if (reading && !reading[@"lastValidSignalDate"]) {
+    if (reading && reading[@"trend"] && reading[@"value"]) {
+        //valid reading
         int readingValue = [reading[@"value"] intValue];
         bloodSugarValueString = [NSString stringWithFormat:@"%d", readingValue];
         
@@ -76,9 +77,15 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
         
         epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
         timeStampAsDate = [NSDate dateWithTimeIntervalSince1970:epoch];
-    } else if (reading[@"lastValidSignalDate"]) {
+    } else if (reading) {
+        //placeholder for non-fresh results
         bloodSugarValueString = @"---";
-        timeStampAsDate = reading[@"lastValidSignalDate"];
+        
+        epoch = [reading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
+        timeStampAsDate = [NSDate dateWithTimeIntervalSince1970:epoch];
+    } else {
+        //no reading whatsoever
+        timeStampAsDate = [NSDate date];
     }
     
     // Create the template and timeline entry.
@@ -135,17 +142,6 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 {
     NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     
-    if (latestReading) {
-        //a reading should only be considered current within an hour of when it was taken, otherwise we should fail over to a blank reading state
-        NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00;
-        if ([[NSDate date] timeIntervalSince1970] - epoch > kReadingFreshnessInterval) {
-            NSDate *lastFreshReadingDate = [NSDate dateWithTimeIntervalSince1970:epoch + kReadingFreshnessInterval];
-            latestReading = @{
-                              @"lastValidSignalDate": lastFreshReadingDate,
-                              };
-        }
-    }
-    
     [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication rendering %@", latestReading]];
 
     handler([ComplicationController createTimelineEntryForReading:latestReading forComplication:complication]);
@@ -159,17 +155,11 @@ static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
     
     NSArray <NSDictionary *> *latestReadings = [DefaultsController latestBloodSugarReadings];
     
-    NSDictionary *freshLatestReading = [latestReadings lastObject];
-    NSTimeInterval epoch = [freshLatestReading[@"timestamp"] doubleValue] / 1000.00;
-    if ([[NSDate date] timeIntervalSince1970] - epoch > kReadingFreshnessInterval) {
-        freshLatestReading = nil;
-    }
-    
     __block NSDictionary *eligibleReading = nil;
     [latestReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary *currentReading, NSUInteger idx, BOOL *stop) {
         NSTimeInterval currentReadingTimestamp = [currentReading[@"timestamp"] doubleValue] / 1000.00;
         
-        if (currentReading != freshLatestReading && currentReadingTimestamp < latestAcceptableTimestamp) {
+        if (currentReading != [latestReadings lastObject] && currentReadingTimestamp < latestAcceptableTimestamp) {
             eligibleReading = currentReading;
             *stop = YES;
         }
