@@ -146,7 +146,7 @@
                                        
                                        self.dexcomToken = nil;
                                        
-                                       [self performFetchWhileWaiting:isWaiting];
+                                       [self internal_performFetchWhileWaiting:isWaiting];
                                    } else {
                                        dispatch_semaphore_signal(self.fetchSemaphore);
                                    }
