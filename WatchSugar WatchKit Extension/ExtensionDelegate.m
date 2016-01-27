@@ -33,8 +33,6 @@
 
 - (void)applicationDidFinishLaunching
 {
-    [DefaultsController addLogMessage:@"applicationDidFinishLaunching"];
-    
     [self initializeSubControllers];
     
     //initialize WatchConnectivity
@@ -46,7 +44,7 @@
         NSLog(@"activate session called on watch");
     }
     
-    NSString *logMessage = [NSString stringWithFormat:@"last know login status on device: %u", [DefaultsController lastKnownLoginStatus]];
+    NSString *logMessage = [NSString stringWithFormat:@"applicationDidFinishLaunching, last know login status on device: %u", [DefaultsController lastKnownLoginStatus]];
     NSLog(@"%@", logMessage);
     [DefaultsController addLogMessage:logMessage];
 }

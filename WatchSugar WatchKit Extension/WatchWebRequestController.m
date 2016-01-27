@@ -37,7 +37,9 @@
 //  accomplish this by waiting on a semaphore and signaling that semaphore upon request sequence success, or upon terminal error in request sequence
 - (void)performFetchWhileWaiting:(BOOL)isWaiting
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"performFetchAndWait:%@", isWaiting ? @"YES" : @"NO"]];
+    if (isWaiting) {
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"performFetchAndWait:%@", isWaiting ? @"YES" : @"NO"]];
+    }
     
     self.lastFetchAttempt = [NSDate date];
     self.isAttemptingReAuth = NO;
@@ -51,12 +53,14 @@
 
 - (void)internal_performFetchWhileWaiting:(BOOL)isWaiting
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"internal_performFetchWhileWaiting:%@", isWaiting ? @"YES" : @"NO"]];
+    if (isWaiting) {
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"internal_performFetchWhileWaiting:%@", isWaiting ? @"YES" : @"NO"]];
+    }
     
     NSDictionary *authenticationPayload = [self.authenticationController authenticationPayload];
     if (!authenticationPayload[@"accountName"] || !authenticationPayload[@"password"]) {
-        [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
         if (isWaiting) {
+            [DefaultsController addLogMessage:@"watch app not authenitcated, skipping fetch attempt"];
             dispatch_semaphore_signal(self.fetchSemaphore);
         }
         return;
@@ -102,7 +106,9 @@
 
 - (void)fetchLatestBloodSugarIsWaiting:(BOOL)isWaiting
 {
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait:%@", isWaiting ? @"YES" : @"NO"]];
+    if (isWaiting) {
+        [DefaultsController addLogMessage:[NSString stringWithFormat:@"fetchLatestBloodSugarAndWait:%@ with token %@", isWaiting ? @"YES" : @"NO", self.dexcomToken]];
+    }
     
     NSString *URLString = [NSString stringWithFormat:@"https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?sessionId=%@&minutes=1400&maxCount=1", self.dexcomToken];
     
@@ -140,7 +146,9 @@
                                        ([jsonError[@"Code"] isEqualToString:@"SessionNotValid"] ||
                                         [jsonError[@"Code"] isEqualToString:@"SessionIdNotFound"])
                                        ) {
-                                       [DefaultsController addLogMessage:@"fetchLatestBloodSugarAndWait -> SessionNotValid"];
+                                       if (isWaiting) {
+                                           [DefaultsController addLogMessage:@"fetchLatestBloodSugarAndWait -> SessionNotValid"];
+                                       }
                                        
                                        self.isAttemptingReAuth = YES; //prevent infinite retries, is reset to NO on each top-level performFetchWhileWaiting: call
                                        
