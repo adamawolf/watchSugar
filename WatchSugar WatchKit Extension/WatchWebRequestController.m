@@ -115,6 +115,22 @@
     [WebRequestController dexcomPOSTToURLString:URLString
                                  withParameters:nil
                                withSuccessBlock:^(NSURLSessionDataTask *task, id responseObject) {
+                                   //reponse object in the form:
+                                   //(
+                                   // {
+                                   //     DT = "/Date(28800000-0800)/";
+                                   //     ST = "/Date(1454023083000)/";
+                                   //     Trend = 5;
+                                   //     Value = 121;
+                                   //     WT = "/Date(1454023083000)/";
+                                   // }
+                                   // )
+                                   
+                                   //DT seems to be 'Delta Time From UTC', [the number of milliseconds from UTC]-[Timezone delta in hours]
+                                   //ST seems to be 'Server Time', or 'System Time'
+                                   //WT seems to be... 'Wall Time'? Hopefull this is the value I want to use.
+                                   //   When using ST, I ran into time zone issues with people on the East Coast
+                                   
                                    if (!isWaiting) {
                                        NSLog(@"received blood sugar data: %@", responseObject);
                                    } else {
