@@ -66,6 +66,9 @@
     NSString *password = self.passwordTextView.text;
     
     if (accountName.length && password.length) {
+        [self.accountNameTextView resignFirstResponder];
+        [self.passwordTextView resignFirstResponder];
+        
         self.pendingAuthenticationPayload = @{
                                        @"accountName": accountName,
                                        @"password": password
@@ -119,8 +122,8 @@
                 [viewsToDisappear addObjectsFromArray:self.loginViews];
                 
                 //input data into logged in fields
-                self.displayNameLabel.text = self.authenticationController.displayName;
-                self.emailLabel.text = self.authenticationController.email;
+                self.displayNameLabel.text = @"dexcomUser"; //self.authenticationController.displayName;
+                self.emailLabel.text = @"example@email.com"; // self.authenticationController.email;
                 break;
                 
             default:
