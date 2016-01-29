@@ -85,8 +85,19 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         if (lastReadings.count) {
             NSDictionary *latestReading = [lastReadings lastObject];
             
-            int mostRecentValue = [latestReading[@"value"] intValue];
-            self.bloodSugarLabel.text = [NSString stringWithFormat:@"%d", mostRecentValue];
+            if (latestReading[@"trend"] && latestReading[@"value"]) {
+                int mostRecentValue = [latestReading[@"value"] intValue];
+                self.bloodSugarLabel.text = [NSString stringWithFormat:@"%d", mostRecentValue];
+                
+                int trend = [latestReading[@"trend"] intValue];
+                NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
+                UIImage *trendImage = [UIImage imageNamed:trendImageName];
+                trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                [self.trendImage setImage:trendImage];
+            } else {
+                self.bloodSugarLabel.text = @"No signal.";
+                [self.trendImage setImage:nil];
+            }
             
             NSTimeInterval epoch = [latestReading[@"timestamp"] doubleValue] / 1000.00; //dexcom dates include milliseconds
             
@@ -97,12 +108,6 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
             }
 
             self.readingDateLabel.text = [NSString stringWithFormat:@"from %@", [_timeStampDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:epoch]]];
-            
-            int trend = [latestReading[@"trend"] intValue];
-            NSString *trendImageName = [NSString stringWithFormat:@"trend_%d", trend];
-            UIImage *trendImage = [UIImage imageNamed:trendImageName];
-            trendImage = [trendImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            [self.trendImage setImage:trendImage];
         } else {
             self.bloodSugarLabel.text = @"--";
             self.readingDateLabel.text = @"";

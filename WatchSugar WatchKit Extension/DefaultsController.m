@@ -117,13 +117,21 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     //check the cases in which we want to add a new entry
     
     //1) there is newBloodSugar data, meaning: there is PROSPECTIVE new blood sugar data AND its timestamp is different than latestReading's
-    BOOL newBloodSugarData = NO;
+    __block BOOL newBloodSugarData = NO;
     if (prospectiveNewBloodSugarData) {
         NSString *newBloodSugarDataTimestampAsString = [prospectiveNewBloodSugarData[@"WT"] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"()"]][1];
         NSTimeInterval newBloodSugarTimeStamp = [newBloodSugarDataTimestampAsString longLongValue];
         
-        if ([latestReading[@"timestamp"] longLongValue] != newBloodSugarTimeStamp) {
-            newBloodSugarData = YES;
+        //assume new, scan array backwards looking for anything reading with matching timestamp. if so, not new
+        newBloodSugarData = YES;
+        [currentReadings enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary *currentReading, NSUInteger idx, BOOL *stop) {
+            if ([currentReading[@"timestamp"] longLongValue] == newBloodSugarTimeStamp) {
+                newBloodSugarData = NO;
+                *stop = YES;
+            }
+        }];
+        
+        if (newBloodSugarData) {
             [newReadingsToAdd addObject:createReadingFromDataDictionary(prospectiveNewBloodSugarData, newBloodSugarTimeStamp)];
         }
     }
@@ -138,7 +146,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
             noNewBloodSugarDataAndLatestIsNotFresh = YES;
             
             latestReadingTimestamp = latestReadingTimestamp + kMaximumFreshnessInterval;
-            [newReadingsToAdd addObject:createReadingFromDataDictionary(nil, latestReadingTimestamp)];
+            [newReadingsToAdd addObject:createReadingFromDataDictionary(nil, latestReadingTimestamp * 1000.0f)];
         }
     }
     
