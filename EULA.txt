@@ -1,0 +1,46 @@
+watchSugar
+Copyright (c) 2016 Flairify LLC
+
+*** END USER LICENSE AGREEMENT ***
+
+IMPORTANT: PLEASE READ THIS LICENSE CAREFULLY BEFORE USING THIS SOFTWARE.
+
+1. LICENSE
+
+By receiving, opening the file package, and/or using watchSugar("Software") containing this software, you agree that this End User User License Agreement(EULA) is a legally binding and valid contract and agree to be bound by it. You agree to abide by the intellectual property laws and all of the terms and conditions of this Agreement.
+
+Unless you have a different license agreement signed by Flairify LLC your use of watchSugar indicates your acceptance of this license agreement and warranty.
+
+Subject to the terms of this Agreement, Flairify LLC grants to you a limited, non-exclusive, non-transferable license, without right to sub-license, to use watchSugar in accordance with this Agreement and any other written agreement with Flairify LLC. Flairify LLC does not transfer the title of watchSugar to you; the license granted to you is not a sale. This agreement is a binding legal agreement between Flairify LLC and the purchasers or users of watchSugar.
+
+If you do not agree to be bound by this agreement, remove watchSugar from your device now and, if applicable, promptly return to Flairify LLC by mail any copies of watchSugar and related documentation and packaging in your possession.
+
+2. USER AGREEMENT
+
+2.1 Use Restrictions
+
+You shall use watchSugar in compliance with all applicable laws and not for any unlawful purpose. Without limiting the foregoing, use, display or distribution of watchSugar together with material that is pornographic, racist, vulgar, obscene, defamatory, libelous, abusive, promoting hatred, discriminating or displaying prejudice based on religion, ethnic heritage, race, sexual orientation or age is strictly prohibited.
+
+2.2 Limitation of Responsibility
+
+You will indemnify, hold harmless, and defend Flairify LLC , its employees, agents and distributors against any and all claims, proceedings, demand and costs resulting from or in any way connected with your use of Flairify LLC's Software.
+
+In no event (including, without limitation, in the event of negligence) will Flairify LLC , its employees, agents or distributors be liable for any consequential, incidental, indirect, special or punitive damages whatsoever (including, without limitation, damages for loss of profits, loss of use, business interruption, loss of information or data, or pecuniary loss), in connection with or arising out of or related to this Agreement, watchSugar or the use or inability to use watchSugar or the furnishing, performance or use of any other matters hereunder whether based upon contract, tort or any other theory including negligence.
+
+Flairify LLC's entire liability, without exception, is limited to the customers' reimbursement of the purchase price of the Software (maximum being the lesser of the amount paid by you and the suggested retail price as listed by Flairify LLC ) in exchange for the return of the product, all copies, registration papers and manuals, and all materials that constitute a transfer of license from the customer back to Flairify LLC.
+
+2.3 Warranties
+
+Except as expressly stated in writing, Flairify LLC makes no representation or warranties in respect of this Software and expressly excludes all other warranties, expressed or implied, oral or written, including, without limitation, any implied warranties of merchantable quality or fitness for a particular purpose.
+
+2.4 Governing Law
+
+This Agreement shall be governed by the law of the United States applicable therein. You hereby irrevocably attorn and submit to the non-exclusive jurisdiction of the courts of United States therefrom. If any provision shall be considered unlawful, void or otherwise unenforceable, then that provision shall be deemed severable from this License and not affect the validity and enforceability of any other provisions.
+
+2.5 Termination
+
+Any failure to comply with the terms and conditions of this Agreement will result in automatic and immediate termination of this license. Upon termination of this license granted herein for any reason, you agree to immediately cease use of watchSugar and destroy all copies of watchSugar supplied under this Agreement. The financial obligations incurred by you shall survive the expiration or termination of this license.
+
+3. DISCLAIMER OF WARRANTY
+
+THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED. THIS DISCLAIMER CONCERNS ALL FILES GENERATED AND EDITED BY watchSugar AS WELL. watchSugar IS SUITABLE FOR NO PURPOSE WHATSOEVER AND IS PROFIVDED FOR EDUCATIONAL PURPOSES ONLY. watchSugar IS NOT TO BE USED TO TREAT ANY MEDICAL CONDITIONS.

@@ -128,6 +128,7 @@
 		9458E4BE1C56FE83007EAC2D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9484D91F1C52FB2800B467C5 /* WebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequestController.h; sourceTree = "<group>"; };
 		9484D9201C52FB2800B467C5 /* WebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequestController.m; sourceTree = "<group>"; };
+		94BA74701C5BF4E40072A04B /* EULA.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = EULA.txt; sourceTree = "<group>"; };
 		94BF86EE1C45F6AA001664ED /* WatchWebRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchWebRequestController.h; sourceTree = "<group>"; };
 		94BF86EF1C45F6AA001664ED /* WatchWebRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchWebRequestController.m; sourceTree = "<group>"; };
 		94C7E4381C4AD88100BB99E4 /* AuthenticationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthenticationController.h; path = WatchSugar/AuthenticationController.h; sourceTree = "<group>"; };
@@ -189,6 +190,7 @@
 		94313B4B1C1F98F900F74345 = {
 			isa = PBXGroup;
 			children = (
+				94BA74701C5BF4E40072A04B /* EULA.txt */,
 				9458E4BE1C56FE83007EAC2D /* README.md */,
 				9484D91E1C52F9CF00B467C5 /* Shared */,
 				94313B561C1F98F900F74345 /* WatchSugar */,
