@@ -12,6 +12,8 @@
 #import "DefaultsController.h"
 #import "WatchWebRequestController.h"
 
+#import <Parse/Parse.h>
+
 static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 @interface InterfaceController() <WatchWebRequestControllerDelegate>
@@ -63,13 +65,16 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         [self.readingDateLabel setHidden:NO];
         [self.trendImage setHidden:NO];
         
-#ifdef DEBUG
+//#ifdef DEBUG
+//        [self.printLogButton setHidden:NO];
+//        [self.clearLogButton setHidden:YES];
+//#else
+//        [self.printLogButton setHidden:YES];
+//        [self.clearLogButton setHidden:YES];
+//#endif
+
         [self.printLogButton setHidden:NO];
-        [self.clearLogButton setHidden:NO];
-#else
-        [self.printLogButton setHidden:YES];
         [self.clearLogButton setHidden:YES];
-#endif
         
         [self.notLoggedInLabel setHidden:YES];
         
@@ -135,7 +140,22 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 - (IBAction)dumpLogTapped:(id)sender
 {
-    NSLog(@"%@", [DefaultsController allLogMessages]);
+    NSArray *actions = @[
+                        [WKAlertAction actionWithTitle:@"Send" style:WKAlertActionStyleDefault handler:^{
+                            PFObject *testObject = [PFObject objectWithClassName:@"Log"];
+                            testObject[@"message"] = [DefaultsController allLogMessages];
+                            [testObject saveInBackground];
+                            
+                            NSLog(@"%@", [DefaultsController allLogMessages]);
+                        }],
+                        [WKAlertAction actionWithTitle:@"Cancel" style:WKAlertActionStyleCancel handler:^{
+                            NSLog(@"%@", [DefaultsController allLogMessages]);
+                        }],
+                        ];
+    
+    [self presentAlertControllerWithTitle:@"Send Logs"
+                                  message:@"Please keep your wrist up for 10-20 seconds to complete."
+                           preferredStyle:WKAlertControllerStyleAlert actions:actions];
 }
 
 - (IBAction)clearLogTapped:(id)sender

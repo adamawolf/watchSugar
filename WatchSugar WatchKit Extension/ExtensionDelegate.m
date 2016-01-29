@@ -16,6 +16,8 @@
 #import "WatchWebRequestController.h"
 #import "AuthenticationController.h"
 
+#import <Parse/Parse.h>
+
 @interface ExtensionDelegate () <WCSessionDelegate>
 
 @end
@@ -34,6 +36,9 @@
 - (void)applicationDidFinishLaunching
 {
     [self initializeSubControllers];
+    
+    [Parse setApplicationId:@"9GhyzvbfPCu2fKMIsyILB0w7vLYSo5vBiD3PuEp7"
+                  clientKey:@"ho4JrXvywYYxO1q2QLA4IblYL03WajjObjCzElT0"];
     
     //initialize WatchConnectivity
     if ([WCSession isSupported]) {

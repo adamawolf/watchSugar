@@ -26,9 +26,9 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 + (void)addLogMessage:(NSString *)logMessage
 {
-#ifndef DEBUG
-    return; //don't log in user defaults outside of DEBUG builds
-#endif
+//#ifndef DEBUG
+//    return; //don't log in user defaults outside of DEBUG builds
+//#endif
     
     static NSDateFormatter *_logDateFormatter = nil;
     if (!_logDateFormatter) {

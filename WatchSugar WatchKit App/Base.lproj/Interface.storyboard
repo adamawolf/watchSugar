@@ -32,7 +32,7 @@
                         <label alignment="left" text="from 11/19 4:39 PM" minimumScaleFactor="0.5" id="Wx1-hA-sNc">
                             <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         </label>
-                        <button width="1" alignment="left" hidden="YES" title="Print Log" id="5q6-t2-tUU">
+                        <button width="1" alignment="left" hidden="YES" title="Send Log" id="5q6-t2-tUU">
                             <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="dumpLogTapped:" destination="AgC-eL-Hgc" id="WqZ-3O-bau"/>

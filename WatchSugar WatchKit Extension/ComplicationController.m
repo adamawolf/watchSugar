@@ -175,7 +175,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
         }
     }
     
-    [DefaultsController addLogMessage:[NSString stringWithFormat:@"getTimelineEntriesForComplication beforeDate:%@ limit:%d : %u returned", date, (int)limit, entries.count]];
+    //[DefaultsController addLogMessage:[NSString stringWithFormat:@"getTimelineEntriesForComplication beforeDate:%@ limit:%d : %u returned", date, (int)limit, entries.count]];
     
     handler(entries);
 }
