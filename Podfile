@@ -12,4 +12,5 @@ target 'WatchSugar WatchKit Extension' do
     platform :watchos, '2.0'
     pod 'AFNetworking'
     pod 'UICKeyChainStore'
+    pod 'Parse'
 end
