@@ -18,20 +18,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="inAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="nh9-aW-SWY">
+                                <rect key="frame" x="168" y="30" width="22" height="32"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="watchSugar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCt-VX-oSF">
-                                <rect key="frame" x="20" y="25" width="140" height="33"/>
+                                <rect key="frame" x="20" y="29" width="140" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Syb-OC-YE6">
-                                <rect key="frame" x="-57" y="24" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bm9-WZ-vC8">
-                                <rect key="frame" x="20" y="73" width="560" height="272"/>
+                                <rect key="frame" x="20" y="77" width="560" height="331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to get started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Uc2-VO-Ab0">
                                         <rect key="frame" x="0.0" y="0.0" width="151" height="21"/>
@@ -92,8 +89,37 @@
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ve1-t5-2F2">
+                                        <rect key="frame" x="0.0" y="236" width="414" height="51"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="2iL-NH-DYF">
+                                                <rect key="frame" x="0.0" y="17" width="19" height="18"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Apple Watch is ready to display blood sugars." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-2P-Wl7">
+                                                <rect key="frame" x="27" y="15" width="387" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="0.99607843137254903" blue="0.97254901960784312" alpha="0.0" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Eam-2P-Wl7" firstAttribute="centerY" secondItem="ve1-t5-2F2" secondAttribute="centerY" id="29m-lw-C4P"/>
+                                            <constraint firstItem="2iL-NH-DYF" firstAttribute="leading" secondItem="ve1-t5-2F2" secondAttribute="leading" id="5uW-T2-GkO"/>
+                                            <constraint firstAttribute="width" constant="490" id="7ER-bP-QJ3"/>
+                                            <constraint firstAttribute="height" constant="51" id="Kx0-sh-MkI"/>
+                                            <constraint firstItem="2iL-NH-DYF" firstAttribute="centerY" secondItem="ve1-t5-2F2" secondAttribute="centerY" id="Sgf-mv-XNc"/>
+                                            <constraint firstItem="Eam-2P-Wl7" firstAttribute="leading" secondItem="2iL-NH-DYF" secondAttribute="trailing" constant="8" id="lB2-ke-2Ws"/>
+                                            <constraint firstAttribute="trailing" secondItem="Eam-2P-Wl7" secondAttribute="trailing" id="rct-Hf-TH1"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="7ER-bP-QJ3"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z1U-8V-CE9">
-                                        <rect key="frame" x="0.0" y="236" width="68" height="36"/>
+                                        <rect key="frame" x="0.0" y="295" width="68" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Log out"/>
                                         <connections>
@@ -108,15 +134,32 @@
                                     <constraint firstAttribute="trailing" secondItem="ajm-7q-Wl2" secondAttribute="trailing" id="wrq-kM-EOG"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="watchSugar is for informational purposes only and should not be used in treating medical conditions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="V1n-p0-GdK">
+                                <rect key="frame" x="20" y="558" width="560" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="0.99607843137254903" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="eCt-VX-oSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="K2q-Kc-eWA"/>
+                            <constraint firstItem="V1n-p0-GdK" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="0pl-hT-Vlx"/>
+                            <constraint firstItem="nh9-aW-SWY" firstAttribute="leading" secondItem="eCt-VX-oSF" secondAttribute="trailing" constant="8" id="DGe-wh-90D"/>
+                            <constraint firstItem="eCt-VX-oSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="9" id="K2q-Kc-eWA"/>
+                            <constraint firstItem="nh9-aW-SWY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="W2d-fz-Zb0"/>
                             <constraint firstItem="eCt-VX-oSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="gRL-F5-nOC"/>
+                            <constraint firstItem="V1n-p0-GdK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="iOp-3L-4f6"/>
+                            <constraint firstItem="nh9-aW-SWY" firstAttribute="top" secondItem="eCt-VX-oSF" secondAttribute="top" constant="1" id="jfw-Sj-cp1"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="V1n-p0-GdK" secondAttribute="bottom" constant="8" id="lvE-kW-EH2"/>
                             <constraint firstItem="bm9-WZ-vC8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="puL-GS-KdF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bm9-WZ-vC8" secondAttribute="trailing" id="qzf-hl-hbh"/>
                             <constraint firstItem="bm9-WZ-vC8" firstAttribute="top" secondItem="eCt-VX-oSF" secondAttribute="bottom" constant="15" id="za4-A4-BD7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="W2d-fz-Zb0"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="accountNameTextView" destination="S7C-Wj-dAP" id="7Q8-8Z-sNR"/>
@@ -133,6 +176,7 @@
                         <outletCollection property="loggedInViews" destination="JKd-uF-Fwh" id="MKK-kY-Qkd"/>
                         <outletCollection property="loggedInViews" destination="qZX-mJ-tOY" id="Xh3-7R-E1r"/>
                         <outletCollection property="loggedInViews" destination="Z1U-8V-CE9" id="i4g-mS-l9Y"/>
+                        <outletCollection property="loggedInViews" destination="Eam-2P-Wl7" id="eL7-NG-Htc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -140,4 +184,8 @@
             <point key="canvasLocation" x="631" y="673"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="check" width="19" height="18"/>
+        <image name="inAppIcon" width="22" height="32"/>
+    </resources>
 </document>
