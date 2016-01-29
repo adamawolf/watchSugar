@@ -13,7 +13,7 @@ NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginSta
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
-static const NSInteger kMaxBloodSugarReadings = 6 * 12;
+static const NSInteger kMaxBloodSugarReadings = 3 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 //#define kTestReadings(epochMilliseconds) @[@{ \
