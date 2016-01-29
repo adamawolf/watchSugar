@@ -36,7 +36,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dexcom G5 Account Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="S7C-Wj-dAP">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dexcom Share Account Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="S7C-Wj-dAP">
                                         <rect key="frame" x="0.0" y="29" width="560" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="560" id="KfY-xh-RkY"/>
@@ -94,6 +94,10 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="2iL-NH-DYF">
                                                 <rect key="frame" x="0.0" y="17" width="19" height="18"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="18" id="5al-wX-dZB"/>
+                                                    <constraint firstAttribute="width" constant="19" id="PFg-pl-KS1"/>
+                                                </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Apple Watch is ready to display blood sugars." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eam-2P-Wl7">
                                                 <rect key="frame" x="27" y="15" width="387" height="21"/>
@@ -107,7 +111,7 @@
                                             <constraint firstItem="Eam-2P-Wl7" firstAttribute="centerY" secondItem="ve1-t5-2F2" secondAttribute="centerY" id="29m-lw-C4P"/>
                                             <constraint firstItem="2iL-NH-DYF" firstAttribute="leading" secondItem="ve1-t5-2F2" secondAttribute="leading" id="5uW-T2-GkO"/>
                                             <constraint firstAttribute="width" constant="490" id="7ER-bP-QJ3"/>
-                                            <constraint firstAttribute="height" constant="51" id="Kx0-sh-MkI"/>
+                                            <constraint firstAttribute="height" priority="999" constant="51" id="Kx0-sh-MkI"/>
                                             <constraint firstItem="2iL-NH-DYF" firstAttribute="centerY" secondItem="ve1-t5-2F2" secondAttribute="centerY" id="Sgf-mv-XNc"/>
                                             <constraint firstItem="Eam-2P-Wl7" firstAttribute="leading" secondItem="2iL-NH-DYF" secondAttribute="trailing" constant="8" id="lB2-ke-2Ws"/>
                                             <constraint firstAttribute="trailing" secondItem="Eam-2P-Wl7" secondAttribute="trailing" id="rct-Hf-TH1"/>
@@ -176,7 +180,7 @@
                         <outletCollection property="loggedInViews" destination="JKd-uF-Fwh" id="MKK-kY-Qkd"/>
                         <outletCollection property="loggedInViews" destination="qZX-mJ-tOY" id="Xh3-7R-E1r"/>
                         <outletCollection property="loggedInViews" destination="Z1U-8V-CE9" id="i4g-mS-l9Y"/>
-                        <outletCollection property="loggedInViews" destination="Eam-2P-Wl7" id="eL7-NG-Htc"/>
+                        <outletCollection property="loggedInViews" destination="ve1-t5-2F2" id="nM1-3d-gkd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

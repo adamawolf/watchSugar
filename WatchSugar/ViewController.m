@@ -62,6 +62,8 @@
 
 - (IBAction)loginButtonTapped:(id)sender
 {
+    self.errorMessage = nil;
+    
     NSString *accountName = self.accountNameTextView.text;
     NSString *password = self.passwordTextView.text;
     
@@ -122,8 +124,8 @@
                 [viewsToDisappear addObjectsFromArray:self.loginViews];
                 
                 //input data into logged in fields
-                self.displayNameLabel.text = @"dexcomUser"; //self.authenticationController.displayName;
-                self.emailLabel.text = @"example@email.com"; // self.authenticationController.email;
+                self.displayNameLabel.text = self.authenticationController.displayName;
+                self.emailLabel.text = self.authenticationController.email;
                 break;
                 
             default:
