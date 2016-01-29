@@ -17,7 +17,6 @@
 static NSTimeInterval kBufferEGVToComplicationUpdate = 45.0f;
 static NSTimeInterval kMinimumComplicationUpdateInterval = 9.0f * 60.0f;
 static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
-static NSTimeInterval kReadingFreshnessInterval = 60.0 * 60.0f;
 
 @interface ComplicationController ()
 
