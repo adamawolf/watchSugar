@@ -262,4 +262,68 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++ (NSArray <NSDictionary *> *)wakeUpDeltaMetricEntries
+{
+    NSArray *entries = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_WakeUpDeltaMetricsArray];
+    
+    return entries ? entries : @[];
+}
+
++ (void)appendWakeUpDeltaMetricEntry:(NSDictionary *)entry
+{
+    if (!entry || !entry[@"date"] || !entry[@"deltaMinutes"]) {
+        return;
+    }
+    
+    NSArray *entries = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_WakeUpDeltaMetricsArray];
+    
+    if (!entries) {
+        entries = @[];
+    }
+    
+    NSMutableArray *mutableEntries = [entries mutableCopy];
+    [mutableEntries addObject:entry];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mutableEntries forKey:WSDefaults_WakeUpDeltaMetricsArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void)clearWakeUpDeltaMetricEntries
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_WakeUpDeltaMetricsArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSArray <NSDictionary *> *)processingTimeMetricEntries
+{
+    NSArray *entries = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_ProcessingTimeMetricsArray];
+    
+    return entries ? entries : @[];
+}
+
++ (void)processingTimeMetricsArray:(NSDictionary *)entry
+{
+    if (!entry || !entry[@"date"] || !entry[@"deltaSeconds"]) {
+        return;
+    }
+    
+    NSArray *entries = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_ProcessingTimeMetricsArray];
+    
+    if (!entries) {
+        entries = @[];
+    }
+    
+    NSMutableArray *mutableEntries = [entries mutableCopy];
+    [mutableEntries addObject:entry];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mutableEntries forKey:WSDefaults_ProcessingTimeMetricsArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (void)clearProcessingTimeMetricsArray
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_ProcessingTimeMetricsArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
