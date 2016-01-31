@@ -7,11 +7,14 @@
 //
 
 #import "DefaultsController.h"
+#include <stdlib.h>
 
 NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 NSString *const WSDefaults_TimeTravelEnabled = @"WSDefaults_TimeTravelEnabled";
+
+NSString *const WSDefaults_UserGroup = @"WSDefaults_UserGroup";
 
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
@@ -24,6 +27,27 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 //                                        },]
 
 @implementation DefaultsController
+
++ (void)configureInitialOptions
+{
+    NSNumber *userGroupNumber = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_UserGroup];
+    
+    if (!userGroupNumber) {
+        //initially assign a user group and set corresponding settings
+        if ([DefaultsController latestBloodSugarReadings].count > 3) {
+            //user has already been testing a previous version
+            [[NSUserDefaults standardUserDefaults] setInteger:WSUserGroup_FirstWaveBetaTesters forKey:WSDefaults_UserGroup];
+            //clear all logging from version 6
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
+        } else {
+            WSUserGroup randomUserGroup = arc4random_uniform(2) == 0 ? WSUserGroup_SecondWaveBetaTesters_NoTimeTravel : WSUserGroup_SecondWaveBetaTesters_WithTimeTravel;
+            [[NSUserDefaults standardUserDefaults] setInteger:randomUserGroup forKey:WSDefaults_UserGroup];
+            [[NSUserDefaults standardUserDefaults] setBool:randomUserGroup == WSUserGroup_SecondWaveBetaTesters_WithTimeTravel forKey:WSDefaults_TimeTravelEnabled];
+        }
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
 
 + (void)addLogMessage:(NSString *)logMessage
 {
