@@ -18,6 +18,7 @@
                             <items>
                                 <label alignment="left" text="102" id="CJe-pa-4I6">
                                     <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" type="system" pointSize="18"/>
                                 </label>
                                 <group alignment="left" id="OPd-6n-scq">
                                     <items>
@@ -25,7 +26,7 @@
                                             <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                     </items>
-                                    <edgeInsets key="margins" left="0.0" right="0.0" top="2" bottom="0.0"/>
+                                    <edgeInsets key="margins" left="0.0" right="0.0" top="4" bottom="0.0"/>
                                 </group>
                             </items>
                         </group>
