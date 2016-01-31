@@ -22,6 +22,8 @@ NSString *const WSDefaults_ProcessingTimeMetricsArray = @"WSDefaults_ProcessingT
 NSString *const WSDefaults_LastNextRequestedUpdateDate = @"WSDefaults_LastNextRequestedUpdateDate";
 NSString *const WSDefaults_LastUpdateStartDate = @"WSDefaults_LastUpdateStartDate";
 
+NSString *const WSDefaults_LastUpdateDidChangeComplication = @"WSDefaults_LastUpdateDidChangeComplication";
+
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
@@ -262,6 +264,17 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++ (BOOL)lastUpdateDidChangeComplication
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:WSDefaults_LastUpdateDidChangeComplication];
+}
+
++ (void)setLastUpdateDidChangeComplication:(BOOL)didChange
+{
+    [[NSUserDefaults standardUserDefaults] setBool:didChange forKey:WSDefaults_LastUpdateDidChangeComplication];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 + (NSArray <NSDictionary *> *)wakeUpDeltaMetricEntries
 {
     NSArray *entries = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_WakeUpDeltaMetricsArray];
@@ -301,7 +314,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     return entries ? entries : @[];
 }
 
-+ (void)processingTimeMetricsArray:(NSDictionary *)entry
++ (void)appendProcessingTimeMetricsArray:(NSDictionary *)entry
 {
     if (!entry || !entry[@"date"] || !entry[@"deltaSeconds"]) {
         return;
