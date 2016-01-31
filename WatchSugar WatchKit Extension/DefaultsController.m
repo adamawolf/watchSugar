@@ -24,6 +24,8 @@ NSString *const WSDefaults_LastUpdateStartDate = @"WSDefaults_LastUpdateStartDat
 
 NSString *const WSDefaults_LastUpdateDidChangeComplication = @"WSDefaults_LastUpdateDidChangeComplication";
 
+NSString *const WSDefaults_MostRecentForegroundComplicationUpdate = @"WSDefaults_MostRecentForegroundComplicationUpdate";
+
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
@@ -316,7 +318,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 + (void)appendProcessingTimeMetricsArray:(NSDictionary *)entry
 {
-    if (!entry || !entry[@"date"] || !entry[@"deltaSeconds"]) {
+    if (!entry || !entry[@"date"] || !entry[@"deltaSeconds"] || !entry[@"didChangeData"]) {
         return;
     }
     
@@ -336,6 +338,21 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 + (void)clearProcessingTimeMetricsArray
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_ProcessingTimeMetricsArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSDate *)mostRecentForegroundComplicationUpdate
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_MostRecentForegroundComplicationUpdate];
+}
+
++ (void)setMostRecentForegroundComplicationUpdate:(NSDate *)date
+{
+    if (date) {
+        [[NSUserDefaults standardUserDefaults] setObject:date forKey:WSDefaults_MostRecentForegroundComplicationUpdate];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_MostRecentForegroundComplicationUpdate];
+    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

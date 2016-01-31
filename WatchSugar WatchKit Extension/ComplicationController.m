@@ -235,8 +235,11 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     [DefaultsController setLastNextRequestedUpdateDate:futureDate];
     
-    //tabulate a wakeUpDeltaMetric entry if appropriate
-    if ([DefaultsController lastUpdateStartDate]) {
+    //tabulate a processing time entry if appropriate
+    NSDate *foregroundReloadDate = [DefaultsController mostRecentForegroundComplicationUpdate];
+    if ([DefaultsController lastUpdateStartDate] &&
+        (!foregroundReloadDate || (foregroundReloadDate && [[NSDate date] timeIntervalSinceDate:foregroundReloadDate] > 60.0f)) //require this update not triggered by the UI
+        ) {
         NSDate *now = [NSDate date];
         NSTimeInterval delta = [now timeIntervalSinceDate:[DefaultsController lastUpdateStartDate]];
         

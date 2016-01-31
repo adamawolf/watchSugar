@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, WSUserGroup) {
 
 + (void)configureInitialOptions;
 
++ (WSUserGroup)userGroup;
+
 + (void)addLogMessage:(NSString *)logMessage;
 
 + (NSArray <NSString *> *)allLogMessages;
@@ -59,5 +61,8 @@ typedef NS_ENUM(NSUInteger, WSUserGroup) {
 + (NSArray <NSDictionary *> *)processingTimeMetricEntries;
 + (void)appendProcessingTimeMetricsArray:(NSDictionary *)entry;
 + (void)clearProcessingTimeMetricsArray;
+
++ (NSDate *)mostRecentForegroundComplicationUpdate;
++ (void)setMostRecentForegroundComplicationUpdate:(NSDate *)date;
 
 @end

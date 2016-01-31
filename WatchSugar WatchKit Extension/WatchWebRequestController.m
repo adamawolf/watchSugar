@@ -197,6 +197,7 @@
         
         if (!isWaiting) {
             [self.delegate webRequestControllerDidFetchNewBloodSugarData:self];
+            [DefaultsController setMostRecentForegroundComplicationUpdate:[NSDate date]];
         }
         
         //log success
