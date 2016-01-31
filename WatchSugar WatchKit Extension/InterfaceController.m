@@ -65,16 +65,13 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         [self.readingDateLabel setHidden:NO];
         [self.trendImage setHidden:NO];
         
-//#ifdef DEBUG
-//        [self.printLogButton setHidden:NO];
-//        [self.clearLogButton setHidden:YES];
-//#else
-//        [self.printLogButton setHidden:YES];
-//        [self.clearLogButton setHidden:YES];
-//#endif
-
+#ifdef DEBUG
         [self.printLogButton setHidden:NO];
         [self.clearLogButton setHidden:YES];
+#else
+        [self.printLogButton setHidden:YES];
+        [self.clearLogButton setHidden:YES];
+#endif
         
         [self.notLoggedInLabel setHidden:YES];
         
