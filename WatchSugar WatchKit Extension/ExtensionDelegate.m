@@ -37,6 +37,8 @@
 {
     [self initializeSubControllers];
     
+    [DefaultsController setTimeTravelEnabled:YES];
+    
     [Parse setApplicationId:@"9GhyzvbfPCu2fKMIsyILB0w7vLYSo5vBiD3PuEp7"
                   clientKey:@"ho4JrXvywYYxO1q2QLA4IblYL03WajjObjCzElT0"];
     

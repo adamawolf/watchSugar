@@ -28,11 +28,20 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 - (void)getSupportedTimeTravelDirectionsForComplication:(CLKComplication *)complication withHandler:(void(^)(CLKComplicationTimeTravelDirections directions))handler
 {
-    handler(CLKComplicationTimeTravelDirectionBackward);
+    if ([DefaultsController timeTravelEnabled]) {
+        handler(CLKComplicationTimeTravelDirectionBackward);
+    } else {
+        handler(CLKComplicationTimeTravelDirectionNone);
+    }
 }
 
 - (void)getTimelineStartDateForComplication:(CLKComplication *)complication withHandler:(void(^)(NSDate *__nullable date))handler
 {
+    if (![DefaultsController timeTravelEnabled]) {
+        handler(nil);
+        return;
+    }
+    
     NSDate *date = [NSDate date];
     
     NSDictionary *earliestReading = [[DefaultsController latestBloodSugarReadings] firstObject];
@@ -148,6 +157,11 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 - (void)getTimelineEntriesForComplication:(CLKComplication *)complication beforeDate:(NSDate *)date limit:(NSUInteger)limit withHandler:(void(^)(NSArray<CLKComplicationTimelineEntry *> *__nullable entries))handler
 {
+    if (![DefaultsController timeTravelEnabled]) {
+        handler(nil);
+        return;
+    }
+    
     NSTimeInterval latestAcceptableTimestamp = [date timeIntervalSince1970];
     
     NSMutableArray <CLKComplicationTimelineEntry *> *entries = [NSMutableArray new];

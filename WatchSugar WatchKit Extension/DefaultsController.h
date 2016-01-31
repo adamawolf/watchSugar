@@ -13,6 +13,7 @@
 extern NSString *const WSDefaults_LogMessageArray;
 extern NSString *const WSDefaults_LastKnownLoginStatus;
 extern NSString *const WSDefaults_LastReadings;
+extern NSString *const WSDefaults_TimeTravelEnabled;
 
 typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
     WSProcessReadingResultNewResultAdded,
@@ -20,6 +21,8 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 };
 
 @interface DefaultsController : NSObject
+
+
 
 + (void)addLogMessage:(NSString *)logMessage;
 
@@ -33,5 +36,8 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings;
 
 + (WSProcessReadingResult)processNewBloodSugarData:(NSDictionary *)prospectiveNewBloodSugarData;
+
++ (BOOL)timeTravelEnabled;
++ (void)setTimeTravelEnabled:(BOOL)enabled;
 
 @end

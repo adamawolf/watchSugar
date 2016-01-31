@@ -11,6 +11,7 @@
 NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
+NSString *const WSDefaults_TimeTravelEnabled = @"WSDefaults_TimeTravelEnabled";
 
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
@@ -178,6 +179,17 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     }
     
     return result;
+}
+
++ (BOOL)timeTravelEnabled;
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:WSDefaults_TimeTravelEnabled];
+}
+
++ (void)setTimeTravelEnabled:(BOOL)enabled
+{
+    [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:WSDefaults_TimeTravelEnabled];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
