@@ -37,8 +37,10 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
         if ([DefaultsController latestBloodSugarReadings].count > 3) {
             //user has already been testing a previous version
             [[NSUserDefaults standardUserDefaults] setInteger:WSUserGroup_FirstWaveBetaTesters forKey:WSDefaults_UserGroup];
+#ifndef DEBUG
             //clear all logging from version 6
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
+#endif
         } else {
             WSUserGroup randomUserGroup = arc4random_uniform(2) == 0 ? WSUserGroup_SecondWaveBetaTesters_NoTimeTravel : WSUserGroup_SecondWaveBetaTesters_WithTimeTravel;
             [[NSUserDefaults standardUserDefaults] setInteger:randomUserGroup forKey:WSDefaults_UserGroup];
