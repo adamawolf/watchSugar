@@ -21,9 +21,10 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 };
 
 typedef NS_ENUM(NSUInteger, WSUserGroup) {
-    WSUserGroup_FirstWaveBetaTesters,
-    WSUserGroup_SecondWaveBetaTesters_NoTimeTravel,
-    WSUserGroup_SecondWaveBetaTesters_WithTimeTravel,
+    WSUserGroupNone,
+    WSUserGroupFirstWaveBetaTesters,
+    WSUserGroupSecondWaveBetaTesters_NoTimeTravel,
+    WSUserGroupSecondWaveBetaTesters_WithTimeTravel,
 };
 
 @interface DefaultsController : NSObject
