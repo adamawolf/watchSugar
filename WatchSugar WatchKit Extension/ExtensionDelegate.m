@@ -18,7 +18,7 @@
 
 #import <Parse/Parse.h>
 
-static NSInteger kMinMetricsBatchSize = 1;
+static NSInteger kMinMetricsBatchSize = 12 * 3;
 
 @interface ExtensionDelegate () <WCSessionDelegate>
 
