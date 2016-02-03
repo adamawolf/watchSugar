@@ -18,8 +18,6 @@
 
 #import <Parse/Parse.h>
 
-static NSInteger kMinMetricsBatchSize = 1;
-
 @interface ExtensionDelegate () <WCSessionDelegate>
 
 @end
@@ -64,8 +62,6 @@ static NSInteger kMinMetricsBatchSize = 1;
     [DefaultsController setLastNextRequestedUpdateDate:nil];
     [DefaultsController setLastUpdateStartDate:nil];
     
-    [ExtensionDelegate processBackgroundMetrics];
-    
     if ([DefaultsController lastKnownLoginStatus] == WSLoginStatus_None && [WCSession defaultSession].isReachable) {
         [self requestAuthenticationPayloadFromDevice];
     }
@@ -80,61 +76,6 @@ static NSInteger kMinMetricsBatchSize = 1;
     [[WCSession defaultSession] sendMessage:@{@"watchIsRequestingAuthenticationPayload": @YES} replyHandler:NULL errorHandler:^(NSError *error) {
         NSLog(@"WCSession error when requesting updated authentication payload: %@", error);
     }];
-}
-
-+ (void)processBackgroundMetrics
-{
-    WSUserGroup userGroup = [DefaultsController userGroup];
-    NSString *metricsClassName = @"Metrics_FirstWave";
-    if (userGroup == WSUserGroupSecondWaveBetaTesters_NoTimeTravel) {
-        metricsClassName = @"Metrics_SecondNoTimeTravel";
-    } else if (userGroup == WSUserGroupSecondWaveBetaTesters_WithTimeTravel) {
-        metricsClassName = @"Metrics_SecondWithTimeTravel";
-    }
-    
-    NSArray <NSDictionary *> *wakeUpMetrics = [DefaultsController wakeUpDeltaMetricEntries];
-    NSArray <NSDictionary *> *processingTimeMetrics = [DefaultsController processingTimeMetricEntries];
-    
-    if (wakeUpMetrics.count > kMinMetricsBatchSize && processingTimeMetrics.count > kMinMetricsBatchSize) {
-        NSDate *firstDate = [wakeUpMetrics firstObject][@"date"];
-        NSDate *lastDate = [processingTimeMetrics lastObject][@"date"];
-        NSTimeInterval metricSpan = [lastDate timeIntervalSinceDate:firstDate];
-        
-        __block NSTimeInterval totalWakeUpDelta = 0.0f;
-        [wakeUpMetrics enumerateObjectsUsingBlock:^(NSDictionary *curEntry, NSUInteger idx, BOOL *stop) {
-            totalWakeUpDelta += [curEntry[@"deltaMinutes"] doubleValue];
-        }];
-        NSTimeInterval averageWakeUpDelta = totalWakeUpDelta / wakeUpMetrics.count;
-        
-        __block NSTimeInterval totalProcessingTime = 0.0f;
-        __block NSInteger totalDidChangeData = 0;
-        [processingTimeMetrics enumerateObjectsUsingBlock:^(NSDictionary *curEntry, NSUInteger idx, BOOL *stop) {
-            totalProcessingTime += [curEntry[@"deltaSeconds"] doubleValue];
-            totalDidChangeData += [curEntry[@"didChangeData"] boolValue] ? 1 : 0;
-        }];
-        NSTimeInterval averageProcessingTime = totalProcessingTime / processingTimeMetrics.count;
-        CGFloat dataChangePercent = (totalDidChangeData * 1.0f) / (processingTimeMetrics.count * 1.0f) * 100.0f;
-        
-        PFObject *metrics = [PFObject objectWithClassName:metricsClassName];
-        metrics[@"averageWakeUpDeltaMinutes"] = @(averageWakeUpDelta);
-        metrics[@"averageProcessingTimeSeconds"] = @(averageProcessingTime);
-
-        metrics[@"timespanHours"] = @(metricSpan / (60.0f * 60.0f));
-        
-        metrics[@"dataChangedPercent"] = @(dataChangePercent);
-        metrics[@"dataChangedCount"] = @(totalDidChangeData);
-        
-        metrics[@"processingEntryCount"] = @(processingTimeMetrics.count);
-        metrics[@"wakeEntryCount"] = @(wakeUpMetrics.count);
-        
-        metrics[@"rawWakeUpMetrics"] = wakeUpMetrics;
-        metrics[@"rawProcessingTimeMetrics"] = processingTimeMetrics;
-
-        [metrics saveInBackground];
-        
-        [DefaultsController clearWakeUpDeltaMetricEntries];
-        [DefaultsController clearProcessingTimeMetricsArray];
-    }
 }
 
 #pragma mark - WCSessionDelegate methods
