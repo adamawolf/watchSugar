@@ -238,6 +238,8 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 - (void)requestedUpdateDidBegin
 {
+    [DefaultsController configureDefaults];
+    
     [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
     
     NSDictionary *previousLatestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
