@@ -20,15 +20,9 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
     WSProcessReadingResultNothingChanged,
 };
 
-typedef NS_ENUM(NSUInteger, WSUserGroup) {
-    WSUserGroup_FirstWaveBetaTesters,
-    WSUserGroup_SecondWaveBetaTesters_NoTimeTravel,
-    WSUserGroup_SecondWaveBetaTesters_WithTimeTravel,
-};
-
 @interface DefaultsController : NSObject
 
-+ (void)configureInitialOptions;
+
 
 + (void)addLogMessage:(NSString *)logMessage;
 
