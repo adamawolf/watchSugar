@@ -45,19 +45,15 @@ typedef NS_ENUM(NSUInteger, WSUserGroup) {
 //metrics
 + (NSDate *)lastNextRequestedUpdateDate;
 + (void)setLastNextRequestedUpdateDate:(NSDate *)date;
-
 + (NSDate *)lastUpdateStartDate;
 + (void)setLastUpdateStartDate:(NSDate *)date;
-
-+ (BOOL)lastUpdateDidChangeComplication;
-+ (void)setLastUpdateDidChangeComplication:(BOOL)didChange;
 
 + (NSArray <NSDictionary *> *)wakeUpDeltaMetricEntries;
 + (void)appendWakeUpDeltaMetricEntry:(NSDictionary *)entry;
 + (void)clearWakeUpDeltaMetricEntries;
 
 + (NSArray <NSDictionary *> *)processingTimeMetricEntries;
-+ (void)appendProcessingTimeMetricsArray:(NSDictionary *)entry;
++ (void)processingTimeMetricsArray:(NSDictionary *)entry;
 + (void)clearProcessingTimeMetricsArray;
 
 @end

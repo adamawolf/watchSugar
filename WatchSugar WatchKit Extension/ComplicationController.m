@@ -151,7 +151,7 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
     
     [DefaultsController addLogMessage:[NSString stringWithFormat:@"getCurrentTimelineEntryForComplication rendering %@", latestReading]];
-    
+
     handler([ComplicationController createTimelineEntryForReading:latestReading forComplication:complication]);
 }
 
@@ -235,36 +235,12 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     [DefaultsController setLastNextRequestedUpdateDate:futureDate];
     
-    //tabulate a wakeUpDeltaMetric entry if appropriate
-    if ([DefaultsController lastUpdateStartDate]) {
-        NSDate *now = [NSDate date];
-        NSTimeInterval delta = [now timeIntervalSinceDate:[DefaultsController lastUpdateStartDate]];
-        
-        [DefaultsController appendProcessingTimeMetricsArray:@{
-                                                               @"date": now,
-                                                               @"deltaSeconds": @(delta),
-                                                               @"didChangeData": @([DefaultsController lastUpdateDidChangeComplication]),
-                                                               }];
-    }
-    
     handler(futureDate);
 }
 
 - (void)requestedUpdateDidBegin
 {
     [DefaultsController setLastUpdateStartDate:[NSDate date]];
-    [DefaultsController setLastUpdateDidChangeComplication:NO];
-    
-    //tabulate a wakeUpDeltaMetric entry if appropriate
-    if ([DefaultsController lastNextRequestedUpdateDate]) {
-        NSDate *now = [NSDate date];
-        NSTimeInterval delta = [now timeIntervalSinceDate:[DefaultsController lastNextRequestedUpdateDate]];
-        
-        [DefaultsController appendWakeUpDeltaMetricEntry:@{
-                                                           @"date": now,
-                                                           @"deltaMinutes": @(delta / 60.0f)
-                                                           }];
-    }
     
     [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
     
@@ -303,8 +279,6 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
         for (CLKComplication *complication in [[CLKComplicationServer sharedInstance] activeComplications]) {
             [[CLKComplicationServer sharedInstance] reloadTimelineForComplication:complication];
         }
-        
-        [DefaultsController setLastUpdateDidChangeComplication:YES];
     }
 }
 
