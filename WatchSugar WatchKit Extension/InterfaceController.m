@@ -12,8 +12,6 @@
 #import "DefaultsController.h"
 #import "WatchWebRequestController.h"
 
-#import <Parse/Parse.h>
-
 static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 @interface InterfaceController() <WatchWebRequestControllerDelegate>
@@ -137,22 +135,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
 
 - (IBAction)dumpLogTapped:(id)sender
 {
-    NSArray *actions = @[
-                        [WKAlertAction actionWithTitle:@"Send" style:WKAlertActionStyleDefault handler:^{
-                            PFObject *testObject = [PFObject objectWithClassName:@"Log"];
-                            testObject[@"message"] = [DefaultsController allLogMessages];
-                            [testObject saveInBackground];
-                            
-                            NSLog(@"%@", [DefaultsController allLogMessages]);
-                        }],
-                        [WKAlertAction actionWithTitle:@"Cancel" style:WKAlertActionStyleCancel handler:^{
-                            NSLog(@"%@", [DefaultsController allLogMessages]);
-                        }],
-                        ];
-    
-    [self presentAlertControllerWithTitle:@"Send Logs"
-                                  message:@"Please keep your wrist up for 10-20 seconds to complete."
-                           preferredStyle:WKAlertControllerStyleAlert actions:actions];
+    NSLog(@"%@", [DefaultsController allLogMessages]);
 }
 
 - (IBAction)clearLogTapped:(id)sender
