@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 
 @interface DefaultsController : NSObject
 
++ (void)configureDefaults;
+
 //blood sugar storage and retrieval
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings;
 + (WSProcessReadingResult)processNewBloodSugarData:(NSDictionary *)prospectiveNewBloodSugarData;
@@ -28,6 +30,8 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 //global app settings
 + (BOOL)timeTravelEnabled;
 + (void)setTimeTravelEnabled:(BOOL)enabled;
++ (NSInteger)quietTimeStartHour;
++ (NSInteger)quietTimeEndHour;
 
 //debug logging to user defaults for use in development
 + (void)addLogMessage:(NSString *)logMessage;

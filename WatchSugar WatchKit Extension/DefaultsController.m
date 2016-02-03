@@ -12,18 +12,48 @@ NSString *const WSDefaults_LogMessageArray = @"WSDefaults_LogMessageArray";
 NSString *const WSDefaults_LastKnownLoginStatus = @"WSDefaults_LastKnownLoginStatus";
 NSString *const WSDefaults_LastReadings = @"WSDefaults_LastReadings";
 NSString *const WSDefaults_TimeTravelEnabled = @"WSDefaults_TimeTravelEnabled";
+NSString *const WSDefaults_QuietTimeStartHour = @"WSDefaults_QuietTimeStartHour";
+NSString *const WSDefaults_QuietTimeEndHour = @"WSDefaults_QuietTimeEndHour";
+NSString *const WSDefaults_DefaultsConfiguredForVersion = @"WSDefaults_DefaultsConfiguredForVersion";
 
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
-//#define kTestReadings(epochMilliseconds) @[@{ \
-//                                            @"timestamp": @((epochMilliseconds)), \
-//                                            @"trend": @(5),\
-//                                            @"value": @(102), \
-//                                        },]
+//#define kTestReadings(epochMilliseconds) @[@{ @"timestamp": @((epochMilliseconds)), @"trend": @(5), @"value": @(102), },]
 
 @implementation DefaultsController
+
++ (void)configureDefaults
+{
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    if ([appVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_DefaultsConfiguredForVersion]]) {
+        return;
+    }
+    
+    //through metrics collected during beta test, enabling time travel only slows average update interval by 24 seconds
+    [DefaultsController setTimeTravelEnabled:YES];
+    //request updates much less frequently between 1 and 6 AM
+    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:WSDefaults_QuietTimeStartHour];
+    [[NSUserDefaults standardUserDefaults] setInteger:6 forKey:WSDefaults_QuietTimeStartHour];
+    
+    //clear logging if we're running a release build
+#ifndef DEBUG
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
+#endif
+    //clear keys that were at one time used during beta test
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_UserGroup"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_WakeUpDeltaMetricsArray"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_LastNextRequestedUpdateDate"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_LastUpdateStartDate"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_LastUpdateDidChangeComplication"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"WSDefaults_MostRecentForegroundComplicationUpdate"];
+    
+    //notate that this method has configured app for current version
+    [[NSUserDefaults standardUserDefaults] setObject:appVersion forKey:WSDefaults_DefaultsConfiguredForVersion];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 #pragma mark - Blood Sugar methods
 
@@ -153,6 +183,16 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 {
     [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:WSDefaults_TimeTravelEnabled];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSInteger)quietTimeStartHour
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_QuietTimeStartHour];
+}
+
++ (NSInteger)quietTimeEndHour
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_QuietTimeEndHour];
 }
 
 #pragma mark - Logging methods
