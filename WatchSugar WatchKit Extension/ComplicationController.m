@@ -233,15 +233,11 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
     
     [DefaultsController addLogMessage:[NSString stringWithFormat:@"getNextRequestedUpdateDateWithHandler requesting future date: %@", [_timeStampDateFormatter stringFromDate:futureDate]]];
     
-    [DefaultsController setLastNextRequestedUpdateDate:futureDate];
-    
     handler(futureDate);
 }
 
 - (void)requestedUpdateDidBegin
 {
-    [DefaultsController setLastUpdateStartDate:[NSDate date]];
-    
     [DefaultsController addLogMessage:@"ComplicationController requestedUpdateDidBegin"];
     
     NSDictionary *previousLatestReading = [[DefaultsController latestBloodSugarReadings] lastObject];

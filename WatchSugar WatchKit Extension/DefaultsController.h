@@ -10,6 +10,11 @@
 
 #import "AuthenticationController.h"
 
+extern NSString *const WSDefaults_LogMessageArray;
+extern NSString *const WSDefaults_LastKnownLoginStatus;
+extern NSString *const WSDefaults_LastReadings;
+extern NSString *const WSDefaults_TimeTravelEnabled;
+
 typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
     WSProcessReadingResultNewResultAdded,
     WSProcessReadingResultNothingChanged,
@@ -41,11 +46,5 @@ typedef NS_ENUM(NSUInteger, WSUserGroup) {
 
 + (BOOL)timeTravelEnabled;
 + (void)setTimeTravelEnabled:(BOOL)enabled;
-
-//metrics
-+ (NSDate *)lastNextRequestedUpdateDate;
-+ (void)setLastNextRequestedUpdateDate:(NSDate *)date;
-+ (NSDate *)lastUpdateStartDate;
-+ (void)setLastUpdateStartDate:(NSDate *)date;
 
 @end

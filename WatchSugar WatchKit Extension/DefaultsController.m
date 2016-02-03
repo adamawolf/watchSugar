@@ -16,12 +16,6 @@ NSString *const WSDefaults_TimeTravelEnabled = @"WSDefaults_TimeTravelEnabled";
 
 NSString *const WSDefaults_UserGroup = @"WSDefaults_UserGroup";
 
-NSString *const WSDefaults_WakeUpDeltaMetricsArray = @"WSDefaults_WakeUpDeltaMetricsArray";
-NSString *const WSDefaults_ProcessingTimeMetricsArray = @"WSDefaults_ProcessingTimeMetricsArray";
-
-NSString *const WSDefaults_LastNextRequestedUpdateDate = @"WSDefaults_LastNextRequestedUpdateDate";
-NSString *const WSDefaults_LastUpdateStartDate = @"WSDefaults_LastUpdateStartDate";
-
 static const NSTimeInterval kMaximumFreshnessInterval = 60.0f * 60.0f;
 static const NSInteger kMaxBloodSugarReadings = 3 * 12;
 static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
@@ -227,38 +221,6 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 + (void)setTimeTravelEnabled:(BOOL)enabled
 {
     [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:WSDefaults_TimeTravelEnabled];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark - Metrics methods
-
-+ (NSDate *)lastNextRequestedUpdateDate
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LastNextRequestedUpdateDate];
-}
-
-+ (void)setLastNextRequestedUpdateDate:(NSDate *)date
-{
-    if (date) {
-        [[NSUserDefaults standardUserDefaults] setObject:date forKey:WSDefaults_LastNextRequestedUpdateDate];
-    } else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LastNextRequestedUpdateDate];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSDate *)lastUpdateStartDate
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_LastUpdateStartDate];
-}
-
-+ (void)setLastUpdateStartDate:(NSDate *)date
-{
-    if (date) {
-        [[NSUserDefaults standardUserDefaults] setObject:date forKey:WSDefaults_LastUpdateStartDate];
-    } else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LastUpdateStartDate];
-    }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

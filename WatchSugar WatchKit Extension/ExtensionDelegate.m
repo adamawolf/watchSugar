@@ -58,10 +58,6 @@
 
 - (void)applicationDidBecomeActive
 {
-    //clear dates used for processing background update metrics, since app is no longer in background and foreground updating will forcibly adjust timing of things
-    [DefaultsController setLastNextRequestedUpdateDate:nil];
-    [DefaultsController setLastUpdateStartDate:nil];
-    
     if ([DefaultsController lastKnownLoginStatus] == WSLoginStatus_None && [WCSession defaultSession].isReachable) {
         [self requestAuthenticationPayloadFromDevice];
     }
