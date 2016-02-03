@@ -65,7 +65,7 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         
 #ifdef DEBUG
         [self.printLogButton setHidden:NO];
-        [self.clearLogButton setHidden:YES];
+        [self.clearLogButton setHidden:NO];
 #else
         [self.printLogButton setHidden:YES];
         [self.clearLogButton setHidden:YES];
