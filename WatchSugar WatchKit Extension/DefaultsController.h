@@ -10,11 +10,6 @@
 
 #import "AuthenticationController.h"
 
-extern NSString *const WSDefaults_LogMessageArray;
-extern NSString *const WSDefaults_LastKnownLoginStatus;
-extern NSString *const WSDefaults_LastReadings;
-extern NSString *const WSDefaults_TimeTravelEnabled;
-
 typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
     WSProcessReadingResultNewResultAdded,
     WSProcessReadingResultNothingChanged,
@@ -22,22 +17,21 @@ typedef NS_ENUM(NSUInteger, WSProcessReadingResult) {
 
 @interface DefaultsController : NSObject
 
+//blood sugar storage and retrieval
++ (NSArray <NSDictionary *> *)latestBloodSugarReadings;
++ (WSProcessReadingResult)processNewBloodSugarData:(NSDictionary *)prospectiveNewBloodSugarData;
 
-
-+ (void)addLogMessage:(NSString *)logMessage;
-
-+ (NSArray <NSString *> *)allLogMessages;
-
-+ (void)clearAllLogMessages;
-
+//login status management
 + (WSLoginStatus)lastKnownLoginStatus;
 + (void)setLastKnownLoginStatus:(WSLoginStatus)status;
 
-+ (NSArray <NSDictionary *> *)latestBloodSugarReadings;
-
-+ (WSProcessReadingResult)processNewBloodSugarData:(NSDictionary *)prospectiveNewBloodSugarData;
-
+//global app settings
 + (BOOL)timeTravelEnabled;
 + (void)setTimeTravelEnabled:(BOOL)enabled;
+
+//debug logging to user defaults for use in development
++ (void)addLogMessage:(NSString *)logMessage;
++ (NSArray <NSString *> *)allLogMessages;
++ (void)clearAllLogMessages;
 
 @end

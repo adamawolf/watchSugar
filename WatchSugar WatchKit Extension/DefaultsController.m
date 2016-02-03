@@ -25,59 +25,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 @implementation DefaultsController
 
-+ (void)addLogMessage:(NSString *)logMessage
-{
-#ifndef DEBUG
-    return; //don't log in user defaults outside of DEBUG builds
-#endif
-    
-    static NSDateFormatter *_logDateFormatter = nil;
-    if (!_logDateFormatter) {
-        _logDateFormatter = [[NSDateFormatter alloc] init];
-        _logDateFormatter.dateStyle = NSDateFormatterShortStyle;
-        _logDateFormatter.timeStyle = NSDateFormatterShortStyle;
-    }
-    
-    NSArray *logMessagesArray = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LogMessageArray];
-    if (!logMessagesArray) {
-        logMessagesArray = @[];
-    }
-    
-    NSString *fullEntry = [NSString stringWithFormat:@"%@ - %@", [_logDateFormatter stringFromDate:[NSDate date]], logMessage];
-    
-    NSMutableArray *mutableLogMessagesArray = [logMessagesArray mutableCopy];
-    [mutableLogMessagesArray addObject:fullEntry];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:mutableLogMessagesArray forKey:WSDefaults_LogMessageArray];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSArray <NSString *> *)allLogMessages
-{
-    NSArray <NSString *> *logMessagesArray = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LogMessageArray];
-    if (!logMessagesArray) {
-        logMessagesArray = @[];
-    }
-    
-    return logMessagesArray;
-}
-
-+ (void)clearAllLogMessages
-{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (WSLoginStatus)lastKnownLoginStatus
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_LastKnownLoginStatus];
-}
-
-+ (void)setLastKnownLoginStatus:(WSLoginStatus)status
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:status forKey:WSDefaults_LastKnownLoginStatus];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+#pragma mark - Blood Sugar methods
 
 + (NSArray <NSDictionary *> *)latestBloodSugarReadings
 {
@@ -181,6 +129,21 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     return result;
 }
 
+#pragma mark - Login status methods
+
++ (WSLoginStatus)lastKnownLoginStatus
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_LastKnownLoginStatus];
+}
+
++ (void)setLastKnownLoginStatus:(WSLoginStatus)status
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:status forKey:WSDefaults_LastKnownLoginStatus];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Global settings methods
+
 + (BOOL)timeTravelEnabled;
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:WSDefaults_TimeTravelEnabled];
@@ -189,6 +152,51 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 + (void)setTimeTravelEnabled:(BOOL)enabled
 {
     [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:WSDefaults_TimeTravelEnabled];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Logging methods
+
++ (void)addLogMessage:(NSString *)logMessage
+{
+#ifndef DEBUG
+    return; //don't log in user defaults outside of DEBUG builds
+#endif
+    
+    static NSDateFormatter *_logDateFormatter = nil;
+    if (!_logDateFormatter) {
+        _logDateFormatter = [[NSDateFormatter alloc] init];
+        _logDateFormatter.dateStyle = NSDateFormatterShortStyle;
+        _logDateFormatter.timeStyle = NSDateFormatterShortStyle;
+    }
+    
+    NSArray *logMessagesArray = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LogMessageArray];
+    if (!logMessagesArray) {
+        logMessagesArray = @[];
+    }
+    
+    NSString *fullEntry = [NSString stringWithFormat:@"%@ - %@", [_logDateFormatter stringFromDate:[NSDate date]], logMessage];
+    
+    NSMutableArray *mutableLogMessagesArray = [logMessagesArray mutableCopy];
+    [mutableLogMessagesArray addObject:fullEntry];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mutableLogMessagesArray forKey:WSDefaults_LogMessageArray];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (NSArray <NSString *> *)allLogMessages
+{
+    NSArray <NSString *> *logMessagesArray = [[NSUserDefaults standardUserDefaults] arrayForKey:WSDefaults_LogMessageArray];
+    if (!logMessagesArray) {
+        logMessagesArray = @[];
+    }
+    
+    return logMessagesArray;
+}
+
++ (void)clearAllLogMessages
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
