@@ -79,10 +79,6 @@ static const NSTimeInterval kMinimumRefreshInterval = 60.0f;
         WatchWebRequestController *webRequestController = extensionDelegate.webRequestController;
         
         if (!webRequestController.lastFetchAttempt || [[NSDate date] timeIntervalSinceDate:webRequestController.lastFetchAttempt] > kMinimumRefreshInterval) {
-            //clear dates used for processing background update metrics since this alters things
-            [DefaultsController setLastNextRequestedUpdateDate:nil];
-            [DefaultsController setLastUpdateStartDate:nil];
-            
             [webRequestController performFetchWhileWaiting:NO];
         }
         
