@@ -30,31 +30,25 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
 
 + (void)configureInitialOptions
 {
-    WSUserGroup userGroup = [DefaultsController userGroup];
+    NSNumber *userGroupNumber = [[NSUserDefaults standardUserDefaults] objectForKey:WSDefaults_UserGroup];
     
-    if (userGroup == WSUserGroupNone) {
+    if (!userGroupNumber) {
         //initially assign a user group and set corresponding settings
         if ([DefaultsController latestBloodSugarReadings].count > 3) {
             //user has already been testing a previous version
-            [[NSUserDefaults standardUserDefaults] setInteger:WSUserGroupFirstWaveBetaTesters forKey:WSDefaults_UserGroup];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:WSDefaults_TimeTravelEnabled];
+            [[NSUserDefaults standardUserDefaults] setInteger:WSUserGroup_FirstWaveBetaTesters forKey:WSDefaults_UserGroup];
 #ifndef DEBUG
             //clear all logging from version 6
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:WSDefaults_LogMessageArray];
 #endif
         } else {
-            WSUserGroup randomUserGroup = arc4random_uniform(2) == 0 ? WSUserGroupSecondWaveBetaTesters_NoTimeTravel : WSUserGroupSecondWaveBetaTesters_WithTimeTravel;
+            WSUserGroup randomUserGroup = arc4random_uniform(2) == 0 ? WSUserGroup_SecondWaveBetaTesters_NoTimeTravel : WSUserGroup_SecondWaveBetaTesters_WithTimeTravel;
             [[NSUserDefaults standardUserDefaults] setInteger:randomUserGroup forKey:WSDefaults_UserGroup];
-            [[NSUserDefaults standardUserDefaults] setBool:randomUserGroup == WSUserGroupSecondWaveBetaTesters_WithTimeTravel forKey:WSDefaults_TimeTravelEnabled];
+            [[NSUserDefaults standardUserDefaults] setBool:randomUserGroup == WSUserGroup_SecondWaveBetaTesters_WithTimeTravel forKey:WSDefaults_TimeTravelEnabled];
         }
         
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-}
-
-+ (WSUserGroup)userGroup
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:WSDefaults_UserGroup];
 }
 
 + (void)addLogMessage:(NSString *)logMessage
