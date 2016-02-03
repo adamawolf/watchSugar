@@ -14,7 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.0.2)
   - AFNetworking/UIKit (3.0.2):
     - AFNetworking/NSURLSession
-  - Bolts/Tasks (1.6.0)
   - CocoaLumberjack (2.2.0):
     - CocoaLumberjack/Default (= 2.2.0)
     - CocoaLumberjack/Extensions (= 2.2.0)
@@ -23,21 +22,16 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.2.0):
     - CocoaLumberjack/Default
-  - Parse (1.12.0):
-    - Bolts/Tasks (~> 1.5)
   - UICKeyChainStore (2.1.0)
 
 DEPENDENCIES:
   - AFNetworking
   - CocoaLumberjack
-  - Parse
   - UICKeyChainStore
 
 SPEC CHECKSUMS:
   AFNetworking: 2f30b7db399a405b12b24e049c654f108fc8c54d
-  Bolts: f52a250053bb517ca874523c3913776359ab3def
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
-  Parse: de2c52a9a1421b91ae7594ab8ce191afd184f19b
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
 
 COCOAPODS: 0.39.0
