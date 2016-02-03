@@ -35,7 +35,7 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     [DefaultsController setTimeTravelEnabled:YES];
     //request updates much less frequently between 1 and 6 AM
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:WSDefaults_QuietTimeStartHour];
-    [[NSUserDefaults standardUserDefaults] setInteger:6 forKey:WSDefaults_QuietTimeStartHour];
+    [[NSUserDefaults standardUserDefaults] setInteger:6 forKey:WSDefaults_QuietTimeEndHour];
     
     //clear logging if we're running a release build
 #ifndef DEBUG
@@ -53,6 +53,8 @@ static const NSTimeInterval kMaximumReadingHistoryInterval = 12 * 60.0f * 60.0f;
     [[NSUserDefaults standardUserDefaults] setObject:appVersion forKey:WSDefaults_DefaultsConfiguredForVersion];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [DefaultsController addLogMessage:[NSString stringWithFormat:@"configured defaults for version %@", appVersion]];
 }
 
 #pragma mark - Blood Sugar methods

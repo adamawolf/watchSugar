@@ -201,27 +201,65 @@ static NSTimeInterval kEGVReadingInterval = 5.0f * 60.0f;
 
 #pragma mark Update Scheduling
 
+#define kSecondsInMinute 60.0f
+#define kSecondsPerHour (60.0f * kSecondsInMinute)
+#define kHoursInDay 24.0f
+
 - (void)getNextRequestedUpdateDateWithHandler:(void(^)(NSDate *__nullable updateDate))handler
 {
     NSDate *futureDate = nil;
     
-    //dexcom system captures an EGV every 5 minutes
-    //knowing that, let's be smart about the complication update interval.
-    //make it update 1) 45 seconds after an anticipated EGV reading and 2) no sooner than 9 minutes from now
+    //determine if we're in a quite time interval
+    __block BOOL isQuietTime = NO;
     
-    NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
-    if (!latestReading) {
-        futureDate = [[NSDate date] dateByAddingTimeInterval:60.0f * 9.5];
-    } else {
-        NSTimeInterval timestamp = [latestReading[@"timestamp"] doubleValue] / 1000.00;
-        NSTimeInterval nextTimestamp = timestamp + kBufferEGVToComplicationUpdate;
+    NSInteger quietStartHour = [DefaultsController quietTimeStartHour];
+    NSInteger quietEndHour = [DefaultsController quietTimeEndHour];
+    
+    NSDate *now = [NSDate date];
+    NSDate *startOfToday = [[NSCalendar currentCalendar] startOfDayForDate:now];
+    
+    NSMutableArray <NSDate *> *midnightsToCheck = [NSMutableArray new];
+    [midnightsToCheck addObject:startOfToday];
+    if (quietStartHour > quietEndHour) {
+        //check tomorrow's midnight as well
+        quietStartHour -= kHoursInDay;
         
-        NSTimeInterval nineMinutesFromNowTimestamp = [[NSDate date] timeIntervalSince1970] + kMinimumComplicationUpdateInterval;
-        while (nextTimestamp < nineMinutesFromNowTimestamp) {
-            nextTimestamp += kEGVReadingInterval;
+        [midnightsToCheck addObject:[startOfToday dateByAddingTimeInterval:kHoursInDay * kSecondsPerHour]];
+    }
+    
+    [midnightsToCheck enumerateObjectsUsingBlock:^(NSDate *midnight, NSUInteger idx, BOOL *stop) {
+        NSDate *startQuietRange = [midnight dateByAddingTimeInterval:quietStartHour * kSecondsPerHour];
+        NSDate *endQuietRange = [midnight dateByAddingTimeInterval:quietEndHour * kSecondsPerHour];
+        
+        if ([now timeIntervalSinceReferenceDate] > [startQuietRange timeIntervalSinceReferenceDate] &&
+            [now timeIntervalSinceReferenceDate] < [endQuietRange timeIntervalSinceReferenceDate]) {
+            isQuietTime = YES;
+            *stop = YES;
         }
+    }];
+    
+    if (!isQuietTime ) {
+        //dexcom system captures an EGV every 5 minutes
+        //knowing that, let's be smart about the complication update interval.
+        //make it update 1) 45 seconds after an anticipated EGV reading and 2) no sooner than 9 minutes from now
         
-        futureDate = [NSDate dateWithTimeIntervalSince1970:nextTimestamp];
+        NSDictionary *latestReading = [[DefaultsController latestBloodSugarReadings] lastObject];
+        if (!latestReading) {
+            futureDate = [now dateByAddingTimeInterval:9.5 * kSecondsInMinute];
+        } else {
+            NSTimeInterval timestamp = [latestReading[@"timestamp"] doubleValue] / 1000.00;
+            NSTimeInterval nextTimestamp = timestamp + kBufferEGVToComplicationUpdate;
+            
+            NSTimeInterval nineMinutesFromNowTimestamp = [[NSDate date] timeIntervalSince1970] + kMinimumComplicationUpdateInterval;
+            while (nextTimestamp < nineMinutesFromNowTimestamp) {
+                nextTimestamp += kEGVReadingInterval;
+            }
+            
+            futureDate = [NSDate dateWithTimeIntervalSince1970:nextTimestamp];
+        }
+    } else {
+        [DefaultsController addLogMessage:@"getNextRequestedUpdateDateWithHandler in quietTime. Requesting less frequent updates..."];
+        futureDate = [now dateByAddingTimeInterval:50 * kSecondsInMinute];
     }
     
     static NSDateFormatter *_timeStampDateFormatter = nil;
